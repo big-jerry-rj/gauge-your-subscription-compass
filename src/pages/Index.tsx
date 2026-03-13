@@ -1,24 +1,29 @@
-import { useState } from 'react';
-import BottomNav from '@/components/layout/BottomNav';
-import FAB from '@/components/layout/FAB';
-import AddSubscriptionSheet from '@/components/subscriptions/AddSubscriptionSheet';
-import SubscriptionsPage from './SubscriptionsPage';
-import InsightsPage from './InsightsPage';
-import CalendarPage from './CalendarPage';
-import SettingsPage from './SettingsPage';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from "react";
+import BottomNav from "@/components/layout/BottomNav";
+import FAB from "@/components/layout/FAB";
+import AddSubscriptionSheet from "@/components/subscriptions/AddSubscriptionSheet";
+import SubscriptionsPage from "./SubscriptionsPage";
+import InsightsPage from "./InsightsPage";
+import CalendarPage from "./CalendarPage";
+import SettingsPage from "./SettingsPage";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Index() {
-  const [activeTab, setActiveTab] = useState('subscriptions');
+  const [activeTab, setActiveTab] = useState("subscriptions");
   const [showAdd, setShowAdd] = useState(false);
 
   const renderPage = () => {
     switch (activeTab) {
-      case 'subscriptions': return <SubscriptionsPage />;
-      case 'insights': return <InsightsPage />;
-      case 'calendar': return <CalendarPage />;
-      case 'settings': return <SettingsPage />;
-      default: return <SubscriptionsPage />;
+      case "subscriptions":
+        return <SubscriptionsPage />;
+      case "insights":
+        return <InsightsPage />;
+      case "calendar":
+        return <CalendarPage />;
+      case "settings":
+        return <SettingsPage />;
+      default:
+        return <SubscriptionsPage />;
     }
   };
 
@@ -30,7 +35,7 @@ export default function Index() {
       <div className="relative z-10 mx-auto max-w-lg">
         {/* Header with logo */}
         <div className="flex items-center gap-3 px-5 pt-6 pb-2">
-          <img src="/gauge-logo.png" alt="Gauge" className="h-6 w-auto" />
+          <img src="/gauge-logo.png" alt="Gauge" className="h-12 w-auto" />
         </div>
 
         <AnimatePresence mode="wait">

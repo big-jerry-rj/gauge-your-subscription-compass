@@ -1,56 +1,75 @@
 export const CURRENCIES = [
-  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'EUR', symbol: '\u20AC', name: 'Euro' },
   { code: 'USD', symbol: '$', name: 'US Dollar' },
-  { code: 'GBP', symbol: '£', name: 'British Pound' },
+  { code: 'GBP', symbol: '\u00A3', name: 'British Pound' },
   { code: 'CHF', symbol: 'CHF', name: 'Swiss Franc' },
   { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
   { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
-  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+  { code: 'JPY', symbol: '\u00A5', name: 'Japanese Yen' },
   { code: 'SEK', symbol: 'kr', name: 'Swedish Krona' },
   { code: 'NOK', symbol: 'kr', name: 'Norwegian Krone' },
   { code: 'DKK', symbol: 'kr', name: 'Danish Krone' },
-  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+  { code: 'INR', symbol: '\u20B9', name: 'Indian Rupee' },
 ] as const;
 
-export const CATEGORIES = [
-  'Entertainment',
-  'Music',
-  'Video Streaming',
-  'Gaming',
-  'Productivity',
-  'Cloud Storage',
-  'News & Media',
-  'Health & Fitness',
-  'Education',
-  'Finance',
-  'Software',
-  'Social Media',
-  'Food & Delivery',
-  'Shopping',
-  'Other',
+export type CategoryKey =
+  | 'streaming' | 'music' | 'gaming' | 'software' | 'cloud'
+  | 'fitness' | 'news' | 'food' | 'productivity' | 'education'
+  | 'shopping' | 'finance' | 'other';
+
+export interface CategoryInfo {
+  key: CategoryKey;
+  label: string;
+  emoji: string;
+  color: string;
+}
+
+export const CATEGORIES: CategoryInfo[] = [
+  { key: 'streaming', label: 'Streaming', emoji: '\uD83C\uDFAC', color: '#E74C3C' },
+  { key: 'music', label: 'Music', emoji: '\uD83C\uDFB5', color: '#9B59B6' },
+  { key: 'gaming', label: 'Gaming', emoji: '\uD83C\uDFAE', color: '#2ECC71' },
+  { key: 'software', label: 'Software', emoji: '\uD83D\uDCBB', color: '#3498DB' },
+  { key: 'cloud', label: 'Cloud Storage', emoji: '\u2601\uFE0F', color: '#1ABC9C' },
+  { key: 'fitness', label: 'Fitness', emoji: '\uD83C\uDFCB\uFE0F', color: '#E67E22' },
+  { key: 'news', label: 'News & Media', emoji: '\uD83D\uDCF0', color: '#F39C12' },
+  { key: 'food', label: 'Food & Delivery', emoji: '\uD83C\uDF55', color: '#E91E63' },
+  { key: 'productivity', label: 'Productivity', emoji: '\u2705', color: '#00BCD4' },
+  { key: 'education', label: 'Education', emoji: '\uD83C\uDF93', color: '#8BC34A' },
+  { key: 'shopping', label: 'Shopping', emoji: '\uD83D\uDED2', color: '#FF5722' },
+  { key: 'finance', label: 'Finance', emoji: '\uD83D\uDCB0', color: '#607D8B' },
+  { key: 'other', label: 'Other', emoji: '\uD83D\uDCCC', color: '#95A5A6' },
+];
+
+export function getCategoryInfo(key: string | null): CategoryInfo {
+  return CATEGORIES.find(c => c.key === key) ?? CATEGORIES[CATEGORIES.length - 1];
+}
+
+export const BILLING_CYCLES = [
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'quarterly', label: 'Quarterly' },
+  { value: 'semi-annual', label: 'Semi-Annual' },
+  { value: 'annual', label: 'Annual' },
 ] as const;
+
+export type BillingCycle = 'weekly' | 'monthly' | 'quarterly' | 'semi-annual' | 'annual';
 
 export const POPULAR_SERVICES = [
-  { name: 'Netflix', logo: 'https://logo.clearbit.com/netflix.com', category: 'Video Streaming', defaultAmount: 15.49 },
-  { name: 'Spotify', logo: 'https://logo.clearbit.com/spotify.com', category: 'Music', defaultAmount: 10.99 },
-  { name: 'Disney+', logo: 'https://logo.clearbit.com/disneyplus.com', category: 'Video Streaming', defaultAmount: 8.99 },
-  { name: 'YouTube Premium', logo: 'https://logo.clearbit.com/youtube.com', category: 'Video Streaming', defaultAmount: 13.99 },
-  { name: 'Apple Music', logo: 'https://logo.clearbit.com/apple.com', category: 'Music', defaultAmount: 10.99 },
-  { name: 'iCloud+', logo: 'https://logo.clearbit.com/icloud.com', category: 'Cloud Storage', defaultAmount: 2.99 },
-  { name: 'Google One', logo: 'https://logo.clearbit.com/one.google.com', category: 'Cloud Storage', defaultAmount: 1.99 },
-  { name: 'Adobe Creative Cloud', logo: 'https://logo.clearbit.com/adobe.com', category: 'Software', defaultAmount: 54.99 },
-  { name: 'Microsoft 365', logo: 'https://logo.clearbit.com/microsoft.com', category: 'Productivity', defaultAmount: 9.99 },
-  { name: 'Amazon Prime', logo: 'https://logo.clearbit.com/amazon.com', category: 'Shopping', defaultAmount: 8.99 },
-  { name: 'HBO Max', logo: 'https://logo.clearbit.com/hbomax.com', category: 'Video Streaming', defaultAmount: 13.99 },
-  { name: 'Notion', logo: 'https://logo.clearbit.com/notion.so', category: 'Productivity', defaultAmount: 10.00 },
-  { name: 'Figma', logo: 'https://logo.clearbit.com/figma.com', category: 'Software', defaultAmount: 15.00 },
-  { name: 'Slack', logo: 'https://logo.clearbit.com/slack.com', category: 'Productivity', defaultAmount: 8.75 },
-  { name: 'Dropbox', logo: 'https://logo.clearbit.com/dropbox.com', category: 'Cloud Storage', defaultAmount: 11.99 },
-  { name: 'ChatGPT Plus', logo: 'https://logo.clearbit.com/openai.com', category: 'Software', defaultAmount: 20.00 },
-  { name: 'Gym Membership', logo: '', category: 'Health & Fitness', defaultAmount: 29.99 },
-  { name: 'LinkedIn Premium', logo: 'https://logo.clearbit.com/linkedin.com', category: 'Social Media', defaultAmount: 29.99 },
-  { name: 'Hulu', logo: 'https://logo.clearbit.com/hulu.com', category: 'Video Streaming', defaultAmount: 17.99 },
-  { name: 'Paramount+', logo: 'https://logo.clearbit.com/paramountplus.com', category: 'Video Streaming', defaultAmount: 11.99 },
+  { name: 'Netflix', category: 'streaming' as CategoryKey, defaultPrice: 15.49 },
+  { name: 'Spotify', category: 'music' as CategoryKey, defaultPrice: 10.99 },
+  { name: 'Disney+', category: 'streaming' as CategoryKey, defaultPrice: 8.99 },
+  { name: 'YouTube Premium', category: 'streaming' as CategoryKey, defaultPrice: 13.99 },
+  { name: 'Apple Music', category: 'music' as CategoryKey, defaultPrice: 10.99 },
+  { name: 'iCloud+', category: 'cloud' as CategoryKey, defaultPrice: 2.99 },
+  { name: 'Google One', category: 'cloud' as CategoryKey, defaultPrice: 1.99 },
+  { name: 'Adobe CC', category: 'software' as CategoryKey, defaultPrice: 54.99 },
+  { name: 'Microsoft 365', category: 'productivity' as CategoryKey, defaultPrice: 9.99 },
+  { name: 'Amazon Prime', category: 'shopping' as CategoryKey, defaultPrice: 8.99 },
+  { name: 'HBO Max', category: 'streaming' as CategoryKey, defaultPrice: 13.99 },
+  { name: 'Notion', category: 'productivity' as CategoryKey, defaultPrice: 10.00 },
+  { name: 'Figma', category: 'software' as CategoryKey, defaultPrice: 15.00 },
+  { name: 'ChatGPT Plus', category: 'software' as CategoryKey, defaultPrice: 20.00 },
+  { name: 'Gym', category: 'fitness' as CategoryKey, defaultPrice: 29.99 },
 ] as const;
 
 export function getCurrencySymbol(code: string): string {
@@ -62,28 +81,30 @@ export function formatCurrency(amount: number, currencyCode: string = 'EUR'): st
   return `${symbol}${amount.toFixed(2)}`;
 }
 
-export function calculateNextBillingDate(startDate: string, billingCycle: string): string {
+export function calculateNextBillingDate(startDate: string, billingCycle: BillingCycle): string {
   const start = new Date(startDate);
   const now = new Date();
-  let next = new Date(start);
+  const next = new Date(start);
 
   while (next <= now) {
     switch (billingCycle) {
       case 'weekly': next.setDate(next.getDate() + 7); break;
       case 'monthly': next.setMonth(next.getMonth() + 1); break;
       case 'quarterly': next.setMonth(next.getMonth() + 3); break;
-      case 'yearly': next.setFullYear(next.getFullYear() + 1); break;
+      case 'semi-annual': next.setMonth(next.getMonth() + 6); break;
+      case 'annual': next.setFullYear(next.getFullYear() + 1); break;
     }
   }
   return next.toISOString().split('T')[0];
 }
 
-export function getMonthlyAmount(amount: number, billingCycle: string): number {
+export function getMonthlyAmount(price: number, billingCycle: string): number {
   switch (billingCycle) {
-    case 'weekly': return amount * 4.33;
-    case 'monthly': return amount;
-    case 'quarterly': return amount / 3;
-    case 'yearly': return amount / 12;
-    default: return amount;
+    case 'weekly': return price * 4.33;
+    case 'monthly': return price;
+    case 'quarterly': return price / 3;
+    case 'semi-annual': return price / 6;
+    case 'annual': return price / 12;
+    default: return price;
   }
 }

@@ -7,8 +7,6 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.4"
   }
@@ -43,52 +41,58 @@ export type Database = {
       }
       subscriptions: {
         Row: {
-          amount: number
-          billing_cycle: Database["public"]["Enums"]["billing_cycle"]
-          category: string | null
-          created_at: string
-          currency: string
           id: string
-          logo_url: string | null
+          user_id: string
           name: string
+          price: number
+          currency: string
+          category: string | null
+          billing_cycle: Database["public"]["Enums"]["billing_cycle"]
+          start_date: string
           next_billing_date: string | null
           notes: string | null
-          start_date: string
+          is_free_trial: boolean
+          trial_end_date: string | null
           status: Database["public"]["Enums"]["subscription_status"]
+          cancellation_url: string | null
+          created_at: string
           updated_at: string
-          user_id: string
         }
         Insert: {
-          amount: number
-          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
-          category?: string | null
-          created_at?: string
-          currency?: string
           id?: string
-          logo_url?: string | null
+          user_id: string
           name: string
+          price: number
+          currency?: string
+          category?: string | null
+          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
+          start_date?: string
           next_billing_date?: string | null
           notes?: string | null
-          start_date?: string
+          is_free_trial?: boolean
+          trial_end_date?: string | null
           status?: Database["public"]["Enums"]["subscription_status"]
+          cancellation_url?: string | null
+          created_at?: string
           updated_at?: string
-          user_id: string
         }
         Update: {
-          amount?: number
-          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
-          category?: string | null
-          created_at?: string
-          currency?: string
           id?: string
-          logo_url?: string | null
+          user_id?: string
           name?: string
+          price?: number
+          currency?: string
+          category?: string | null
+          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
+          start_date?: string
           next_billing_date?: string | null
           notes?: string | null
-          start_date?: string
+          is_free_trial?: boolean
+          trial_end_date?: string | null
           status?: Database["public"]["Enums"]["subscription_status"]
+          cancellation_url?: string | null
+          created_at?: string
           updated_at?: string
-          user_id?: string
         }
         Relationships: []
       }
@@ -100,7 +104,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      billing_cycle: "weekly" | "monthly" | "quarterly" | "yearly"
+      billing_cycle: "weekly" | "monthly" | "quarterly" | "semi-annual" | "annual"
       subscription_status: "active" | "paused" | "cancelled"
     }
     CompositeTypes: {
@@ -229,7 +233,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      billing_cycle: ["weekly", "monthly", "quarterly", "yearly"],
+      billing_cycle: ["weekly", "monthly", "quarterly", "semi-annual", "annual"],
       subscription_status: ["active", "paused", "cancelled"],
     },
   },

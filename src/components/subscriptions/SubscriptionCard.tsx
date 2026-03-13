@@ -1,6 +1,5 @@
 import { Subscription } from '@/hooks/useSubscriptions';
-import { formatCurrency } from '@/lib/constants';
-import { Badge } from '@/components/ui/badge';
+import { formatCurrency, getCategoryInfo } from '@/lib/constants';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -10,13 +9,16 @@ interface Props {
   onClick?: () => void;
 }
 
-const statusStyles = {
-  active: 'bg-primary/10 text-primary border-0',
-  paused: 'bg-warning/10 text-warning border-0',
-  cancelled: 'bg-destructive/10 text-destructive border-0',
+const statusConfig = {
+  active: { bg: 'bg-green-50', text: 'text-green-600' },
+  paused: { bg: 'bg-amber-50', text: 'text-amber-600' },
+  cancelled: { bg: 'bg-red-50', text: 'text-red-500' },
 };
 
 export default function SubscriptionCard({ subscription, onClick }: Props) {
+  const cat = getCategoryInfo(subscription.category);
+  const status = statusConfig[subscription.status];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -24,35 +26,31 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
       whileHover={{ scale: 1.01 }}
       transition={{ duration: 0.2 }}
       onClick={onClick}
-      className="flex items-center gap-3 p-4 glass-card cursor-pointer transition-shadow hover:card-shadow-hover"
+      className="flex items-center gap-3 p-4 card-elevated card-elevated-hover cursor-pointer transition-all duration-200"
     >
-      {/* Logo */}
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-muted overflow-hidden">
-        {subscription.logo_url ? (
-          <img src={subscription.logo_url} alt={subscription.name} className="h-7 w-7 object-contain" />
-        ) : (
-          <span className="text-lg font-bold text-primary">{subscription.name[0]}</span>
-        )}
+      <div
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-lg"
+        style={{ backgroundColor: cat.color + '15' }}
+      >
+        {cat.emoji}
       </div>
 
-      {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="font-semibold text-foreground truncate">{subscription.name}</p>
-        <p className="text-xs text-muted-foreground">
+        <p className="font-semibold text-[#0F172A] truncate">{subscription.name}</p>
+        <p className="text-xs text-[#64748B]">
           {subscription.next_billing_date
             ? `Next: ${format(new Date(subscription.next_billing_date), 'MMM d, yyyy')}`
             : subscription.billing_cycle}
         </p>
       </div>
 
-      {/* Amount & Status */}
       <div className="flex flex-col items-end gap-1">
-        <span className="text-base font-bold text-foreground">
-          {formatCurrency(subscription.amount, subscription.currency)}
+        <span className="text-base font-bold text-[#0F172A]">
+          {formatCurrency(subscription.price, subscription.currency)}
         </span>
-        <Badge className={cn('text-[10px] px-2 py-0', statusStyles[subscription.status])}>
+        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', status.bg, status.text)}>
           {subscription.status}
-        </Badge>
+        </span>
       </div>
     </motion.div>
   );

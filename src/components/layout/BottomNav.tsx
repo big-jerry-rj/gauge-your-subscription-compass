@@ -6,45 +6,37 @@ interface BottomNavProps {
   onTabChange: (tab: string) => void;
 }
 
-const leftTabs = [
+const tabs = [
   { id: 'subscriptions', label: 'Subs', icon: LayoutList },
   { id: 'insights', label: 'Insights', icon: BarChart3 },
-];
-
-const rightTabs = [
   { id: 'calendar', label: 'Calendar', icon: Calendar },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
-  const renderTab = (tab: typeof leftTabs[number]) => {
-    const isActive = activeTab === tab.id;
-    const Icon = tab.icon;
-    return (
-      <button
-        key={tab.id}
-        onClick={() => onTabChange(tab.id)}
-        className={cn(
-          "flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl transition-colors duration-200",
-          isActive ? "text-primary" : "text-muted-foreground"
-        )}
-      >
-        <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 1.5} fill={isActive ? "currentColor" : "none"} />
-        <span className="text-[10px] font-medium uppercase tracking-wider">{tab.label}</span>
-        {isActive && (
-          <div className="mt-0.5 h-1 w-1 rounded-full bg-primary" />
-        )}
-      </button>
-    );
-  };
-
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-card/80 backdrop-blur-xl safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-xl border-t border-gray-100 safe-bottom">
       <div className="mx-auto flex max-w-lg items-center justify-around px-2 py-2">
-        {leftTabs.map(renderTab)}
-        {/* Spacer for centered FAB */}
-        <div className="w-14" />
-        {rightTabs.map(renderTab)}
+        {tabs.map(tab => {
+          const isActive = activeTab === tab.id;
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id)}
+              className={cn(
+                "flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl transition-colors duration-200",
+                isActive ? "text-[#22C55E]" : "text-[#64748B]"
+              )}
+            >
+              <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 1.5} fill={isActive ? "currentColor" : "none"} />
+              <span className="text-[10px] font-medium uppercase tracking-wider">{tab.label}</span>
+              {isActive && (
+                <div className="mt-0.5 h-1 w-1 rounded-full bg-[#22C55E]" />
+              )}
+            </button>
+          );
+        })}
       </div>
     </nav>
   );

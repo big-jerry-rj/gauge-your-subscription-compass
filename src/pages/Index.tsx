@@ -28,22 +28,14 @@ export default function Index() {
   };
 
   return (
-    <div className="relative min-h-screen bg-background overflow-hidden">
-      {/* Floating glow background */}
-      <div className="glow-background fixed inset-0 pointer-events-none z-0" />
-
-      <div className="relative z-10 mx-auto max-w-lg">
-        {/* Header with logo */}
-        <div className="flex items-center justify-center px-5 pt-6 pb-2">
-          <img src="/gauge-logo.png" alt="Gauge" className="h-12 w-auto" />
-        </div>
-
+    <div className="relative min-h-screen bg-[#FAFAFA]">
+      <div className="relative mx-auto max-w-lg">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, x: 8 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -8 }}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.2 }}
           >
             {renderPage()}

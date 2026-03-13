@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { POPULAR_SERVICES, CATEGORIES, calculateNextBillingDate } from '@/lib/constants';
+import { Switch } from '@/components/ui/switch';
+import { POPULAR_SERVICES, CATEGORIES, BILLING_CYCLES, calculateNextBillingDate } from '@/lib/constants';
+import type { BillingCycle, CategoryKey } from '@/lib/constants';
 import { useSubscriptions } from '@/hooks/useSubscriptions';
 import { useProfile } from '@/hooks/useProfile';
 import { Calendar } from '@/components/ui/calendar';
@@ -22,39 +24,44 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
   const { addSubscription } = useSubscriptions();
   const { profile } = useProfile();
   const [name, setName] = useState('');
-  const [amount, setAmount] = useState('');
-  const [billingCycle, setBillingCycle] = useState<string>('monthly');
-  const [category, setCategory] = useState('');
-  const [logoUrl, setLogoUrl] = useState('');
+  const [price, setPrice] = useState('');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
+  const [category, setCategory] = useState<CategoryKey | ''>('');
   const [startDate, setStartDate] = useState<Date>(new Date());
-  const [showLogoPicker, setShowLogoPicker] = useState(true);
+  const [notes, setNotes] = useState('');
+  const [isFreeTrial, setIsFreeTrial] = useState(false);
+  const [trialEndDate, setTrialEndDate] = useState<Date | undefined>(undefined);
+  const [cancellationUrl, setCancellationUrl] = useState('');
+  const [showPicker, setShowPicker] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const currency = profile?.preferred_currency ?? 'EUR';
 
   const selectService = (service: typeof POPULAR_SERVICES[number]) => {
     setName(service.name);
-    setLogoUrl(service.logo);
     setCategory(service.category);
-    setAmount(service.defaultAmount.toString());
-    setShowLogoPicker(false);
+    setPrice(service.defaultPrice.toString());
+    setShowPicker(false);
   };
 
   const handleSubmit = async () => {
-    if (!name || !amount) return;
+    if (!name || !price) return;
     setLoading(true);
     const startStr = format(startDate, 'yyyy-MM-dd');
     const nextBilling = calculateNextBillingDate(startStr, billingCycle);
     await addSubscription.mutateAsync({
       name,
-      amount: parseFloat(amount),
+      price: parseFloat(price),
       currency,
-      billing_cycle: billingCycle as 'weekly' | 'monthly' | 'quarterly' | 'yearly',
+      billing_cycle: billingCycle,
       category: category || null,
       start_date: startStr,
       next_billing_date: nextBilling,
-      logo_url: logoUrl || null,
       status: 'active',
+      notes: notes || null,
+      is_free_trial: isFreeTrial,
+      trial_end_date: trialEndDate ? format(trialEndDate, 'yyyy-MM-dd') : null,
+      cancellation_url: cancellationUrl || null,
     });
     setLoading(false);
     resetForm();
@@ -62,104 +69,105 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
   };
 
   const resetForm = () => {
-    setName(''); setAmount(''); setBillingCycle('monthly');
-    setCategory(''); setLogoUrl(''); setStartDate(new Date());
-    setShowLogoPicker(true);
+    setName(''); setPrice(''); setBillingCycle('monthly');
+    setCategory(''); setStartDate(new Date()); setNotes('');
+    setIsFreeTrial(false); setTrialEndDate(undefined);
+    setCancellationUrl(''); setShowPicker(true);
   };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] overflow-y-auto rounded-t-3xl px-6 pb-10">
+      <SheetContent side="bottom" className="h-[90vh] overflow-y-auto rounded-t-3xl px-6 pb-10 bg-white">
         <SheetHeader className="mb-4">
-          <SheetTitle className="text-xl font-bold">Add Subscription</SheetTitle>
+          <SheetTitle className="text-xl font-extrabold text-[#0F172A]">Add Subscription</SheetTitle>
         </SheetHeader>
 
-        {showLogoPicker && !name ? (
+        {showPicker && !name ? (
           <div>
-            <p className="mb-3 text-sm font-medium text-muted-foreground">Choose a service or add custom</p>
-            <div className="grid grid-cols-4 gap-3">
-              {POPULAR_SERVICES.map(service => (
-                <button
-                  key={service.name}
-                  onClick={() => selectService(service)}
-                  className="flex flex-col items-center gap-1.5 rounded-2xl bg-muted/50 p-3 transition-all hover:bg-muted hover:scale-[1.02]"
-                >
-                  {service.logo ? (
-                    <img src={service.logo} alt={service.name} className="h-8 w-8 rounded-lg object-contain" />
-                  ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
-                      {service.name[0]}
-                    </div>
-                  )}
-                  <span className="text-[10px] font-medium text-foreground leading-tight text-center line-clamp-2">
-                    {service.name}
-                  </span>
-                </button>
-              ))}
+            <p className="mb-3 text-sm font-medium text-[#64748B]">Choose a service or add custom</p>
+            <div className="grid grid-cols-3 gap-3">
+              {POPULAR_SERVICES.map(service => {
+                const cat = CATEGORIES.find(c => c.key === service.category);
+                return (
+                  <button
+                    key={service.name}
+                    onClick={() => selectService(service)}
+                    className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#F8FAFC] p-3 transition-all hover:bg-gray-100 hover:scale-[1.02]"
+                  >
+                    <span className="text-2xl">{cat?.emoji ?? ''}</span>
+                    <span className="text-[11px] font-medium text-[#0F172A] leading-tight text-center line-clamp-2">
+                      {service.name}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
             <Button
               variant="outline"
-              className="mt-4 w-full rounded-xl"
-              onClick={() => setShowLogoPicker(false)}
+              className="mt-4 w-full rounded-xl border-gray-200"
+              onClick={() => setShowPicker(false)}
             >
               Custom subscription
             </Button>
           </div>
         ) : (
           <div className="space-y-4">
-            {logoUrl && (
-              <div className="flex items-center gap-3 rounded-2xl bg-muted/50 p-3">
-                <img src={logoUrl} alt={name} className="h-10 w-10 rounded-xl object-contain" />
+            {name && showPicker === false && (
+              <div className="flex items-center gap-3 rounded-2xl bg-[#F8FAFC] p-3">
+                <span className="text-2xl">{CATEGORIES.find(c => c.key === category)?.emoji ?? ''}</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-foreground">{name}</p>
-                  <p className="text-xs text-muted-foreground">{category}</p>
+                  <p className="font-semibold text-[#0F172A]">{name}</p>
+                  <p className="text-xs text-[#64748B]">{CATEGORIES.find(c => c.key === category)?.label ?? ''}</p>
                 </div>
-                <button onClick={() => { resetForm(); }} className="text-muted-foreground hover:text-foreground">
+                <button onClick={resetForm} className="text-[#64748B] hover:text-[#0F172A]">
                   <X className="h-4 w-4" />
                 </button>
               </div>
             )}
 
-            {!logoUrl && (
+            {!category && (
               <div className="space-y-1.5">
-                <Label>Name</Label>
-                <Input value={name} onChange={e => setName(e.target.value)} placeholder="Subscription name" className="rounded-xl" />
+                <Label className="text-[#0F172A]">Name</Label>
+                <Input value={name} onChange={e => setName(e.target.value)} placeholder="Subscription name" className="rounded-xl bg-white" />
               </div>
             )}
 
             <div className="space-y-1.5">
-              <Label>Amount ({currency})</Label>
-              <Input type="number" step="0.01" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="rounded-xl" />
+              <Label className="text-[#0F172A]">Price ({currency})</Label>
+              <Input type="number" step="0.01" value={price} onChange={e => setPrice(e.target.value)} placeholder="0.00" className="rounded-xl bg-white" />
             </div>
 
             <div className="space-y-1.5">
-              <Label>Billing Cycle</Label>
-              <Select value={billingCycle} onValueChange={setBillingCycle}>
-                <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+              <Label className="text-[#0F172A]">Billing Cycle</Label>
+              <Select value={billingCycle} onValueChange={v => setBillingCycle(v as BillingCycle)}>
+                <SelectTrigger className="rounded-xl bg-white"><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="weekly">Weekly</SelectItem>
-                  <SelectItem value="monthly">Monthly</SelectItem>
-                  <SelectItem value="quarterly">Quarterly</SelectItem>
-                  <SelectItem value="yearly">Yearly</SelectItem>
+                  {BILLING_CYCLES.map(c => (
+                    <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-1.5">
-              <Label>Category</Label>
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="rounded-xl"><SelectValue placeholder="Select category" /></SelectTrigger>
+              <Label className="text-[#0F172A]">Category</Label>
+              <Select value={category} onValueChange={v => setCategory(v as CategoryKey)}>
+                <SelectTrigger className="rounded-xl bg-white"><SelectValue placeholder="Select category" /></SelectTrigger>
                 <SelectContent>
-                  {CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  {CATEGORIES.map(c => (
+                    <SelectItem key={c.key} value={c.key}>
+                      <span className="flex items-center gap-2">{c.emoji} {c.label}</span>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-1.5">
-              <Label>Start Date</Label>
+              <Label className="text-[#0F172A]">Start Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" className={cn("w-full justify-start rounded-xl text-left font-normal", !startDate && "text-muted-foreground")}>
+                  <Button variant="outline" className={cn("w-full justify-start rounded-xl text-left font-normal bg-white", !startDate && "text-[#64748B]")}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {startDate ? format(startDate, 'PPP') : 'Pick a date'}
                   </Button>
@@ -170,10 +178,42 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
               </Popover>
             </div>
 
+            <div className="space-y-1.5">
+              <Label className="text-[#0F172A]">Notes (optional)</Label>
+              <Input value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any notes..." className="rounded-xl bg-white" />
+            </div>
+
+            <div className="flex items-center justify-between rounded-xl bg-[#F8FAFC] p-3">
+              <Label className="text-sm text-[#0F172A]">Free trial?</Label>
+              <Switch checked={isFreeTrial} onCheckedChange={setIsFreeTrial} />
+            </div>
+
+            {isFreeTrial && (
+              <div className="space-y-1.5">
+                <Label className="text-[#0F172A]">Trial End Date</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className={cn("w-full justify-start rounded-xl text-left font-normal bg-white", !trialEndDate && "text-[#64748B]")}>
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {trialEndDate ? format(trialEndDate, 'PPP') : 'Pick a date'}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar mode="single" selected={trialEndDate} onSelect={setTrialEndDate} initialFocus />
+                  </PopoverContent>
+                </Popover>
+              </div>
+            )}
+
+            <div className="space-y-1.5">
+              <Label className="text-[#0F172A]">Cancellation URL (optional)</Label>
+              <Input value={cancellationUrl} onChange={e => setCancellationUrl(e.target.value)} placeholder="https://..." className="rounded-xl bg-white" />
+            </div>
+
             <Button
               onClick={handleSubmit}
-              disabled={loading || !name || !amount}
-              className="h-12 w-full rounded-xl gradient-primary text-primary-foreground font-semibold text-base fab-shadow hover:opacity-90"
+              disabled={loading || !name || !price}
+              className="h-12 w-full rounded-xl gradient-green text-white font-semibold text-base fab-shadow hover:opacity-90"
             >
               {loading ? 'Adding...' : 'Add Subscription'}
             </Button>

@@ -24,34 +24,32 @@ export default function SubscriptionsPage() {
   }, [subscriptions, filter, search]);
 
   return (
-    <div className="px-5 pb-24 pt-2">
-      <h1 className="mb-1 text-[28px] font-black tracking-tight text-foreground">Subscriptions</h1>
-      <p className="mb-5 text-sm text-muted-foreground">
+    <div className="px-5 pb-24 pt-12">
+      <h1 className="mb-1 text-[32px] font-black tracking-tight text-[#0F172A]">Subscriptions</h1>
+      <p className="mb-5 text-sm text-[#64748B]">
         {subscriptions.length} total · {subscriptions.filter(s => s.status === 'active').length} active
       </p>
 
-      {/* Search */}
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]" />
         <Input
           placeholder="Search subscriptions..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="h-10 rounded-xl pl-9 bg-muted/50 border-0"
+          className="h-10 rounded-xl pl-9 bg-white border-0 shadow-sm"
         />
       </div>
 
-      {/* Filter chips */}
       <div className="mb-5 flex gap-2 overflow-x-auto no-scrollbar">
         {FILTERS.map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={cn(
-              "shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors",
+              "shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200",
               filter === f
-                ? "gradient-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground"
+                ? "gradient-green text-white"
+                : "bg-white text-[#64748B] shadow-sm"
             )}
           >
             {f}
@@ -59,11 +57,10 @@ export default function SubscriptionsPage() {
         ))}
       </div>
 
-      {/* List */}
       {isLoading ? (
         <div className="space-y-3">
           {[1, 2, 3].map(i => (
-            <div key={i} className="h-20 animate-pulse rounded-2xl bg-muted" />
+            <div key={i} className="h-20 animate-pulse rounded-2xl bg-gray-100" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
@@ -72,8 +69,9 @@ export default function SubscriptionsPage() {
           animate={{ opacity: 1 }}
           className="flex flex-col items-center justify-center py-16 text-center"
         >
-          <p className="text-lg font-semibold text-foreground">No subscriptions yet</p>
-          <p className="mt-1 text-sm text-muted-foreground">Tap + to add your first subscription</p>
+          <div className="mb-4 text-5xl">📋</div>
+          <p className="text-lg font-semibold text-[#0F172A]">No subscriptions yet</p>
+          <p className="mt-1 text-sm text-[#64748B]">Tap + to add your first subscription</p>
         </motion.div>
       ) : (
         <div className="space-y-3">

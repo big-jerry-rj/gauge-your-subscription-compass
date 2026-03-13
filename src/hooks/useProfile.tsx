@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-// Local-only profile (no auth required) — will be replaced with Supabase when auth is added back
 export function useProfile() {
   const [profile, setProfile] = useState({
     preferred_currency: 'EUR',

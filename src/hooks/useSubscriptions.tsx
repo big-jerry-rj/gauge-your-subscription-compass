@@ -9,7 +9,7 @@ export function useSubscriptions() {
   const [isLoading] = useState(false);
 
   const addSubscription = {
-    mutateAsync: async (sub: Omit<Subscription, 'id' | 'user_id' | 'created_at' | 'updated_at'>) => {
+    mutateAsync: async (sub: Partial<Omit<Subscription, 'id' | 'user_id' | 'created_at' | 'updated_at'>> & { name: string; amount: number }) => {
       const now = new Date().toISOString();
       const newSub: Subscription = {
         id: crypto.randomUUID(),

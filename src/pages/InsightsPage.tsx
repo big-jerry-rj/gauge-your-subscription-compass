@@ -7,8 +7,8 @@ import { TrendingUp, ArrowUpRight } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 const CHART_COLORS = [
-  'hsl(142 71% 45%)', 'hsl(142 69% 58%)', 'hsl(173 58% 39%)',
-  'hsl(197 37% 24%)', 'hsl(38 92% 50%)', 'hsl(0 84% 60%)',
+  'hsl(88 60% 50%)', 'hsl(88 65% 60%)', 'hsl(167 24% 52%)',
+  'hsl(45 31% 28%)', 'hsl(38 92% 50%)', 'hsl(0 84% 60%)',
   'hsl(262 52% 47%)', 'hsl(199 89% 48%)',
 ];
 

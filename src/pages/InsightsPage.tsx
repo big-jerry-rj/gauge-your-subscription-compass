@@ -84,7 +84,7 @@ export default function InsightsPage() {
       {/* Stats Grid */}
       <div className="mb-5 grid grid-cols-2 gap-3">
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="rounded-2xl bg-card p-4 card-shadow">
+          className="p-4 glass-card">
           <p className="text-xs text-muted-foreground mb-1">Yearly Projection</p>
           <p className="text-2xl font-bold text-foreground">{formatCurrency(yearlyTotal, currency)}</p>
           <div className="mt-2 flex items-center gap-1 text-xs text-primary font-medium">

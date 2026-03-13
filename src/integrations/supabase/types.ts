@@ -14,7 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          preferred_currency: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          preferred_currency?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          preferred_currency?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          amount: number
+          billing_cycle: Database["public"]["Enums"]["billing_cycle"]
+          category: string | null
+          created_at: string
+          currency: string
+          id: string
+          logo_url: string | null
+          name: string
+          next_billing_date: string | null
+          notes: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["subscription_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
+          category?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          logo_url?: string | null
+          name: string
+          next_billing_date?: string | null
+          notes?: string | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
+          category?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          logo_url?: string | null
+          name?: string
+          next_billing_date?: string | null
+          notes?: string | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +100,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      billing_cycle: "weekly" | "monthly" | "quarterly" | "yearly"
+      subscription_status: "active" | "paused" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +228,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      billing_cycle: ["weekly", "monthly", "quarterly", "yearly"],
+      subscription_status: ["active", "paused", "cancelled"],
+    },
   },
 } as const

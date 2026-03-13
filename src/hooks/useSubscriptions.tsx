@@ -1,7 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Tables } from '@/integrations/supabase/types';
-import { calculateNextBillingDate } from '@/lib/constants';
-import { v4 as uuidv4 } from 'crypto';
 
 export type Subscription = Tables<'subscriptions'>;
 

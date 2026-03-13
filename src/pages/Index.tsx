@@ -35,7 +35,7 @@ export default function Index() {
       <div className="relative z-10 mx-auto max-w-lg">
         {/* Header with logo */}
         <div className="flex items-center gap-3 px-5 pt-6 pb-2">
-          <img src="/gauge-logo.png" alt="Gauge" className="h-22 w-auto" />
+          <img src="/gauge-logo.png" alt="Gauge" className="h-15 w-auto" />
         </div>
 
         <AnimatePresence mode="wait">

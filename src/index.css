@@ -138,22 +138,6 @@
       0 0 80px rgba(133, 203, 51, 0.15);
   }
 
-  .glow-background {
-    background:
-      radial-gradient(circle at 30% 40%, rgba(133,203,51,0.55) 0%, rgba(133,203,51,0.25) 35%, rgba(133,203,51,0.05) 60%, transparent 75%),
-      radial-gradient(circle at 70% 60%, rgba(167,224,103,0.45) 0%, rgba(133,203,51,0.15) 40%, transparent 70%),
-      radial-gradient(circle at 50% 50%, rgba(111,184,42,0.35) 0%, transparent 65%);
-    filter: blur(60px);
-    opacity: 0.8;
-    mix-blend-mode: multiply;
-    animation: gradientMove 8s ease-in-out infinite alternate;
-  }
-
-  .dark .glow-background {
-    opacity: 0.4;
-    mix-blend-mode: screen;
-  }
-
   .card-shadow {
     box-shadow: var(--shadow-card);
   }

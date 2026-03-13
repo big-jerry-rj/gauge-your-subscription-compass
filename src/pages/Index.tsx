@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BottomNav from "@/components/layout/BottomNav";
 import FAB from "@/components/layout/FAB";
+import AnimatedBackground from "@/components/layout/AnimatedBackground";
 import AddSubscriptionSheet from "@/components/subscriptions/AddSubscriptionSheet";
 import SubscriptionsPage from "./SubscriptionsPage";
 import InsightsPage from "./InsightsPage";

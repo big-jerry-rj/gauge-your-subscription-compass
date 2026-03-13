@@ -136,7 +136,7 @@ export default function InsightsPage() {
       {/* Top Expensive */}
       {topExpensive.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-          className="rounded-2xl bg-card p-5 card-shadow">
+          className="p-5 glass-card">
           <h3 className="text-sm font-semibold text-foreground mb-4">Most Expensive (Monthly)</h3>
           <div className="h-40">
             <ResponsiveContainer width="100%" height="100%">

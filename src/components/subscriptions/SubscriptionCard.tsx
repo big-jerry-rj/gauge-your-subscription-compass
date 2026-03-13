@@ -24,7 +24,7 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
       whileHover={{ scale: 1.01 }}
       transition={{ duration: 0.2 }}
       onClick={onClick}
-      className="flex items-center gap-3 rounded-2xl bg-card p-4 card-shadow cursor-pointer transition-shadow hover:card-shadow-hover"
+      className="flex items-center gap-3 p-4 glass-card cursor-pointer transition-shadow hover:card-shadow-hover"
     >
       {/* Logo */}
       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-muted overflow-hidden">

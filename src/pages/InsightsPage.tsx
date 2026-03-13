@@ -92,7 +92,7 @@ export default function InsightsPage() {
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="rounded-2xl bg-card p-4 card-shadow">
+          className="p-4 glass-card">
           <p className="text-xs text-muted-foreground mb-1">Avg per Sub</p>
           <p className="text-2xl font-bold text-foreground">
             {active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—'}

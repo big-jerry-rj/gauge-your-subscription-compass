@@ -104,7 +104,7 @@ export default function InsightsPage() {
       {/* Category Breakdown */}
       {categoryData.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="mb-5 rounded-2xl bg-card p-5 card-shadow">
+          className="mb-5 p-5 glass-card">
           <h3 className="text-sm font-semibold text-foreground mb-4">By Category</h3>
           <div className="flex items-center gap-4">
             <div className="h-32 w-32 shrink-0">

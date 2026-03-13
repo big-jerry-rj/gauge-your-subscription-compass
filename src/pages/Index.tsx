@@ -31,7 +31,7 @@ export default function Index() {
         {/* Header with logo */}
         <div className="flex items-center gap-3 px-5 pt-6 pb-2">
           <img src="/gauge-logo.png" alt="Gauge" className="h-8 w-8 rounded-lg" />
-          <h2 className="text-lg font-bold text-foreground tracking-tight">Gauge</h2>
+          <h2 className="text-lg font-bold text-foreground tracking-tight">{"\n"}</h2>
         </div>
 
         <AnimatePresence mode="wait">

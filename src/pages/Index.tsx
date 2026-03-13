@@ -31,7 +31,7 @@ export default function Index() {
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
       {/* Floating glow background */}
-      <div className="glow-background fixed inset-0 pointer-events-none z-0" />
+      <AnimatedBackground />
 
       <div className="relative z-10 mx-auto max-w-lg">
         {/* Header with logo */}

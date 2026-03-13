@@ -7,7 +7,6 @@ import InsightsPage from "./InsightsPage";
 import CalendarPage from "./CalendarPage";
 import SettingsPage from "./SettingsPage";
 import { motion, AnimatePresence } from "framer-motion";
-import AnimatedBackground from "@/components/layout/AnimatedBackground";
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState("subscriptions");
@@ -30,7 +29,8 @@ export default function Index() {
 
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
-      <AnimatedBackground />
+      {/* Floating glow background */}
+      <div className="glow-background fixed inset-0 pointer-events-none z-0" />
 
       <div className="relative z-10 mx-auto max-w-lg">
         {/* Header with logo */}

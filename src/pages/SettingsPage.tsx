@@ -1,15 +1,17 @@
 import { useProfile } from '@/hooks/useProfile';
+import { useAuth } from '@/hooks/useAuth';
 import { CURRENCIES } from '@/lib/constants';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useSubscriptions } from '@/hooks/useSubscriptions';
-import { Download, Upload } from 'lucide-react';
+import { Download, Upload, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { useRef } from 'react';
 
 export default function SettingsPage() {
   const { profile, updateProfile } = useProfile();
+  const { signOut, user } = useAuth();
   const { subscriptions, importSubscriptions } = useSubscriptions();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -87,8 +89,24 @@ export default function SettingsPage() {
           </div>
         </motion.div>
 
-        {/* About */}
+        {/* Account */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          className="rounded-[16px] card-elevated p-5">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-3">Account</h3>
+          {user?.email && (
+            <p className="text-sm text-[#0F172A] mb-3">{user.email}</p>
+          )}
+          <Button
+            variant="outline"
+            className="w-full rounded-xl border-red-200 text-red-500 hover:bg-red-50 hover:text-red-600"
+            onClick={() => signOut()}
+          >
+            <LogOut className="mr-2 h-4 w-4" /> Sign Out
+          </Button>
+        </motion.div>
+
+        {/* About */}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           className="rounded-[16px] card-elevated p-5">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-3">About</h3>
           <p className="text-sm font-semibold text-[#0F172A]">Gauge v1.0</p>

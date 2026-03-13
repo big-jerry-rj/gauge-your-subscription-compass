@@ -222,13 +222,30 @@
   }
 }
 
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 0%;
-    transform: scale(1) rotate(0deg);
-  }
-  100% {
-    background-position: 100% 100%;
-    transform: scale(1.1) rotate(3deg);
-  }
+@keyframes blob1 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate(8%, 12%) scale(1.08) rotate(2deg); }
+  50% { transform: translate(-5%, 8%) scale(0.95) rotate(-1deg); }
+  75% { transform: translate(10%, -5%) scale(1.05) rotate(3deg); }
+}
+
+@keyframes blob2 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate(-12%, -8%) scale(1.1) rotate(-2deg); }
+  50% { transform: translate(6%, -12%) scale(0.92) rotate(1deg); }
+  75% { transform: translate(-8%, 6%) scale(1.06) rotate(-3deg); }
+}
+
+@keyframes blob3 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-10%, 10%) scale(1.07) rotate(2deg); }
+  66% { transform: translate(8%, -6%) scale(0.96) rotate(-2deg); }
+}
+
+@keyframes blob4 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  20% { transform: translate(10%, 5%) scale(1.05) rotate(-1deg); }
+  40% { transform: translate(-6%, 12%) scale(0.97) rotate(2deg); }
+  60% { transform: translate(5%, -10%) scale(1.08) rotate(-2deg); }
+  80% { transform: translate(-8%, -4%) scale(0.94) rotate(1deg); }
 }

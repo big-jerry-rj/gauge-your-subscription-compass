@@ -7,6 +7,7 @@ import InsightsPage from "./InsightsPage";
 import CalendarPage from "./CalendarPage";
 import SettingsPage from "./SettingsPage";
 import { motion, AnimatePresence } from "framer-motion";
+import AnimatedBackground from "@/components/layout/AnimatedBackground";
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState("subscriptions");

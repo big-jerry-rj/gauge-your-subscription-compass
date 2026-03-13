@@ -84,7 +84,7 @@ export default function InsightsPage() {
       {/* Stats Grid */}
       <div className="mb-5 grid grid-cols-2 gap-3">
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="rounded-2xl bg-card p-4 card-shadow">
+          className="p-4 glass-card">
           <p className="text-xs text-muted-foreground mb-1">Yearly Projection</p>
           <p className="text-2xl font-bold text-foreground">{formatCurrency(yearlyTotal, currency)}</p>
           <div className="mt-2 flex items-center gap-1 text-xs text-primary font-medium">
@@ -92,7 +92,7 @@ export default function InsightsPage() {
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="rounded-2xl bg-card p-4 card-shadow">
+          className="p-4 glass-card">
           <p className="text-xs text-muted-foreground mb-1">Avg per Sub</p>
           <p className="text-2xl font-bold text-foreground">
             {active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—'}
@@ -104,7 +104,7 @@ export default function InsightsPage() {
       {/* Category Breakdown */}
       {categoryData.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="mb-5 rounded-2xl bg-card p-5 card-shadow">
+          className="mb-5 p-5 glass-card">
           <h3 className="text-sm font-semibold text-foreground mb-4">By Category</h3>
           <div className="flex items-center gap-4">
             <div className="h-32 w-32 shrink-0">
@@ -136,7 +136,7 @@ export default function InsightsPage() {
       {/* Top Expensive */}
       {topExpensive.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-          className="rounded-2xl bg-card p-5 card-shadow">
+          className="p-5 glass-card">
           <h3 className="text-sm font-semibold text-foreground mb-4">Most Expensive (Monthly)</h3>
           <div className="h-40">
             <ResponsiveContainer width="100%" height="100%">

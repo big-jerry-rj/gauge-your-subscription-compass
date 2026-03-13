@@ -23,9 +23,17 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="mx-auto max-w-lg">
-        <div className="h-12" />
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      {/* Floating glow background */}
+      <div className="glow-background fixed inset-0 pointer-events-none z-0" />
+
+      <div className="relative z-10 mx-auto max-w-lg">
+        {/* Header with logo */}
+        <div className="flex items-center gap-3 px-5 pt-6 pb-2">
+          <img src="/gauge-logo.png" alt="Gauge" className="h-8 w-8 rounded-lg" />
+          <h2 className="text-lg font-bold text-foreground tracking-tight">Gauge</h2>
+        </div>
+
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

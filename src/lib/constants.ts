@@ -9,6 +9,7 @@ export const CURRENCIES = [
   { code: 'SEK', symbol: 'kr', name: 'Swedish Krona' },
   { code: 'NOK', symbol: 'kr', name: 'Norwegian Krone' },
   { code: 'DKK', symbol: 'kr', name: 'Danish Krone' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
 ] as const;
 
 export const CATEGORIES = [

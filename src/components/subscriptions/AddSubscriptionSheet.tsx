@@ -77,14 +77,14 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] overflow-y-auto rounded-t-3xl px-6 pb-10 bg-white">
+      <SheetContent side="bottom" className="h-[90vh] overflow-y-auto rounded-t-3xl px-6 pb-10 bg-white dark:bg-white/10 dark:bg-[#1A1508]">
         <SheetHeader className="mb-4">
-          <SheetTitle className="text-xl font-extrabold text-[#0F172A]">Add Subscription</SheetTitle>
+          <SheetTitle className="text-xl font-extrabold text-[#0F172A] dark:text-[#E8E4DC]">Add Subscription</SheetTitle>
         </SheetHeader>
 
         {showPicker && !name ? (
           <div>
-            <p className="mb-3 text-sm font-medium text-[#64748B]">Choose a service or add custom</p>
+            <p className="mb-3 text-sm font-medium text-[#64748B] dark:text-[#8A8577]">Choose a service or add custom</p>
             <div className="grid grid-cols-3 gap-3">
               {POPULAR_SERVICES.map(service => {
                 const cat = CATEGORIES.find(c => c.key === service.category);
@@ -92,10 +92,10 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
                   <button
                     key={service.name}
                     onClick={() => selectService(service)}
-                    className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#F8FAFC] p-3 transition-all hover:bg-gray-100 hover:scale-[1.02]"
+                    className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#F8FAFC] dark:bg-white dark:bg-white/10/5 p-3 transition-all hover:bg-gray-100 hover:scale-[1.02]"
                   >
                     <span className="text-2xl">{cat?.emoji ?? ''}</span>
-                    <span className="text-[11px] font-medium text-[#0F172A] leading-tight text-center line-clamp-2">
+                    <span className="text-[11px] font-medium text-[#0F172A] dark:text-[#E8E4DC] leading-tight text-center line-clamp-2">
                       {service.name}
                     </span>
                   </button>
@@ -113,13 +113,13 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
         ) : (
           <div className="space-y-4">
             {name && showPicker === false && (
-              <div className="flex items-center gap-3 rounded-2xl bg-[#F8FAFC] p-3">
+              <div className="flex items-center gap-3 rounded-2xl bg-[#F8FAFC] dark:bg-white dark:bg-white/10/5 p-3">
                 <span className="text-2xl">{CATEGORIES.find(c => c.key === category)?.emoji ?? ''}</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-[#0F172A]">{name}</p>
-                  <p className="text-xs text-[#64748B]">{CATEGORIES.find(c => c.key === category)?.label ?? ''}</p>
+                  <p className="font-semibold text-[#0F172A] dark:text-[#E8E4DC]">{name}</p>
+                  <p className="text-xs text-[#64748B] dark:text-[#8A8577]">{CATEGORIES.find(c => c.key === category)?.label ?? ''}</p>
                 </div>
-                <button onClick={resetForm} className="text-[#64748B] hover:text-[#0F172A]">
+                <button onClick={resetForm} className="text-[#64748B] dark:text-[#8A8577] hover:text-[#0F172A] dark:text-[#E8E4DC]">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -127,20 +127,20 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
 
             {!category && (
               <div className="space-y-1.5">
-                <Label className="text-[#0F172A]">Name</Label>
-                <Input value={name} onChange={e => setName(e.target.value)} placeholder="Subscription name" className="rounded-xl bg-white" />
+                <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Name</Label>
+                <Input value={name} onChange={e => setName(e.target.value)} placeholder="Subscription name" className="rounded-xl bg-white dark:bg-white/10" />
               </div>
             )}
 
             <div className="space-y-1.5">
-              <Label className="text-[#0F172A]">Price ({currency})</Label>
-              <Input type="number" step="0.01" value={price} onChange={e => setPrice(e.target.value)} placeholder="0.00" className="rounded-xl bg-white" />
+              <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Price ({currency})</Label>
+              <Input type="number" step="0.01" value={price} onChange={e => setPrice(e.target.value)} placeholder="0.00" className="rounded-xl bg-white dark:bg-white/10" />
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-[#0F172A]">Billing Cycle</Label>
+              <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Billing Cycle</Label>
               <Select value={billingCycle} onValueChange={v => setBillingCycle(v as BillingCycle)}>
-                <SelectTrigger className="rounded-xl bg-white"><SelectValue /></SelectTrigger>
+                <SelectTrigger className="rounded-xl bg-white dark:bg-white/10"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {BILLING_CYCLES.map(c => (
                     <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
@@ -150,9 +150,9 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-[#0F172A]">Category</Label>
+              <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Category</Label>
               <Select value={category} onValueChange={v => setCategory(v as CategoryKey)}>
-                <SelectTrigger className="rounded-xl bg-white"><SelectValue placeholder="Select category" /></SelectTrigger>
+                <SelectTrigger className="rounded-xl bg-white dark:bg-white/10"><SelectValue placeholder="Select category" /></SelectTrigger>
                 <SelectContent>
                   {CATEGORIES.map(c => (
                     <SelectItem key={c.key} value={c.key}>
@@ -164,10 +164,10 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-[#0F172A]">Start Date</Label>
+              <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Start Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" className={cn("w-full justify-start rounded-xl text-left font-normal bg-white", !startDate && "text-[#64748B]")}>
+                  <Button variant="outline" className={cn("w-full justify-start rounded-xl text-left font-normal bg-white dark:bg-white/10", !startDate && "text-[#64748B] dark:text-[#8A8577]")}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {startDate ? format(startDate, 'PPP') : 'Pick a date'}
                   </Button>
@@ -179,21 +179,21 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-[#0F172A]">Notes (optional)</Label>
-              <Input value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any notes..." className="rounded-xl bg-white" />
+              <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Notes (optional)</Label>
+              <Input value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any notes..." className="rounded-xl bg-white dark:bg-white/10" />
             </div>
 
-            <div className="flex items-center justify-between rounded-xl bg-[#F8FAFC] p-3">
-              <Label className="text-sm text-[#0F172A]">Free trial?</Label>
+            <div className="flex items-center justify-between rounded-xl bg-[#F8FAFC] dark:bg-white dark:bg-white/10/5 p-3">
+              <Label className="text-sm text-[#0F172A] dark:text-[#E8E4DC]">Free trial?</Label>
               <Switch checked={isFreeTrial} onCheckedChange={setIsFreeTrial} />
             </div>
 
             {isFreeTrial && (
               <div className="space-y-1.5">
-                <Label className="text-[#0F172A]">Trial End Date</Label>
+                <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Trial End Date</Label>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className={cn("w-full justify-start rounded-xl text-left font-normal bg-white", !trialEndDate && "text-[#64748B]")}>
+                    <Button variant="outline" className={cn("w-full justify-start rounded-xl text-left font-normal bg-white dark:bg-white/10", !trialEndDate && "text-[#64748B] dark:text-[#8A8577]")}>
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {trialEndDate ? format(trialEndDate, 'PPP') : 'Pick a date'}
                     </Button>
@@ -206,8 +206,8 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             )}
 
             <div className="space-y-1.5">
-              <Label className="text-[#0F172A]">Cancellation URL (optional)</Label>
-              <Input value={cancellationUrl} onChange={e => setCancellationUrl(e.target.value)} placeholder="https://..." className="rounded-xl bg-white" />
+              <Label className="text-[#0F172A] dark:text-[#E8E4DC]">Cancellation URL (optional)</Label>
+              <Input value={cancellationUrl} onChange={e => setCancellationUrl(e.target.value)} placeholder="https://..." className="rounded-xl bg-white dark:bg-white/10" />
             </div>
 
             <Button

@@ -25,18 +25,18 @@ export default function SubscriptionsPage() {
 
   return (
     <div className="px-5 pb-24 pt-12">
-      <h1 className="mb-1 text-[32px] font-black tracking-tight text-[#0F172A]">Subscriptions</h1>
-      <p className="mb-5 text-sm text-[#64748B]">
+      <h1 className="mb-1 text-[32px] font-black tracking-tight text-[#0F172A] dark:text-[#E8E4DC]">Subscriptions</h1>
+      <p className="mb-5 text-sm text-[#64748B] dark:text-[#8A8577]">
         {subscriptions.length} total · {subscriptions.filter(s => s.status === 'active').length} active
       </p>
 
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]" />
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B] dark:text-[#8A8577]" />
         <Input
           placeholder="Search subscriptions..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="h-10 rounded-xl pl-9 bg-white border-0 shadow-sm"
+          className="h-10 rounded-xl pl-9 bg-white dark:bg-white/10 border-0 shadow-sm"
         />
       </div>
 
@@ -49,7 +49,7 @@ export default function SubscriptionsPage() {
               "shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200",
               filter === f
                 ? "gradient-green text-white"
-                : "bg-white text-[#64748B] shadow-sm"
+                : "bg-white dark:bg-white/10 text-[#64748B] dark:text-[#8A8577] shadow-sm"
             )}
           >
             {f}
@@ -70,8 +70,8 @@ export default function SubscriptionsPage() {
           className="flex flex-col items-center justify-center py-16 text-center"
         >
           <div className="mb-4 text-5xl">📋</div>
-          <p className="text-lg font-semibold text-[#0F172A]">No subscriptions yet</p>
-          <p className="mt-1 text-sm text-[#64748B]">Tap + to add your first subscription</p>
+          <p className="text-lg font-semibold text-[#0F172A] dark:text-[#E8E4DC]">No subscriptions yet</p>
+          <p className="mt-1 text-sm text-[#64748B] dark:text-[#8A8577]">Tap + to add your first subscription</p>
         </motion.div>
       ) : (
         <div className="space-y-3">

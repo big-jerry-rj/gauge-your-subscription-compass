@@ -40,6 +40,40 @@
 
     --radius: 1rem;
   }
+
+  .dark {
+    --background: 30 100% 3%;
+    --foreground: 60 10% 90%;
+
+    --card: 30 10% 8%;
+    --card-foreground: 60 10% 90%;
+
+    --popover: 30 10% 8%;
+    --popover-foreground: 60 10% 90%;
+
+    --primary: 90 65% 50%;
+    --primary-foreground: 30 100% 3%;
+    --primary-light: 90 65% 60%;
+
+    --secondary: 30 10% 14%;
+    --secondary-foreground: 60 10% 90%;
+
+    --muted: 30 10% 14%;
+    --muted-foreground: 30 10% 55%;
+
+    --accent: 90 65% 50%;
+    --accent-foreground: 30 100% 3%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 30 10% 18%;
+    --input: 30 10% 18%;
+    --ring: 90 65% 50%;
+  }
 }
 
 @layer base {
@@ -76,13 +110,23 @@
   }
 
   .card-elevated {
-    background: white;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
     border-radius: 16px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   }
 
+  .dark .card-elevated {
+    background: rgba(30,25,15,0.7);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  }
+
   .card-elevated-hover:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  }
+
+  .dark .card-elevated-hover:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
   }
 
   .fab-shadow {
@@ -99,5 +143,88 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+}
+
+/* ---- Animated gradient blobs ---- */
+@keyframes blob-drift-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(8vw, 12vh) scale(1.08) rotate(3deg);
+  }
+  50% {
+    transform: translate(-5vw, 6vh) scale(0.95) rotate(-2deg);
+  }
+  75% {
+    transform: translate(4vw, -8vh) scale(1.04) rotate(1deg);
+  }
+}
+
+@keyframes blob-drift-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(-10vw, -6vh) scale(1.06) rotate(-3deg);
+  }
+  50% {
+    transform: translate(6vw, -10vh) scale(0.92) rotate(2deg);
+  }
+  75% {
+    transform: translate(-3vw, 8vh) scale(1.1) rotate(-1deg);
+  }
+}
+
+@keyframes blob-drift-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(6vw, -10vh) scale(0.96) rotate(2deg);
+  }
+  50% {
+    transform: translate(-8vw, 4vh) scale(1.08) rotate(-3deg);
+  }
+  75% {
+    transform: translate(10vw, 6vh) scale(0.94) rotate(1deg);
+  }
+}
+
+@keyframes blob-drift-4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(-6vw, 10vh) scale(1.1) rotate(-2deg);
+  }
+  50% {
+    transform: translate(10vw, -4vh) scale(0.9) rotate(3deg);
+  }
+  75% {
+    transform: translate(-4vw, -6vh) scale(1.05) rotate(-1deg);
+  }
+}
+
+.animated-blob-1 {
+  animation: blob-drift-1 32s ease-in-out infinite;
+}
+.animated-blob-2 {
+  animation: blob-drift-2 26s ease-in-out infinite;
+}
+.animated-blob-3 {
+  animation: blob-drift-3 40s ease-in-out infinite;
+}
+.animated-blob-4 {
+  animation: blob-drift-4 35s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-blob-1,
+  .animated-blob-2,
+  .animated-blob-3,
+  .animated-blob-4 {
+    animation: none;
   }
 }

@@ -57,13 +57,13 @@ export default function SettingsPage() {
 
   return (
     <div className="px-5 pb-24 pt-12">
-      <h1 className="mb-5 text-[32px] font-black tracking-tight text-[#0F172A]">Settings</h1>
+      <h1 className="mb-5 text-[32px] font-black tracking-tight text-[#0F172A] dark:text-[#E8E4DC]">Settings</h1>
 
       <div className="space-y-4">
         {/* Currency */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
           className="rounded-[16px] card-elevated p-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-3">Currency</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] dark:text-[#8A8577] mb-3">Currency</h3>
           <Select value={profile?.preferred_currency ?? 'EUR'} onValueChange={handleCurrencyChange}>
             <SelectTrigger className="rounded-xl bg-white"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -77,7 +77,7 @@ export default function SettingsPage() {
         {/* Data */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
           className="rounded-[16px] card-elevated p-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-3">Data</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] dark:text-[#8A8577] mb-3">Data</h3>
           <div className="space-y-2">
             <Button variant="outline" className="w-full rounded-xl border-gray-200" onClick={handleExport}>
               <Download className="mr-2 h-4 w-4" /> Export Subscriptions
@@ -92,9 +92,9 @@ export default function SettingsPage() {
         {/* Account */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="rounded-[16px] card-elevated p-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-3">Account</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] dark:text-[#8A8577] mb-3">Account</h3>
           {user?.email && (
-            <p className="text-sm text-[#0F172A] mb-3">{user.email}</p>
+            <p className="text-sm text-[#0F172A] dark:text-[#E8E4DC] mb-3">{user.email}</p>
           )}
           <Button
             variant="outline"
@@ -108,9 +108,9 @@ export default function SettingsPage() {
         {/* About */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           className="rounded-[16px] card-elevated p-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-3">About</h3>
-          <p className="text-sm font-semibold text-[#0F172A]">Gauge v1.0</p>
-          <p className="text-xs text-[#64748B] mt-1">Privacy-first subscription tracking. No bank linking, fully manual, fully yours.</p>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#64748B] dark:text-[#8A8577] mb-3">About</h3>
+          <p className="text-sm font-semibold text-[#0F172A] dark:text-[#E8E4DC]">Gauge v1.0</p>
+          <p className="text-xs text-[#64748B] dark:text-[#8A8577] mt-1">Privacy-first subscription tracking. No bank linking, fully manual, fully yours.</p>
         </motion.div>
       </div>
     </div>

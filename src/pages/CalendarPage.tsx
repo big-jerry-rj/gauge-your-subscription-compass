@@ -41,7 +41,7 @@ export default function CalendarPage() {
 
   return (
     <div className="px-5 pb-24 pt-12">
-      <h1 className="mb-5 text-[32px] font-black tracking-tight text-[#0F172A]">Calendar</h1>
+      <h1 className="mb-5 text-[32px] font-black tracking-tight text-[#0F172A] dark:text-[#E8E4DC]">Calendar</h1>
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}
@@ -57,18 +57,18 @@ export default function CalendarPage() {
           className="w-full"
           classNames={{
             day_selected: "gradient-green text-white rounded-lg",
-            day_today: "bg-gray-100 text-[#0F172A] font-bold rounded-lg",
+            day_today: "bg-gray-100 text-[#0F172A] dark:text-[#E8E4DC] font-bold rounded-lg",
           }}
         />
       </motion.div>
 
       {selectedDate && (
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-[#64748B]">
+          <h3 className="mb-3 text-sm font-semibold text-[#64748B] dark:text-[#8A8577]">
             {format(selectedDate, 'MMMM d, yyyy')}
           </h3>
           {subsForDate.length === 0 ? (
-            <p className="text-sm text-[#64748B]">No subscriptions due on this date</p>
+            <p className="text-sm text-[#64748B] dark:text-[#8A8577]">No subscriptions due on this date</p>
           ) : (
             <div className="space-y-2">
               {subsForDate.map(sub => {
@@ -87,10 +87,10 @@ export default function CalendarPage() {
                       {cat.emoji}
                     </div>
                     <div className="flex-1">
-                      <p className="font-semibold text-[#0F172A]">{sub.name}</p>
-                      <p className="text-xs text-[#64748B] capitalize">{sub.billing_cycle}</p>
+                      <p className="font-semibold text-[#0F172A] dark:text-[#E8E4DC]">{sub.name}</p>
+                      <p className="text-xs text-[#64748B] dark:text-[#8A8577] capitalize">{sub.billing_cycle}</p>
                     </div>
-                    <span className="font-bold text-[#0F172A]">{formatCurrency(sub.price, currency)}</span>
+                    <span className="font-bold text-[#0F172A] dark:text-[#E8E4DC]">{formatCurrency(sub.price, currency)}</span>
                   </motion.div>
                 );
               })}

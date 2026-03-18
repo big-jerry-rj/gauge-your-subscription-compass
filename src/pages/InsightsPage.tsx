@@ -48,7 +48,7 @@ export default function InsightsPage() {
 
   return (
     <div className="px-5 pb-24 pt-12">
-      <h1 className="mb-5 text-[32px] font-black tracking-tight text-[#0F172A]">Insights</h1>
+      <h1 className="mb-5 text-[32px] font-black tracking-tight text-[#0F172A] dark:text-[#E8E4DC]">Insights</h1>
 
       {/* Hero Card */}
       <motion.div
@@ -81,19 +81,19 @@ export default function InsightsPage() {
       <div className="mb-5 grid grid-cols-2 gap-3">
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="p-4 card-elevated">
-          <p className="text-xs text-[#64748B] mb-1">Yearly Projection</p>
-          <p className="text-[28px] font-bold text-[#0F172A] leading-tight">{formatCurrency(yearlyTotal, currency)}</p>
+          <p className="text-xs text-[#64748B] dark:text-[#8A8577] mb-1">Yearly Projection</p>
+          <p className="text-[28px] font-bold text-[#0F172A] dark:text-[#E8E4DC] leading-tight">{formatCurrency(yearlyTotal, currency)}</p>
           <div className="mt-2 flex items-center gap-1 text-xs text-[#22C55E] font-medium">
             <ArrowUpRight className="h-3 w-3" /> per year
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           className="p-4 card-elevated">
-          <p className="text-xs text-[#64748B] mb-1">Avg per Sub</p>
-          <p className="text-[28px] font-bold text-[#0F172A] leading-tight">
+          <p className="text-xs text-[#64748B] dark:text-[#8A8577] mb-1">Avg per Sub</p>
+          <p className="text-[28px] font-bold text-[#0F172A] dark:text-[#E8E4DC] leading-tight">
             {active.length ? formatCurrency(monthlyTotal / active.length, currency) : '\u2014'}
           </p>
-          <div className="mt-2 text-xs text-[#64748B]">per month</div>
+          <div className="mt-2 text-xs text-[#64748B] dark:text-[#8A8577]">per month</div>
         </motion.div>
       </div>
 
@@ -101,7 +101,7 @@ export default function InsightsPage() {
       {categoryData.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           className="mb-5 p-5 card-elevated">
-          <h3 className="text-sm font-semibold text-[#0F172A] mb-4">By Category</h3>
+          <h3 className="text-sm font-semibold text-[#0F172A] dark:text-[#E8E4DC] mb-4">By Category</h3>
           <div className="flex items-center gap-4">
             <div className="h-32 w-32 shrink-0">
               <ResponsiveContainer width="100%" height="100%">
@@ -119,9 +119,9 @@ export default function InsightsPage() {
                 <div key={cat.name} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     <div className="h-2.5 w-2.5 rounded-full" style={{ background: cat.color }} />
-                    <span className="text-[#64748B]">{cat.name}</span>
+                    <span className="text-[#64748B] dark:text-[#8A8577]">{cat.name}</span>
                   </div>
-                  <span className="font-medium text-[#0F172A]">{formatCurrency(cat.value, currency)}</span>
+                  <span className="font-medium text-[#0F172A] dark:text-[#E8E4DC]">{formatCurrency(cat.value, currency)}</span>
                 </div>
               ))}
             </div>
@@ -133,7 +133,7 @@ export default function InsightsPage() {
       {topExpensive.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
           className="p-5 card-elevated">
-          <h3 className="text-sm font-semibold text-[#0F172A] mb-4">Most Expensive (Monthly)</h3>
+          <h3 className="text-sm font-semibold text-[#0F172A] dark:text-[#E8E4DC] mb-4">Most Expensive (Monthly)</h3>
           <div className="h-40">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={topExpensive} layout="vertical">
@@ -153,8 +153,8 @@ export default function InsightsPage() {
       {active.length === 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center py-16 text-center">
           <div className="mb-4 text-5xl">📊</div>
-          <p className="text-lg font-semibold text-[#0F172A]">No data yet</p>
-          <p className="mt-1 text-sm text-[#64748B]">Add subscriptions to see spending insights</p>
+          <p className="text-lg font-semibold text-[#0F172A] dark:text-[#E8E4DC]">No data yet</p>
+          <p className="mt-1 text-sm text-[#64748B] dark:text-[#8A8577]">Add subscriptions to see spending insights</p>
         </motion.div>
       )}
     </div>

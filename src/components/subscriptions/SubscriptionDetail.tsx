@@ -40,9 +40,9 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange }:
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="rounded-t-3xl px-6 pb-10 bg-white">
+      <SheetContent side="bottom" className="rounded-t-3xl px-6 pb-10 bg-white dark:bg-[#1A1508]">
         <SheetHeader className="mb-6">
-          <SheetTitle className="text-xl font-bold text-[#0F172A]">Subscription Details</SheetTitle>
+          <SheetTitle className="text-xl font-bold text-[#0F172A] dark:text-[#E8E4DC]">Subscription Details</SheetTitle>
         </SheetHeader>
 
         <div className="flex items-center gap-4 mb-6">
@@ -53,21 +53,21 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange }:
             {cat.emoji}
           </div>
           <div>
-            <h3 className="text-lg font-bold text-[#0F172A]">{subscription.name}</h3>
-            <p className="text-sm text-[#64748B]">{cat.label}</p>
+            <h3 className="text-lg font-bold text-[#0F172A] dark:text-[#E8E4DC]">{subscription.name}</h3>
+            <p className="text-sm text-[#64748B] dark:text-[#8A8577]">{cat.label}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="rounded-2xl bg-[#F8FAFC] p-4">
-            <p className="text-xs text-[#64748B] mb-1">Amount</p>
-            <p className="text-2xl font-bold text-[#0F172A]">{formatCurrency(subscription.price, subscription.currency)}</p>
-            <p className="text-xs text-[#64748B] capitalize">/{subscription.billing_cycle}</p>
+          <div className="rounded-2xl bg-[#F8FAFC] dark:bg-white/5 p-4">
+            <p className="text-xs text-[#64748B] dark:text-[#8A8577] mb-1">Amount</p>
+            <p className="text-2xl font-bold text-[#0F172A] dark:text-[#E8E4DC]">{formatCurrency(subscription.price, subscription.currency)}</p>
+            <p className="text-xs text-[#64748B] dark:text-[#8A8577] capitalize">/{subscription.billing_cycle}</p>
           </div>
-          <div className="rounded-2xl bg-[#F8FAFC] p-4">
-            <p className="text-xs text-[#64748B] mb-1">Monthly cost</p>
-            <p className="text-2xl font-bold text-[#0F172A]">{formatCurrency(monthly, subscription.currency)}</p>
-            <p className="text-xs text-[#64748B]">
+          <div className="rounded-2xl bg-[#F8FAFC] dark:bg-white/5 p-4">
+            <p className="text-xs text-[#64748B] dark:text-[#8A8577] mb-1">Monthly cost</p>
+            <p className="text-2xl font-bold text-[#0F172A] dark:text-[#E8E4DC]">{formatCurrency(monthly, subscription.currency)}</p>
+            <p className="text-xs text-[#64748B] dark:text-[#8A8577]">
               {subscription.next_billing_date ? `Next: ${format(new Date(subscription.next_billing_date), 'MMM d')}` : ''}
             </p>
           </div>
@@ -81,9 +81,9 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange }:
         )}
 
         {subscription.notes && (
-          <div className="mb-4 rounded-2xl bg-[#F8FAFC] p-4">
-            <p className="text-xs text-[#64748B] mb-1">Notes</p>
-            <p className="text-sm text-[#0F172A]">{subscription.notes}</p>
+          <div className="mb-4 rounded-2xl bg-[#F8FAFC] dark:bg-white/5 p-4">
+            <p className="text-xs text-[#64748B] dark:text-[#8A8577] mb-1">Notes</p>
+            <p className="text-sm text-[#0F172A] dark:text-[#E8E4DC]">{subscription.notes}</p>
           </div>
         )}
 
@@ -99,7 +99,7 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange }:
         )}
 
         <div className="mb-6 space-y-1.5">
-          <p className="text-xs font-medium text-[#64748B]">Status</p>
+          <p className="text-xs font-medium text-[#64748B] dark:text-[#8A8577]">Status</p>
           <Select value={subscription.status} onValueChange={handleStatusChange} disabled={loading}>
             <SelectTrigger className="rounded-xl bg-white"><SelectValue /></SelectTrigger>
             <SelectContent>

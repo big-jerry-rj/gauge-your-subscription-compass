@@ -15,7 +15,7 @@ const tabs = [
 
 export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-xl border-t border-gray-100 safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/80 dark:bg-[#100B00]/80 backdrop-blur-xl border-t border-gray-100 dark:border-white/10 safe-bottom">
       <div className="mx-auto flex max-w-lg items-center justify-around px-2 py-2">
         {tabs.map(tab => {
           const isActive = activeTab === tab.id;
@@ -26,7 +26,7 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
               onClick={() => onTabChange(tab.id)}
               className={cn(
                 "flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl transition-colors duration-200",
-                isActive ? "text-[#22C55E]" : "text-[#64748B]"
+                isActive ? "text-[#22C55E]" : "text-[#64748B] dark:text-[#8A8577]"
               )}
             >
               <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 1.5} fill={isActive ? "currentColor" : "none"} />

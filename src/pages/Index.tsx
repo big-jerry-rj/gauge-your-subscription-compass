@@ -28,7 +28,7 @@ export default function Index() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FAFAFA]">
+    <div className="relative min-h-screen">
       <div className="relative mx-auto max-w-lg">
         <AnimatePresence mode="wait">
           <motion.div

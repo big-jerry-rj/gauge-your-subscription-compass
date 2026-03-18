@@ -36,8 +36,8 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
       </div>
 
       <div className="flex-1 min-w-0">
-        <p className="font-semibold text-[#0F172A] truncate">{subscription.name}</p>
-        <p className="text-xs text-[#64748B]">
+        <p className="font-semibold text-[#0F172A] dark:text-[#E8E4DC] truncate">{subscription.name}</p>
+        <p className="text-xs text-[#64748B] dark:text-[#8A8577]">
           {subscription.next_billing_date
             ? `Next: ${format(new Date(subscription.next_billing_date), 'MMM d, yyyy')}`
             : subscription.billing_cycle}
@@ -45,7 +45,7 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
       </div>
 
       <div className="flex flex-col items-end gap-1">
-        <span className="text-base font-bold text-[#0F172A]">
+        <span className="text-base font-bold text-[#0F172A] dark:text-[#E8E4DC]">
           {formatCurrency(subscription.price, subscription.currency)}
         </span>
         <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', status.bg, status.text)}>

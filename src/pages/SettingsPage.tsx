@@ -10,6 +10,7 @@ import { Download, Moon, LogOut, UserCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
+import GaugeLogo from '@/components/GaugeLogo';
 
 export default function SettingsPage() {
   const { profile, updateProfile } = useProfile();
@@ -43,7 +44,7 @@ export default function SettingsPage() {
     <div className="px-5 pb-28">
       {/* Page header */}
       <div className="pt-8 pb-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-1">Gauge</p>
+        <GaugeLogo height={20} className="mb-1" />
         <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Account</h1>
       </div>
 

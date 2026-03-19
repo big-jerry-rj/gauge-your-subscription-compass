@@ -3,7 +3,7 @@ import { useSubscriptions, Subscription } from '@/hooks/useSubscriptions';
 import SubscriptionCard from '@/components/subscriptions/SubscriptionCard';
 import SubscriptionDetail from '@/components/subscriptions/SubscriptionDetail';
 import { Input } from '@/components/ui/input';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
@@ -147,10 +147,10 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
       {/* Primary CTA */}
       <button
         onClick={onAdd}
-        className="mb-9 flex items-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
+        className="mb-9 inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
         style={{ boxShadow: '0 4px 20px rgba(133,203,51,0.35)' }}
       >
-        <span className="text-lg leading-none font-light">+</span>
+        <Plus className="h-4 w-4 shrink-0" strokeWidth={2.5} />
         Add your first subscription
       </button>
 

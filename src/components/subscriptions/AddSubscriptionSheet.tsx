@@ -101,11 +101,14 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[92vh] overflow-y-auto rounded-t-[28px] px-6 pb-10">
-        <SheetHeader className="mb-5">
+      <SheetContent side="bottom" className="h-[92vh] flex flex-col rounded-t-[28px] px-0 pb-0 overflow-hidden">
+        {/* Sticky header — X button always visible */}
+        <SheetHeader className="shrink-0 px-6 pt-5 pb-4 border-b border-border/30">
           <SheetTitle className="text-[22px] font-bold tracking-tight">Add Subscription</SheetTitle>
         </SheetHeader>
 
+        {/* Scrollable body */}
+        <div className="flex-1 overflow-y-auto px-6 pb-10 pt-5">
         {showLogoPicker && !name ? (
           <div>
             <p className="mb-3 text-sm font-medium text-muted-foreground">Choose a service or add custom</p>
@@ -196,6 +199,7 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             </Button>
           </div>
         )}
+        </div>
       </SheetContent>
     </Sheet>
   );

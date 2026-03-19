@@ -89,7 +89,7 @@ export default function InsightsPage() {
     <div className="px-5 pb-28">
       {/* Page header */}
       <div className="pt-8 pb-6">
-        <GaugeLogo height={20} className="mb-1" />
+        <GaugeLogo height={50} className="mb-1" />
         <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Insights</h1>
       </div>
 

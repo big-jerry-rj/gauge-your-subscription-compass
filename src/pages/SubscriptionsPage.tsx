@@ -37,7 +37,7 @@ export default function SubscriptionsPage({ onAdd }: Props) {
       {/* Page header */}
       <div className="flex items-end justify-between pt-8 pb-6">
         <div>
-          <GaugeLogo height={20} className="mb-1" />
+          <GaugeLogo height={50} className="mb-1" />
           <h1 className="text-[32px] font-black tracking-tight leading-none">
             <span className="text-foreground">Your </span>
             <span className="text-primary">subs</span>

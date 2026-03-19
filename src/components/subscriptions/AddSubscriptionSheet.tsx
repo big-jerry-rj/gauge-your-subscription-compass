@@ -108,7 +108,7 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
         </SheetHeader>
 
         {/* Scrollable body */}
-        <div className="flex-1 overflow-y-auto px-6 pb-10 pt-5">
+        <div className="flex-1 min-h-0 overflow-y-auto px-6 pb-10 pt-5">
         {showLogoPicker && !name ? (
           <div>
             <p className="mb-3 text-sm font-medium text-muted-foreground">Choose a service or add custom</p>

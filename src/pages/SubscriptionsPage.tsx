@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 const FILTERS = ['All', 'Active', 'Paused', 'Cancelled'] as const;
 
@@ -145,14 +146,16 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
       </p>
 
       {/* Primary CTA */}
-      <button
-        onClick={onAdd}
-        className="mb-9 inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
-        style={{ boxShadow: '0 4px 20px rgba(133,203,51,0.35)' }}
-      >
-        <Plus className="h-4 w-4 shrink-0" strokeWidth={2.5} />
-        Add your first subscription
-      </button>
+      <div className="relative rounded-2xl border border-border/40 mb-9">
+        <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+        <button
+          onClick={onAdd}
+          className="relative inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
+        >
+          <Plus className="h-4 w-4 shrink-0" strokeWidth={2.5} />
+          Add your first subscription
+        </button>
+      </div>
 
       {/* Suggestions */}
       <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground/40 mb-3">

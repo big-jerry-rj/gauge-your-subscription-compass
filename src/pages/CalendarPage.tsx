@@ -5,6 +5,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { Calendar } from '@/components/ui/calendar';
 import { format, isSameDay } from 'date-fns';
 import { motion } from 'framer-motion';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 export default function CalendarPage() {
   const { subscriptions } = useSubscriptions();
@@ -44,19 +45,22 @@ export default function CalendarPage() {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-block rounded-[20px] bg-card border border-border/40 p-3"
+          className="relative inline-block rounded-[20px] border border-border/40"
         >
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={setSelectedDate}
-            modifiers={modifiers}
-            modifiersStyles={modifiersStyles}
-            classNames={{
-              day_selected: 'bg-primary text-primary-foreground rounded-xl',
-              day_today: 'bg-muted text-foreground font-bold rounded-xl',
-            }}
-          />
+          <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-[20px] bg-card p-3">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={setSelectedDate}
+              modifiers={modifiers}
+              modifiersStyles={modifiersStyles}
+              classNames={{
+                day_selected: 'bg-primary text-primary-foreground rounded-xl',
+                day_today: 'bg-muted text-foreground font-bold rounded-xl',
+              }}
+            />
+          </div>
         </motion.div>
       </div>
 

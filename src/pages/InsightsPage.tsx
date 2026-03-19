@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { useSubscriptions } from '@/hooks/useSubscriptions';
 import { useProfile } from '@/hooks/useProfile';
 import { formatCurrency, getMonthlyAmount } from '@/lib/constants';
-import { motion } from 'framer-motion';
+import { motion, animate } from 'framer-motion';
 import { TrendingUp, ArrowUpRight, AlertCircle, Zap } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { format, differenceInDays } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -28,6 +27,17 @@ export default function InsightsPage() {
   , [active]);
 
   const yearlyTotal = monthlyTotal * 12;
+
+  // Animated counter for hero monthly spend
+  const [displayTotal, setDisplayTotal] = useState(0);
+  useEffect(() => {
+    const controls = animate(0, monthlyTotal, {
+      duration: 1.0,
+      ease: [0.25, 0.1, 0.25, 1],
+      onUpdate: (v) => setDisplayTotal(v),
+    });
+    return () => controls.stop();
+  }, [monthlyTotal]);
 
   const pausedSavings = paused.reduce((sum, s) => sum + getMonthlyAmount(s.amount, s.billing_cycle), 0);
 
@@ -78,7 +88,7 @@ export default function InsightsPage() {
     <div className="px-5 pb-28">
       {/* Page header */}
       <div className="pt-8 pb-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary/50 mb-1">Gauge</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-1">Gauge</p>
         <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Insights</h1>
       </div>
 
@@ -108,7 +118,7 @@ export default function InsightsPage() {
                     Monthly Spend
                   </p>
                   <p className="text-[42px] font-black text-primary-foreground leading-none tracking-tight">
-                    {formatCurrency(monthlyTotal, currency)}
+                    {formatCurrency(displayTotal, currency)}
                   </p>
                   <p className="mt-2 text-sm text-primary-foreground/65">
                     {active.length} active subscription{active.length !== 1 ? 's' : ''}
@@ -136,9 +146,8 @@ export default function InsightsPage() {
               { label: 'Avg / Sub', value: active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—', sub: 'per month', delay: 0.12 },
             ].map(stat => (
               <motion.div key={stat.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: stat.delay }} className="relative rounded-[20px] border border-border/40">
-                <GlowingEffect spread={25} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-                <div className="relative glass-card rounded-[20px] p-4">
+                transition={{ delay: stat.delay }} className="glow-pulse rounded-[20px] border border-border/40">
+                <div className="glass-card rounded-[20px] p-4">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">{stat.label}</p>
                   <p className="text-[20px] font-bold text-foreground">{stat.value}</p>
                   <div className="mt-1 flex items-center gap-1 text-[11px] text-primary font-semibold">
@@ -152,9 +161,8 @@ export default function InsightsPage() {
           {/* Upcoming renewals — next 7 days */}
           {upcomingRenewals.length > 0 && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-              className="mb-4 relative rounded-[20px] border border-border/40">
-              <GlowingEffect spread={25} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-              <div className="relative glass-card rounded-[20px] p-4">
+              className="mb-4 glow-pulse rounded-[20px] border border-border/40">
+              <div className="glass-card rounded-[20px] p-4">
                 <div className="flex items-center justify-between mb-3.5">
                   <div className="flex items-center gap-2.5">
                     <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-warning/12">
@@ -197,9 +205,8 @@ export default function InsightsPage() {
           {/* Largest subscription */}
           {largestSub && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}
-              className="mb-4 relative rounded-[20px] border border-border/40">
-              <GlowingEffect spread={25} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-              <div className="relative glass-card rounded-[20px] p-4">
+              className="mb-4 glow-pulse rounded-[20px] border border-border/40">
+              <div className="glass-card rounded-[20px] p-4">
                 <div className="flex items-center gap-2.5 mb-3">
                   <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary/10">
                     <Zap className="h-3.5 w-3.5 text-primary" />
@@ -231,9 +238,8 @@ export default function InsightsPage() {
           {/* Category breakdown */}
           {categoryData.length > 0 && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}
-              className="mb-4 relative rounded-[20px] border border-border/40">
-              <GlowingEffect spread={25} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-              <div className="relative glass-card rounded-[20px] p-5">
+              className="mb-4 glow-pulse rounded-[20px] border border-border/40">
+              <div className="glass-card rounded-[20px] p-5">
                 <h3 className="text-[13px] font-bold text-foreground mb-4">Spend by Category</h3>
                 <div className="flex items-center gap-4">
                   <div className="h-32 w-32 shrink-0">
@@ -266,9 +272,8 @@ export default function InsightsPage() {
           {/* Most expensive bar chart */}
           {topExpensive.length > 1 && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.26 }}
-              className="relative rounded-[20px] border border-border/40">
-              <GlowingEffect spread={25} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-              <div className="relative glass-card rounded-[20px] p-5">
+              className="glow-pulse rounded-[20px] border border-border/40">
+              <div className="glass-card rounded-[20px] p-5">
                 <h3 className="text-[13px] font-bold text-foreground mb-4">Monthly Cost Ranking</h3>
                 <div className="h-44">
                   <ResponsiveContainer width="100%" height="100%">

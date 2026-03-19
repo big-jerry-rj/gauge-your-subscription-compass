@@ -101,7 +101,7 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[92vh] flex flex-col rounded-t-[28px] px-0 pb-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[92dvh] flex flex-col rounded-t-[28px] px-0 pb-0 overflow-hidden">
         {/* Sticky header — X button always visible */}
         <SheetHeader className="shrink-0 px-6 pt-5 pb-4 border-b border-border/30">
           <SheetTitle className="text-[22px] font-bold tracking-tight">Add Subscription</SheetTitle>

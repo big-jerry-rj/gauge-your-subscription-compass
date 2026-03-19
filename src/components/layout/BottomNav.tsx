@@ -31,13 +31,13 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
       >
         <div className={cn(
           "flex items-center justify-center w-10 h-7 rounded-2xl transition-all duration-200",
-          isActive ? "bg-primary/[0.12]" : "bg-transparent"
+          isActive ? "bg-primary/[0.15]" : "bg-transparent"
         )}>
           <Icon className="h-[19px] w-[19px]" strokeWidth={isActive ? 2.5 : 1.8} />
         </div>
         <span className={cn(
           "text-[10px] font-semibold tracking-wide",
-          isActive ? "text-primary" : "text-muted-foreground/70"
+          isActive ? "text-primary" : "text-muted-foreground"
         )}>
           {tab.label}
         </span>
@@ -46,7 +46,7 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/30 bg-background safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/60 bg-card shadow-[0_-2px_16px_rgba(0,0,0,0.06)] safe-bottom">
       <div className="mx-auto flex max-w-lg items-center justify-around px-2 py-1.5">
         {leftTabs.map(renderTab)}
         <div className="w-14" />

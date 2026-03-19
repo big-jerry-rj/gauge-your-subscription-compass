@@ -35,35 +35,23 @@ export default function AnimatedBackground() {
     );
   }
 
-  // Light mode — keep the lively blob system
+  // Light mode — near-white base with two subtle corner whispers
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      <div className="absolute inset-0 transition-colors duration-700" style={{ backgroundColor: '#EFFFC8' }} />
+      <div className="absolute inset-0 transition-colors duration-700" style={{ backgroundColor: '#FAFEF7' }} />
 
+      {/* Blob 1 — top-left lime whisper */}
       <div className="absolute animate-blob1 will-change-transform" style={{
-        width: '130vw', height: '130vw', top: '-20%', left: '-15%', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(133,203,51,0.45) 0%, rgba(133,203,51,0.15) 40%, transparent 70%)',
+        width: '55vw', height: '55vw', top: '-15%', left: '-15%', borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(133,203,51,0.10) 0%, transparent 65%)',
         filter: 'blur(80px)',
       }} />
-      <div className="absolute animate-blob2 will-change-transform" style={{
-        width: '110vw', height: '110vw', bottom: '-25%', right: '-20%', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(165,203,195,0.5) 0%, rgba(165,203,195,0.15) 45%, transparent 70%)',
-        filter: 'blur(90px)',
-      }} />
+
+      {/* Blob 2 — bottom-right teal whisper */}
       <div className="absolute animate-blob3 will-change-transform" style={{
-        width: '100vw', height: '100vw', top: '30%', right: '-30%', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(133,203,51,0.3) 0%, rgba(239,255,200,0.4) 40%, transparent 70%)',
-        filter: 'blur(100px)',
-      }} />
-      <div className="absolute animate-blob4 will-change-transform" style={{
-        width: '90vw', height: '90vw', bottom: '10%', left: '-25%', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(165,203,195,0.4) 0%, rgba(239,255,200,0.3) 45%, transparent 70%)',
-        filter: 'blur(85px)',
-      }} />
-      <div className="absolute animate-blob5 will-change-transform" style={{
-        width: '80vw', height: '80vw', top: '15%', left: '20%', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(239,255,200,0.6) 0%, rgba(133,203,51,0.1) 50%, transparent 70%)',
-        filter: 'blur(70px)',
+        width: '50vw', height: '50vw', bottom: '-15%', right: '-15%', borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(165,203,195,0.09) 0%, transparent 65%)',
+        filter: 'blur(80px)',
       }} />
 
       <div className="absolute inset-0" style={{
@@ -71,9 +59,6 @@ export default function AnimatedBackground() {
         backgroundSize: '128px 128px',
         opacity: 0.04,
         mixBlendMode: 'multiply',
-      }} />
-      <div className="absolute inset-0" style={{
-        background: 'radial-gradient(ellipse at center, transparent 50%, rgba(239,255,200,0.3) 100%)',
       }} />
     </div>
   );

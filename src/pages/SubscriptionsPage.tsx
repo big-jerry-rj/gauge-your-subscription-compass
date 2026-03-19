@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 const FILTERS = ['All', 'Active', 'Paused', 'Cancelled'] as const;
 
@@ -36,7 +35,7 @@ export default function SubscriptionsPage({ onAdd }: Props) {
       {/* Page header */}
       <div className="flex items-end justify-between pt-8 pb-6">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary/50 mb-1">Gauge</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-1">Gauge</p>
           <h1 className="text-[32px] font-black tracking-tight leading-none">
             <span className="text-foreground">Your </span>
             <span className="text-primary">subs</span>
@@ -57,7 +56,7 @@ export default function SubscriptionsPage({ onAdd }: Props) {
       {isLoading ? (
         <div className="space-y-3">
           {[1, 2, 3].map(i => (
-            <div key={i} className="h-20 animate-pulse rounded-[20px] bg-muted/60" />
+            <div key={i} className="shimmer h-20 rounded-[20px]" />
           ))}
         </div>
       ) : !hasAny ? (
@@ -85,7 +84,7 @@ export default function SubscriptionsPage({ onAdd }: Props) {
                   'shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200',
                   filter === f
                     ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+                    : 'bg-muted text-muted-foreground border border-border/60 hover:bg-muted'
                 )}
               >
                 {f}
@@ -146,11 +145,10 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
       </p>
 
       {/* Primary CTA */}
-      <div className="relative rounded-2xl border border-border/40 mb-9">
-        <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+      <div className="glow-pulse rounded-2xl border border-border/40 mb-9">
         <button
           onClick={onAdd}
-          className="relative inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
         >
           <Plus className="h-4 w-4 shrink-0" strokeWidth={2.5} />
           Add your first subscription
@@ -166,7 +164,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
           <button
             key={name}
             onClick={onAdd}
-            className="rounded-full border border-border/50 bg-card/40 px-4 py-1.5 text-[12px] font-semibold text-muted-foreground transition-all active:scale-95 hover:border-primary/30 hover:text-foreground"
+            className="rounded-full border border-border/80 bg-muted/70 px-4 py-1.5 text-[12px] font-semibold text-muted-foreground transition-all active:scale-95 hover:border-primary/30 hover:text-foreground"
           >
             {name}
           </button>

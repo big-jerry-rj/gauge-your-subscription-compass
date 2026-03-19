@@ -5,7 +5,6 @@ import { useProfile } from '@/hooks/useProfile';
 import { Calendar } from '@/components/ui/calendar';
 import { format, isSameDay } from 'date-fns';
 import { motion } from 'framer-motion';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 export default function CalendarPage() {
   const { subscriptions } = useSubscriptions();
@@ -37,7 +36,7 @@ export default function CalendarPage() {
     <div className="px-5 pb-28">
       {/* Page header */}
       <div className="pt-8 pb-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary/50 mb-1">Gauge</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-1">Gauge</p>
         <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Calendar</h1>
       </div>
 
@@ -45,10 +44,9 @@ export default function CalendarPage() {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative inline-block rounded-[20px] border border-border/40"
+          className="glow-pulse inline-block rounded-[20px] border border-border/40"
         >
-          <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-[20px] bg-card p-3">
+          <div className="rounded-[20px] bg-card p-3">
             <Calendar
               mode="single"
               selected={selectedDate}

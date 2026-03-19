@@ -2,7 +2,6 @@ import { useMemo, useEffect, useState } from 'react';
 import { useSubscriptions } from '@/hooks/useSubscriptions';
 import { useProfile } from '@/hooks/useProfile';
 import { formatCurrency, getMonthlyAmount } from '@/lib/constants';
-import GaugeLogo from '@/components/GaugeLogo';
 import { motion, animate } from 'framer-motion';
 import { TrendingUp, ArrowUpRight, AlertCircle, Zap } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
@@ -89,7 +88,6 @@ export default function InsightsPage() {
     <div className="px-5 pb-28">
       {/* Page header */}
       <div className="pt-8 pb-6">
-        <GaugeLogo height={50} className="mb-1" />
         <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Insights</h1>
       </div>
 

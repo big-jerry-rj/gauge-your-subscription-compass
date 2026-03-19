@@ -4,7 +4,6 @@ import SubscriptionCard from '@/components/subscriptions/SubscriptionCard';
 import SubscriptionDetail from '@/components/subscriptions/SubscriptionDetail';
 import { Input } from '@/components/ui/input';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
-import GaugeLogo from '@/components/GaugeLogo';
 import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -37,7 +36,6 @@ export default function SubscriptionsPage({ onAdd }: Props) {
       {/* Page header */}
       <div className="flex items-end justify-between pt-8 pb-6">
         <div>
-          <GaugeLogo height={50} className="mb-1" />
           <h1 className="text-[32px] font-black tracking-tight leading-none">
             <span className="text-foreground">Your </span>
             <span className="text-primary">subs</span>

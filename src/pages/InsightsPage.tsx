@@ -7,6 +7,7 @@ import { TrendingUp, ArrowUpRight, AlertCircle, Zap } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { format, differenceInDays } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 const CHART_COLORS = [
   'hsl(88 60% 50%)', 'hsl(167 24% 52%)', 'hsl(199 89% 48%)',
@@ -145,8 +146,9 @@ export default function InsightsPage() {
               { label: 'Avg / Sub', value: active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—', sub: 'per month', delay: 0.12 },
             ].map(stat => (
               <motion.div key={stat.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: stat.delay }} className="glow-pulse rounded-[20px] border border-border/40">
-                <div className="glass-card rounded-[20px] p-4">
+                transition={{ delay: stat.delay }} className="relative rounded-[20px] border border-border/40">
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+                <div className="relative glass-card rounded-[20px] p-4">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">{stat.label}</p>
                   <p className="text-[20px] font-bold text-foreground">{stat.value}</p>
                   <div className="mt-1 flex items-center gap-1 text-[11px] text-primary font-semibold">
@@ -160,8 +162,9 @@ export default function InsightsPage() {
           {/* Upcoming renewals — next 7 days */}
           {upcomingRenewals.length > 0 && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-              className="mb-4 glow-pulse rounded-[20px] border border-border/40">
-              <div className="glass-card rounded-[20px] p-4">
+              className="relative mb-4 rounded-[20px] border border-border/40">
+              <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+              <div className="relative glass-card rounded-[20px] p-4">
                 <div className="flex items-center justify-between mb-3.5">
                   <div className="flex items-center gap-2.5">
                     <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-warning/12">
@@ -204,8 +207,9 @@ export default function InsightsPage() {
           {/* Largest subscription */}
           {largestSub && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}
-              className="mb-4 glow-pulse rounded-[20px] border border-border/40">
-              <div className="glass-card rounded-[20px] p-4">
+              className="relative mb-4 rounded-[20px] border border-border/40">
+              <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+              <div className="relative glass-card rounded-[20px] p-4">
                 <div className="flex items-center gap-2.5 mb-3">
                   <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary/10">
                     <Zap className="h-3.5 w-3.5 text-primary" />
@@ -237,8 +241,9 @@ export default function InsightsPage() {
           {/* Category breakdown */}
           {categoryData.length > 0 && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}
-              className="mb-4 glow-pulse rounded-[20px] border border-border/40">
-              <div className="glass-card rounded-[20px] p-5">
+              className="relative mb-4 rounded-[20px] border border-border/40">
+              <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+              <div className="relative glass-card rounded-[20px] p-5">
                 <h3 className="text-[13px] font-bold text-foreground mb-4">Spend by Category</h3>
                 <div className="flex items-center gap-4">
                   <div className="h-32 w-32 shrink-0">
@@ -271,8 +276,9 @@ export default function InsightsPage() {
           {/* Most expensive bar chart */}
           {topExpensive.length > 1 && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.26 }}
-              className="glow-pulse rounded-[20px] border border-border/40">
-              <div className="glass-card rounded-[20px] p-5">
+              className="relative rounded-[20px] border border-border/40">
+              <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+              <div className="relative glass-card rounded-[20px] p-5">
                 <h3 className="text-[13px] font-bold text-foreground mb-4">Monthly Cost Ranking</h3>
                 <div className="h-44">
                   <ResponsiveContainer width="100%" height="100%">

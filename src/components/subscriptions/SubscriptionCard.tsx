@@ -2,13 +2,20 @@ import { Subscription } from '@/hooks/useSubscriptions';
 import { formatCurrency } from '@/lib/constants';
 import { format, differenceInDays } from 'date-fns';
 import { motion } from 'framer-motion';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { ChevronRight } from 'lucide-react';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 interface Props {
   subscription: Subscription;
   onClick?: () => void;
 }
+
+// Status dot color per subscription status
+const STATUS_COLORS: Record<string, string> = {
+  active: '#A3E635',
+  paused: '#f59e0b',
+  cancelled: '#6b7280',
+};
 
 // Renewal arc — the core Gauge brand motif
 function RenewalArc({ nextBillingDate, children }: { nextBillingDate: string | null; children: React.ReactNode }) {
@@ -17,13 +24,13 @@ function RenewalArc({ nextBillingDate, children }: { nextBillingDate: string | n
     : null;
 
   const SIZE = 52;
-  const C = SIZE / 2;   // center
-  const R = 21;         // radius
+  const C = SIZE / 2;
+  const R = 21;
   const CIRC = 2 * Math.PI * R;
 
   // Arc depletes as renewal approaches (full = 30+ days away, empty = today)
   const progress = daysLeft !== null ? Math.min(1, daysLeft / 30) : 1;
-  const dashOffset = CIRC * (1 - progress);
+  const targetOffset = CIRC * (1 - progress);
 
   const strokeColor =
     daysLeft === null       ? 'rgba(163,230,53,0.15)' :
@@ -36,15 +43,17 @@ function RenewalArc({ nextBillingDate, children }: { nextBillingDate: string | n
       <svg className="absolute inset-0" width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
         {/* Track */}
         <circle cx={C} cy={C} r={R} fill="none" stroke="rgba(163,230,53,0.07)" strokeWidth="2" />
-        {/* Progress arc */}
+        {/* Progress arc — animates on mount */}
         {daysLeft !== null && (
-          <circle
+          <motion.circle
             cx={C} cy={C} r={R}
             fill="none"
             stroke={strokeColor}
             strokeWidth="2"
             strokeDasharray={CIRC}
-            strokeDashoffset={dashOffset}
+            initial={{ strokeDashoffset: CIRC }}
+            animate={{ strokeDashoffset: targetOffset }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
             strokeLinecap="round"
             transform={`rotate(-90 ${C} ${C})`}
             opacity={0.8}
@@ -62,14 +71,35 @@ function RenewalArc({ nextBillingDate, children }: { nextBillingDate: string | n
   );
 }
 
-function daysLabel(date: string | null): string {
-  if (!date) return 'No renewal date';
-  const days = differenceInDays(new Date(date), new Date());
-  if (days < 0) return 'Overdue';
-  if (days === 0) return 'Renews today';
-  if (days === 1) return 'Renews tomorrow';
-  if (days <= 7) return `Renews in ${days}d`;
-  return `Renews ${format(new Date(date), 'MMM d')}`;
+function daysLeft(date: string | null): number | null {
+  if (!date) return null;
+  return differenceInDays(new Date(date), new Date());
+}
+
+function RenewalLabel({ date, status }: { date: string | null; status: string }) {
+  const days = daysLeft(date);
+
+  if (!date) return <span className="text-[12px] text-muted-foreground">No renewal date</span>;
+  if (days! < 0) return <span className="text-[12px] text-muted-foreground">Overdue</span>;
+
+  if (days === 0) {
+    return (
+      <span className="inline-flex items-center rounded-md bg-destructive/15 px-1.5 py-0.5 text-[11px] font-bold text-destructive">
+        Renews today
+      </span>
+    );
+  }
+  if (days === 1) {
+    return (
+      <span className="inline-flex items-center rounded-md bg-warning/12 px-1.5 py-0.5 text-[11px] font-bold text-warning">
+        Renews tomorrow
+      </span>
+    );
+  }
+  if (days! <= 7) {
+    return <span className="text-[12px] text-muted-foreground">Renews in {days}d</span>;
+  }
+  return <span className="text-[12px] text-muted-foreground">Renews {format(new Date(date), 'MMM d')}</span>;
 }
 
 function cycleShort(cycle: string): string {
@@ -77,6 +107,8 @@ function cycleShort(cycle: string): string {
 }
 
 export default function SubscriptionCard({ subscription, onClick }: Props) {
+  const dotColor = STATUS_COLORS[subscription.status] ?? '#A3E635';
+
   return (
     <motion.div
       whileTap={{ scale: 0.983 }}
@@ -84,8 +116,14 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
       onClick={onClick}
       className="relative cursor-pointer rounded-[20px] border border-border/40"
     >
-      <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+      <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <div className="relative glass-card flex items-center gap-3.5 px-4 py-3.5 rounded-[20px]">
+        {/* Status dot */}
+        <div
+          className="absolute top-3 right-3 h-[6px] w-[6px] rounded-full opacity-70"
+          style={{ background: dotColor, position: 'absolute', top: 14, right: 14 }}
+        />
+
         {/* Renewal arc wrapping the logo */}
         <RenewalArc nextBillingDate={subscription.next_billing_date}>
           {subscription.logo_url ? (
@@ -97,12 +135,16 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
 
         {/* Name + renewal date */}
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-[15px] text-foreground truncate leading-snug">
-            {subscription.name}
-          </p>
-          <p className="text-[12px] text-muted-foreground mt-0.5">
-            {daysLabel(subscription.next_billing_date)}
-          </p>
+          <div className="flex items-center gap-1.5 mb-0.5">
+            <div
+              className="h-[6px] w-[6px] rounded-full shrink-0"
+              style={{ background: dotColor, opacity: 0.8 }}
+            />
+            <p className="font-semibold text-[15px] text-foreground truncate leading-snug">
+              {subscription.name}
+            </p>
+          </div>
+          <RenewalLabel date={subscription.next_billing_date} status={subscription.status} />
         </div>
 
         {/* Amount + cycle */}

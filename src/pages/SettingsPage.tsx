@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useProfile } from '@/hooks/useProfile';
 import { useTheme } from '@/hooks/useTheme';
 import { useAuth } from '@/hooks/useAuth';
@@ -6,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { useSubscriptions } from '@/hooks/useSubscriptions';
-import { Download, Moon, LogOut, UserCircle } from 'lucide-react';
+import { Download, Moon, LogOut, UserCircle, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
@@ -14,7 +15,8 @@ import { GlowingEffect } from '@/components/ui/glowing-effect';
 export default function SettingsPage() {
   const { profile, updateProfile } = useProfile();
   const { theme, toggleTheme } = useTheme();
-  const { user, signOut } = useAuth();
+  const { user, isGuest, signOut, deleteAccount } = useAuth();
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const { subscriptions } = useSubscriptions();
 
   const handleCurrencyChange = async (code: string) => {
@@ -39,6 +41,15 @@ export default function SettingsPage() {
     toast.success('Signed out');
   };
 
+  const handleDeleteAccount = async () => {
+    if (!confirmDelete) {
+      setConfirmDelete(true);
+      return;
+    }
+    await deleteAccount();
+    toast.success('Account deleted');
+  };
+
   return (
     <div className="px-5 pb-28">
       {/* Page header */}
@@ -57,8 +68,12 @@ export default function SettingsPage() {
                 <UserCircle className="h-6 w-6 text-primary" />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-bold text-foreground truncate">{user?.email ?? '—'}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Gauge account</p>
+                <p className="text-sm font-bold text-foreground truncate">
+                  {isGuest ? 'Guest' : (user?.email ?? '—')}
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {isGuest ? 'Local only · data won\'t sync' : 'Gauge account'}
+                </p>
               </div>
             </div>
           </div>
@@ -122,16 +137,35 @@ export default function SettingsPage() {
           </div>
         </motion.div>
 
-        {/* Sign out */}
+        {/* Sign out / Leave guest */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.17 }}>
           <Button
             variant="outline"
-            className="w-full rounded-2xl h-12 border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
+            className="w-full rounded-2xl h-12 border-border/60 text-muted-foreground hover:bg-muted"
             onClick={handleSignOut}
           >
-            <LogOut className="mr-2 h-4 w-4" /> Sign Out
+            <LogOut className="mr-2 h-4 w-4" />
+            {isGuest ? 'Leave guest mode' : 'Sign out'}
           </Button>
         </motion.div>
+
+        {/* Delete account — only for real accounts */}
+        {!isGuest && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <Button
+              variant="outline"
+              className={`w-full rounded-2xl h-12 transition-colors ${
+                confirmDelete
+                  ? 'border-destructive bg-destructive/10 text-destructive hover:bg-destructive/20'
+                  : 'border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive'
+              }`}
+              onClick={handleDeleteAccount}
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              {confirmDelete ? 'Tap again to confirm deletion' : 'Delete account'}
+            </Button>
+          </motion.div>
+        )}
       </div>
     </div>
   );

@@ -15,13 +15,9 @@ export default function CalendarPage() {
   const activeSubs = subscriptions.filter(s => s.status === 'active');
 
   const billingDates = useMemo(() => {
-    const dates: Date[] = [];
-    activeSubs.forEach(s => {
-      if (s.next_billing_date) {
-        dates.push(new Date(s.next_billing_date));
-      }
-    });
-    return dates;
+    return activeSubs
+      .filter(s => s.next_billing_date)
+      .map(s => new Date(s.next_billing_date!));
   }, [activeSubs]);
 
   const subsForDate = useMemo(() => {
@@ -33,20 +29,21 @@ export default function CalendarPage() {
 
   const modifiers = { billing: billingDates };
   const modifiersStyles = {
-    billing: {
-      fontWeight: 700,
-      position: 'relative' as const,
-    },
+    billing: { fontWeight: 700, position: 'relative' as const },
   };
 
   return (
-    <div className="px-5 pb-24 pt-2">
-      <h1 className="mb-5 text-[28px] font-black tracking-tight text-foreground">Calendar</h1>
+    <div className="px-5 pb-28">
+      {/* Page header */}
+      <div className="pt-8 pb-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary/50 mb-1">Gauge</p>
+        <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Calendar</h1>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-5 rounded-2xl bg-card card-shadow p-3 flex justify-center"
+        className="mb-5 rounded-[20px] bg-card border border-border/40 p-3 flex justify-center"
       >
         <Calendar
           mode="single"
@@ -56,40 +53,42 @@ export default function CalendarPage() {
           modifiersStyles={modifiersStyles}
           className="w-full"
           classNames={{
-            day_selected: "gradient-primary text-primary-foreground rounded-lg",
-            day_today: "bg-muted text-foreground font-bold rounded-lg",
+            day_selected: 'bg-primary text-primary-foreground rounded-xl',
+            day_today: 'bg-muted text-foreground font-bold rounded-xl',
           }}
         />
       </motion.div>
 
       {selectedDate && (
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-muted-foreground">
+          <h3 className="mb-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
             {format(selectedDate, 'MMMM d, yyyy')}
           </h3>
           {subsForDate.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No subscriptions due on this date</p>
+            <p className="text-sm text-muted-foreground">No renewals on this date</p>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {subsForDate.map(sub => (
                 <motion.div
                   key={sub.id}
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex items-center gap-3 rounded-2xl bg-card p-4 card-shadow"
+                  className="flex items-center gap-3 rounded-[20px] bg-card border border-border/40 p-4"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted overflow-hidden">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted overflow-hidden shrink-0">
                     {sub.logo_url ? (
                       <img src={sub.logo_url} alt={sub.name} className="h-6 w-6 object-contain" />
                     ) : (
                       <span className="font-bold text-primary">{sub.name[0]}</span>
                     )}
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <p className="font-semibold text-foreground">{sub.name}</p>
                     <p className="text-xs text-muted-foreground capitalize">{sub.billing_cycle}</p>
                   </div>
-                  <span className="font-bold text-foreground">{formatCurrency(sub.amount, currency)}</span>
+                  <span className="font-bold text-foreground tabular-nums">
+                    {formatCurrency(sub.amount, currency)}
+                  </span>
                 </motion.div>
               ))}
             </div>

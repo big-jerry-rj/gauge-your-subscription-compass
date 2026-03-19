@@ -29,20 +29,24 @@ export default function SettingsPage() {
     a.download = `gauge-subscriptions-${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    toast.success('Data exported successfully');
+    toast.success('Data exported');
   };
 
   return (
-    <div className="px-5 pb-24 pt-2">
-      <h1 className="mb-5 text-[28px] font-black tracking-tight text-foreground">Settings</h1>
+    <div className="px-5 pb-28">
+      {/* Page header */}
+      <div className="pt-8 pb-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary/50 mb-1">Gauge</p>
+        <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Settings</h1>
+      </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {/* Currency */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Currency</h3>
+          <div className="relative rounded-2xl bg-card p-5">
+            <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Currency</h3>
             <Select value={profile?.preferred_currency ?? 'EUR'} onValueChange={handleCurrencyChange}>
               <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -58,8 +62,8 @@ export default function SettingsPage() {
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Appearance</h3>
+          <div className="relative rounded-2xl bg-card p-5">
+            <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Appearance</h3>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Moon className="h-4 w-4 text-muted-foreground" />
@@ -74,8 +78,8 @@ export default function SettingsPage() {
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Data</h3>
+          <div className="relative rounded-2xl bg-card p-5">
+            <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Data</h3>
             <Button variant="outline" className="w-full rounded-xl" onClick={handleExport}>
               <Download className="mr-2 h-4 w-4" /> Export Subscriptions
             </Button>
@@ -86,10 +90,12 @@ export default function SettingsPage() {
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">About</h3>
-            <p className="text-sm text-foreground font-semibold">Gauge v1.0</p>
-            <p className="text-xs text-muted-foreground mt-1">Privacy-first subscription tracking. No bank linking, fully manual, fully yours.</p>
+          <div className="relative rounded-2xl bg-card p-5">
+            <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">About</h3>
+            <p className="text-sm font-bold text-foreground">Gauge v1.0</p>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              Privacy-first subscription tracking. No bank linking, fully manual, fully yours.
+            </p>
           </div>
         </motion.div>
       </div>

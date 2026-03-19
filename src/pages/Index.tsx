@@ -3,7 +3,6 @@ import BottomNav from "@/components/layout/BottomNav";
 import FAB from "@/components/layout/FAB";
 import AnimatedBackground from "@/components/layout/AnimatedBackground";
 import AddSubscriptionSheet from "@/components/subscriptions/AddSubscriptionSheet";
-import GaugeLogo from "@/components/GaugeLogo";
 import SubscriptionsPage from "./SubscriptionsPage";
 import InsightsPage from "./InsightsPage";
 import CalendarPage from "./CalendarPage";
@@ -17,7 +16,7 @@ export default function Index() {
   const renderPage = () => {
     switch (activeTab) {
       case "subscriptions":
-        return <SubscriptionsPage />;
+        return <SubscriptionsPage onAdd={() => setShowAdd(true)} />;
       case "insights":
         return <InsightsPage />;
       case "calendar":
@@ -25,20 +24,17 @@ export default function Index() {
       case "settings":
         return <SettingsPage />;
       default:
-        return <SubscriptionsPage />;
+        return <SubscriptionsPage onAdd={() => setShowAdd(true)} />;
     }
   };
 
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
-      {/* Floating glow background */}
       <AnimatedBackground />
 
       <div className="relative z-10 mx-auto max-w-lg">
-        {/* Header with logo */}
-        <div className="flex items-center justify-center px-5 pb-2 safe-top" style={{ paddingTop: 'max(20px, calc(env(safe-area-inset-top) + 8px))' }}>
-          <GaugeLogo height={40} />
-        </div>
+        {/* iOS safe area spacer */}
+        <div style={{ height: 'env(safe-area-inset-top, 0px)' }} />
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -46,7 +42,7 @@ export default function Index() {
             initial={{ opacity: 0, x: 8 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -8 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.18 }}
           >
             {renderPage()}
           </motion.div>

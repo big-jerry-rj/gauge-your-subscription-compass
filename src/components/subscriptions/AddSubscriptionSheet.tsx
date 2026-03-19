@@ -13,6 +13,38 @@ import { CalendarIcon, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
+function ServiceButton({
+  service,
+  onSelect,
+}: {
+  service: typeof POPULAR_SERVICES[number];
+  onSelect: (s: typeof POPULAR_SERVICES[number]) => void;
+}) {
+  const [imgFailed, setImgFailed] = useState(false);
+  return (
+    <button
+      onClick={() => onSelect(service)}
+      className="flex flex-col items-center gap-2 rounded-2xl bg-muted/50 p-3 transition-all active:scale-95 hover:bg-muted"
+    >
+      {service.logo && !imgFailed ? (
+        <img
+          src={service.logo}
+          alt={service.name}
+          className="h-10 w-10 rounded-xl object-contain"
+          onError={() => setImgFailed(true)}
+        />
+      ) : (
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
+          {service.name[0]}
+        </div>
+      )}
+      <span className="text-[10px] font-medium text-foreground leading-tight text-center line-clamp-2">
+        {service.name}
+      </span>
+    </button>
+  );
+}
+
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -79,22 +111,7 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             <p className="mb-3 text-sm font-medium text-muted-foreground">Choose a service or add custom</p>
             <div className="grid grid-cols-4 gap-3">
               {POPULAR_SERVICES.map(service => (
-                <button
-                  key={service.name}
-                  onClick={() => selectService(service)}
-                  className="flex flex-col items-center gap-1.5 rounded-2xl bg-muted/50 p-3 transition-all hover:bg-muted hover:scale-[1.02]"
-                >
-                  {service.logo ? (
-                    <img src={service.logo} alt={service.name} className="h-8 w-8 rounded-lg object-contain" />
-                  ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
-                      {service.name[0]}
-                    </div>
-                  )}
-                  <span className="text-[10px] font-medium text-foreground leading-tight text-center line-clamp-2">
-                    {service.name}
-                  </span>
-                </button>
+                <ServiceButton key={service.name} service={service} onSelect={selectService} />
               ))}
             </div>
             <Button

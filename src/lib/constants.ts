@@ -30,27 +30,30 @@ export const CATEGORIES = [
   'Other',
 ] as const;
 
+const favicon = (domain: string) =>
+  `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+
 export const POPULAR_SERVICES = [
-  { name: 'Netflix', logo: 'https://logo.clearbit.com/netflix.com', category: 'Video Streaming', defaultAmount: 15.49 },
-  { name: 'Spotify', logo: 'https://logo.clearbit.com/spotify.com', category: 'Music', defaultAmount: 10.99 },
-  { name: 'Disney+', logo: 'https://logo.clearbit.com/disneyplus.com', category: 'Video Streaming', defaultAmount: 8.99 },
-  { name: 'YouTube Premium', logo: 'https://logo.clearbit.com/youtube.com', category: 'Video Streaming', defaultAmount: 13.99 },
-  { name: 'Apple Music', logo: 'https://logo.clearbit.com/apple.com', category: 'Music', defaultAmount: 10.99 },
-  { name: 'iCloud+', logo: 'https://logo.clearbit.com/icloud.com', category: 'Cloud Storage', defaultAmount: 2.99 },
-  { name: 'Google One', logo: 'https://logo.clearbit.com/one.google.com', category: 'Cloud Storage', defaultAmount: 1.99 },
-  { name: 'Adobe Creative Cloud', logo: 'https://logo.clearbit.com/adobe.com', category: 'Software', defaultAmount: 54.99 },
-  { name: 'Microsoft 365', logo: 'https://logo.clearbit.com/microsoft.com', category: 'Productivity', defaultAmount: 9.99 },
-  { name: 'Amazon Prime', logo: 'https://logo.clearbit.com/amazon.com', category: 'Shopping', defaultAmount: 8.99 },
-  { name: 'HBO Max', logo: 'https://logo.clearbit.com/hbomax.com', category: 'Video Streaming', defaultAmount: 13.99 },
-  { name: 'Notion', logo: 'https://logo.clearbit.com/notion.so', category: 'Productivity', defaultAmount: 10.00 },
-  { name: 'Figma', logo: 'https://logo.clearbit.com/figma.com', category: 'Software', defaultAmount: 15.00 },
-  { name: 'Slack', logo: 'https://logo.clearbit.com/slack.com', category: 'Productivity', defaultAmount: 8.75 },
-  { name: 'Dropbox', logo: 'https://logo.clearbit.com/dropbox.com', category: 'Cloud Storage', defaultAmount: 11.99 },
-  { name: 'ChatGPT Plus', logo: 'https://logo.clearbit.com/openai.com', category: 'Software', defaultAmount: 20.00 },
+  { name: 'Netflix', logo: favicon('netflix.com'), category: 'Video Streaming', defaultAmount: 15.49 },
+  { name: 'Spotify', logo: favicon('spotify.com'), category: 'Music', defaultAmount: 10.99 },
+  { name: 'Disney+', logo: favicon('disneyplus.com'), category: 'Video Streaming', defaultAmount: 8.99 },
+  { name: 'YouTube Premium', logo: favicon('youtube.com'), category: 'Video Streaming', defaultAmount: 13.99 },
+  { name: 'Apple Music', logo: favicon('music.apple.com'), category: 'Music', defaultAmount: 10.99 },
+  { name: 'iCloud+', logo: favicon('icloud.com'), category: 'Cloud Storage', defaultAmount: 2.99 },
+  { name: 'Google One', logo: favicon('one.google.com'), category: 'Cloud Storage', defaultAmount: 1.99 },
+  { name: 'Adobe Creative Cloud', logo: favicon('adobe.com'), category: 'Software', defaultAmount: 54.99 },
+  { name: 'Microsoft 365', logo: favicon('microsoft.com'), category: 'Productivity', defaultAmount: 9.99 },
+  { name: 'Amazon Prime', logo: favicon('amazon.com'), category: 'Shopping', defaultAmount: 8.99 },
+  { name: 'HBO Max', logo: favicon('max.com'), category: 'Video Streaming', defaultAmount: 13.99 },
+  { name: 'Notion', logo: favicon('notion.so'), category: 'Productivity', defaultAmount: 10.00 },
+  { name: 'Figma', logo: favicon('figma.com'), category: 'Software', defaultAmount: 15.00 },
+  { name: 'Slack', logo: favicon('slack.com'), category: 'Productivity', defaultAmount: 8.75 },
+  { name: 'Dropbox', logo: favicon('dropbox.com'), category: 'Cloud Storage', defaultAmount: 11.99 },
+  { name: 'ChatGPT Plus', logo: favicon('openai.com'), category: 'Software', defaultAmount: 20.00 },
   { name: 'Gym Membership', logo: '', category: 'Health & Fitness', defaultAmount: 29.99 },
-  { name: 'LinkedIn Premium', logo: 'https://logo.clearbit.com/linkedin.com', category: 'Social Media', defaultAmount: 29.99 },
-  { name: 'Hulu', logo: 'https://logo.clearbit.com/hulu.com', category: 'Video Streaming', defaultAmount: 17.99 },
-  { name: 'Paramount+', logo: 'https://logo.clearbit.com/paramountplus.com', category: 'Video Streaming', defaultAmount: 11.99 },
+  { name: 'LinkedIn Premium', logo: favicon('linkedin.com'), category: 'Social Media', defaultAmount: 29.99 },
+  { name: 'Hulu', logo: favicon('hulu.com'), category: 'Video Streaming', defaultAmount: 17.99 },
+  { name: 'Paramount+', logo: favicon('paramountplus.com'), category: 'Video Streaming', defaultAmount: 11.99 },
 ] as const;
 
 export function getCurrencySymbol(code: string): string {

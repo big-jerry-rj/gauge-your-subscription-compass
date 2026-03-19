@@ -3,17 +3,24 @@ import { useSubscriptions, Subscription } from '@/hooks/useSubscriptions';
 import SubscriptionCard from '@/components/subscriptions/SubscriptionCard';
 import SubscriptionDetail from '@/components/subscriptions/SubscriptionDetail';
 import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { Search, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 const FILTERS = ['All', 'Active', 'Paused', 'Cancelled'] as const;
 
-export default function SubscriptionsPage() {
+interface Props {
+  onAdd: () => void;
+}
+
+export default function SubscriptionsPage({ onAdd }: Props) {
   const { subscriptions, isLoading } = useSubscriptions();
   const [filter, setFilter] = useState<string>('All');
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<Subscription | null>(null);
+
+  const hasAny = subscriptions.length > 0;
+  const activeCount = subscriptions.filter(s => s.status === 'active').length;
 
   const filtered = useMemo(() => {
     return subscriptions.filter(s => {
@@ -24,68 +31,93 @@ export default function SubscriptionsPage() {
   }, [subscriptions, filter, search]);
 
   return (
-    <div className="px-5 pb-24 pt-2">
-      <h1 className="mb-1 text-[28px] font-black tracking-tight text-foreground">Subscriptions</h1>
-      <p className="mb-5 text-sm text-muted-foreground">
-        {subscriptions.length} total · {subscriptions.filter(s => s.status === 'active').length} active
-      </p>
-
-      {/* Search */}
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          placeholder="Search subscriptions..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="h-10 rounded-xl pl-9 bg-muted/50 border-0"
-        />
-      </div>
-
-      {/* Filter chips */}
-      <div className="mb-5 flex gap-2 overflow-x-auto no-scrollbar">
-        {FILTERS.map(f => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={cn(
-              "shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors",
-              filter === f
-                ? "gradient-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground"
-            )}
-          >
-            {f}
+    <div className="px-5 pb-28">
+      {/* Page header */}
+      <div className="flex items-end justify-between pt-8 pb-6">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary/50 mb-1">Gauge</p>
+          <h1 className="text-[32px] font-black tracking-tight leading-none">
+            <span className="text-foreground">Your </span>
+            <span className="text-primary">subs</span>
+          </h1>
+          {hasAny && (
+            <p className="mt-2 text-sm text-muted-foreground">
+              {subscriptions.length} total · {activeCount} active
+            </p>
+          )}
+        </div>
+        {hasAny && (
+          <button className="flex h-9 w-9 items-center justify-center rounded-2xl bg-muted/60 transition-colors active:bg-muted">
+            <SlidersHorizontal className="h-[17px] w-[17px] text-muted-foreground" />
           </button>
-        ))}
+        )}
       </div>
 
-      {/* List */}
       {isLoading ? (
         <div className="space-y-3">
           {[1, 2, 3].map(i => (
-            <div key={i} className="h-20 animate-pulse rounded-2xl bg-muted" />
+            <div key={i} className="h-20 animate-pulse rounded-[20px] bg-muted/60" />
           ))}
         </div>
-      ) : filtered.length === 0 ? (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center justify-center py-20 text-center"
-        >
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10">
-            <span className="text-3xl">📋</span>
-          </div>
-          <p className="text-base font-bold text-foreground">No subscriptions yet</p>
-          <p className="mt-1.5 text-sm text-muted-foreground max-w-[200px] leading-relaxed">
-            {search ? 'No results for that search' : 'Tap + to track your first subscription'}
-          </p>
-        </motion.div>
+      ) : !hasAny ? (
+        <EmptyState onAdd={onAdd} />
       ) : (
-        <div className="space-y-3">
-          {filtered.map(sub => (
-            <SubscriptionCard key={sub.id} subscription={sub} onClick={() => setSelected(sub)} />
-          ))}
-        </div>
+        <>
+          {/* Search */}
+          <div className="relative mb-4">
+            <Search className="absolute left-3.5 top-1/2 h-[15px] w-[15px] -translate-y-1/2 text-muted-foreground/50" />
+            <Input
+              placeholder="Search subscriptions..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="h-11 rounded-2xl pl-10 bg-muted/50 border-0 text-[14px] font-medium placeholder:text-muted-foreground/40 focus-visible:ring-1 focus-visible:ring-primary/25"
+            />
+          </div>
+
+          {/* Filter chips */}
+          <div className="mb-5 flex gap-2 overflow-x-auto no-scrollbar pb-0.5">
+            {FILTERS.map(f => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={cn(
+                  'shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200',
+                  filter === f
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+                )}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+
+          {/* List */}
+          {filtered.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="py-12 text-center"
+            >
+              <p className="text-sm text-muted-foreground">
+                No results for "{search || filter}"
+              </p>
+            </motion.div>
+          ) : (
+            <div className="space-y-3">
+              {filtered.map((sub, i) => (
+                <motion.div
+                  key={sub.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.04 }}
+                >
+                  <SubscriptionCard subscription={sub} onClick={() => setSelected(sub)} />
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </>
       )}
 
       <SubscriptionDetail
@@ -94,5 +126,72 @@ export default function SubscriptionsPage() {
         onOpenChange={open => !open && setSelected(null)}
       />
     </div>
+  );
+}
+
+function EmptyState({ onAdd }: { onAdd: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+      className="flex flex-col items-center pt-6 pb-4 text-center"
+    >
+      {/* Gauge arc illustration — the brand motif */}
+      <div className="relative mb-7">
+        <svg width="116" height="116" viewBox="0 0 116 116" fill="none">
+          {/* Outer track */}
+          <circle cx="58" cy="58" r="50" stroke="rgba(163,230,53,0.08)" strokeWidth="7" />
+          {/* Partial arc — "nothing tracked yet" */}
+          <circle
+            cx="58" cy="58" r="50"
+            stroke="rgba(163,230,53,0.22)"
+            strokeWidth="7"
+            strokeDasharray={`${2 * Math.PI * 50}`}
+            strokeDashoffset={`${2 * Math.PI * 50 * 0.72}`}
+            strokeLinecap="round"
+            transform="rotate(-90 58 58)"
+          />
+          {/* Inner ring */}
+          <circle cx="58" cy="58" r="36" stroke="rgba(163,230,53,0.05)" strokeWidth="1" />
+          {/* Center G mark */}
+          <text x="58" y="52" textAnchor="middle" fontSize="26" fill="rgba(163,230,53,0.55)" fontFamily="system-ui" fontWeight="800">G</text>
+          <text x="58" y="69" textAnchor="middle" fontSize="9" fill="rgba(163,230,53,0.3)" fontFamily="system-ui" fontWeight="700" letterSpacing="2">GAUGE</text>
+        </svg>
+      </div>
+
+      <h2 className="text-[22px] font-black tracking-tight text-foreground mb-2.5">
+        No subscriptions yet
+      </h2>
+      <p className="text-sm text-muted-foreground leading-relaxed max-w-[250px] mb-8">
+        Add your first recurring payment to start tracking renewals and monthly spend.
+      </p>
+
+      {/* Primary CTA */}
+      <button
+        onClick={onAdd}
+        className="mb-9 flex items-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
+        style={{ boxShadow: '0 4px 20px rgba(133,203,51,0.35)' }}
+      >
+        <span className="text-lg leading-none font-light">+</span>
+        Add your first subscription
+      </button>
+
+      {/* Suggestions */}
+      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground/40 mb-3">
+        Popular services
+      </p>
+      <div className="flex flex-wrap gap-2 justify-center">
+        {['Netflix', 'Spotify', 'iCloud', 'YouTube', 'Gym', 'Custom'].map(name => (
+          <button
+            key={name}
+            onClick={onAdd}
+            className="rounded-full border border-border/50 bg-card/40 px-4 py-1.5 text-[12px] font-semibold text-muted-foreground transition-all active:scale-95 hover:border-primary/30 hover:text-foreground"
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+    </motion.div>
   );
 }

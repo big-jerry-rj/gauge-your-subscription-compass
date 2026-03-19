@@ -10,12 +10,6 @@ interface Props {
   onClick?: () => void;
 }
 
-// Status dot color per subscription status
-const STATUS_COLORS: Record<string, string> = {
-  active: '#A3E635',
-  paused: '#f59e0b',
-  cancelled: '#6b7280',
-};
 
 // Renewal arc — the core Gauge brand motif
 function RenewalArc({ nextBillingDate, children }: { nextBillingDate: string | null; children: React.ReactNode }) {
@@ -107,7 +101,6 @@ function cycleShort(cycle: string): string {
 }
 
 export default function SubscriptionCard({ subscription, onClick }: Props) {
-  const dotColor = STATUS_COLORS[subscription.status] ?? '#A3E635';
 
   return (
     <motion.div
@@ -118,32 +111,20 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
     >
       <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <div className="relative glass-card flex items-center gap-3.5 px-4 py-3.5 rounded-[20px]">
-        {/* Status dot */}
-        <div
-          className="absolute top-3 right-3 h-[6px] w-[6px] rounded-full opacity-70"
-          style={{ background: dotColor, position: 'absolute', top: 14, right: 14 }}
-        />
-
-        {/* Renewal arc wrapping the logo */}
-        <RenewalArc nextBillingDate={subscription.next_billing_date}>
+        {/* Logo tile */}
+        <div className="h-[52px] w-[52px] shrink-0 rounded-xl bg-muted overflow-hidden flex items-center justify-center">
           {subscription.logo_url ? (
-            <img src={subscription.logo_url} alt={subscription.name} className="h-6 w-6 object-contain" />
+            <img src={subscription.logo_url} alt={subscription.name} className="h-10 w-10 object-contain rounded-xl" />
           ) : (
             <span className="text-sm font-bold text-primary">{subscription.name[0]}</span>
           )}
-        </RenewalArc>
+        </div>
 
         {/* Name + renewal date */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 mb-0.5">
-            <div
-              className="h-[6px] w-[6px] rounded-full shrink-0"
-              style={{ background: dotColor, opacity: 0.8 }}
-            />
-            <p className="font-semibold text-[15px] text-foreground truncate leading-snug">
-              {subscription.name}
-            </p>
-          </div>
+          <p className="font-semibold text-[15px] text-foreground truncate leading-snug mb-0.5">
+            {subscription.name}
+          </p>
           <RenewalLabel date={subscription.next_billing_date} status={subscription.status} />
         </div>
 

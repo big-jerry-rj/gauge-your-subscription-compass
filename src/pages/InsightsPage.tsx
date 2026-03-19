@@ -53,32 +53,39 @@ export default function InsightsPage() {
     <div className="px-5 pb-24 pt-2">
       <h1 className="mb-5 text-[28px] font-black tracking-tight text-foreground">Insights</h1>
 
-      {/* Hero Card */}
+      {/* Spend summary */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-5 rounded-2xl gradient-hero p-6 relative overflow-hidden"
+        className="mb-5 rounded-[20px] bg-primary p-5 relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent pointer-events-none" />
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="h-4 w-4 text-primary-foreground dark:text-primary" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary-foreground/80 dark:text-primary/80">
-              Monthly Spending
-            </span>
-          </div>
-          <p className="text-4xl font-black text-primary-foreground dark:text-foreground">
-            {formatCurrency(monthlyTotal, currency)}
-          </p>
-          <p className="mt-1 text-sm text-primary-foreground/80 dark:text-muted-foreground">
-            on {active.length} active subscription{active.length !== 1 ? 's' : ''}
-          </p>
-          {pausedSavings > 0 && (
-            <p className="mt-3 text-xs font-medium text-primary-foreground/70 dark:text-primary/70">
-              💰 Saving {formatCurrency(pausedSavings, currency)}/mo by pausing {paused.length} sub{paused.length !== 1 ? 's' : ''}
+        <div className="flex items-start justify-between">
+          <div>
+            <div className="flex items-center gap-1.5 mb-2">
+              <TrendingUp className="h-3.5 w-3.5 text-primary-foreground/70" />
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-primary-foreground/70">
+                This Month
+              </span>
+            </div>
+            <p className="text-[38px] font-black text-primary-foreground leading-none tracking-tight">
+              {formatCurrency(monthlyTotal, currency)}
             </p>
-          )}
+            <p className="mt-2 text-sm text-primary-foreground/75">
+              across {active.length} active subscription{active.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-foreground/15">
+            <ArrowUpRight className="h-5 w-5 text-primary-foreground" />
+          </div>
         </div>
+        {pausedSavings > 0 && (
+          <div className="mt-4 flex items-center gap-2 rounded-xl bg-primary-foreground/15 px-3 py-2">
+            <span className="text-sm">💰</span>
+            <p className="text-xs font-medium text-primary-foreground/85">
+              Saving {formatCurrency(pausedSavings, currency)}/mo from {paused.length} paused
+            </p>
+          </div>
+        )}
       </motion.div>
 
       {/* Stats Grid */}
@@ -147,7 +154,7 @@ export default function InsightsPage() {
                   formatter={(val: number) => formatCurrency(val, currency)}
                   contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: 12, fontSize: 12 }}
                 />
-                <Bar dataKey="amount" fill="hsl(142 71% 45%)" radius={[0, 6, 6, 0]} barSize={16} />
+                <Bar dataKey="amount" fill="hsl(88 60% 50%)" radius={[0, 6, 6, 0]} barSize={16} />
               </BarChart>
             </ResponsiveContainer>
           </div>

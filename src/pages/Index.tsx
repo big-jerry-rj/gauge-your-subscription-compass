@@ -3,6 +3,7 @@ import BottomNav from "@/components/layout/BottomNav";
 import FAB from "@/components/layout/FAB";
 import AnimatedBackground from "@/components/layout/AnimatedBackground";
 import AddSubscriptionSheet from "@/components/subscriptions/AddSubscriptionSheet";
+import GaugeLogo from "@/components/GaugeLogo";
 import SubscriptionsPage from "./SubscriptionsPage";
 import InsightsPage from "./InsightsPage";
 import CalendarPage from "./CalendarPage";
@@ -35,8 +36,8 @@ export default function Index() {
 
       <div className="relative z-10 mx-auto max-w-lg">
         {/* Header with logo */}
-        <div className="flex items-center justify-center px-5 pt-6 pb-2">
-          <img src="/gauge-logo.png" alt="Gauge" className="h-12 w-auto" />
+        <div className="flex items-center justify-center px-5 pb-2 safe-top" style={{ paddingTop: 'max(20px, calc(env(safe-area-inset-top) + 8px))' }}>
+          <GaugeLogo height={40} />
         </div>
 
         <AnimatePresence mode="wait">

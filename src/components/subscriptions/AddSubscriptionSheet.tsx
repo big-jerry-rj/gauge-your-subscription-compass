@@ -69,9 +69,9 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] overflow-y-auto rounded-t-3xl px-6 pb-10">
-        <SheetHeader className="mb-4">
-          <SheetTitle className="text-xl font-bold">Add Subscription</SheetTitle>
+      <SheetContent side="bottom" className="h-[92vh] overflow-y-auto rounded-t-[28px] px-6 pb-10">
+        <SheetHeader className="mb-5">
+          <SheetTitle className="text-[22px] font-bold tracking-tight">Add Subscription</SheetTitle>
         </SheetHeader>
 
         {showLogoPicker && !name ? (

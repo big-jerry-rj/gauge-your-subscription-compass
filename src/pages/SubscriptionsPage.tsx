@@ -68,12 +68,17 @@ export default function SubscriptionsPage() {
         </div>
       ) : filtered.length === 0 ? (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex flex-col items-center justify-center py-16 text-center"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center justify-center py-20 text-center"
         >
-          <p className="text-lg font-semibold text-foreground">No subscriptions yet</p>
-          <p className="mt-1 text-sm text-muted-foreground">Tap + to add your first subscription</p>
+          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10">
+            <span className="text-3xl">📋</span>
+          </div>
+          <p className="text-base font-bold text-foreground">No subscriptions yet</p>
+          <p className="mt-1.5 text-sm text-muted-foreground max-w-[200px] leading-relaxed">
+            {search ? 'No results for that search' : 'Tap + to track your first subscription'}
+          </p>
         </motion.div>
       ) : (
         <div className="space-y-3">

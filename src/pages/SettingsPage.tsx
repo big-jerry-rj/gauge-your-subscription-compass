@@ -8,6 +8,7 @@ import { useSubscriptions } from '@/hooks/useSubscriptions';
 import { Download, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 export default function SettingsPage() {
   const { profile, updateProfile } = useProfile();
@@ -38,46 +39,58 @@ export default function SettingsPage() {
       <div className="space-y-4">
         {/* Currency */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl bg-card p-5 card-shadow">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Currency</h3>
-          <Select value={profile?.preferred_currency ?? 'EUR'} onValueChange={handleCurrencyChange}>
-            <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {CURRENCIES.map(c => (
-                <SelectItem key={c.code} value={c.code}>{c.symbol} {c.name} ({c.code})</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Currency</h3>
+            <Select value={profile?.preferred_currency ?? 'EUR'} onValueChange={handleCurrencyChange}>
+              <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {CURRENCIES.map(c => (
+                  <SelectItem key={c.code} value={c.code}>{c.symbol} {c.name} ({c.code})</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </motion.div>
 
         {/* Appearance */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-          className="rounded-2xl bg-card p-5 card-shadow">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Appearance</h3>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Moon className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-foreground">Dark Mode</span>
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Appearance</h3>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Moon className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-foreground">Dark Mode</span>
+              </div>
+              <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
             </div>
-            <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
           </div>
         </motion.div>
 
         {/* Data */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="rounded-2xl bg-card p-5 card-shadow">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Data</h3>
-          <Button variant="outline" className="w-full rounded-xl" onClick={handleExport}>
-            <Download className="mr-2 h-4 w-4" /> Export Subscriptions
-          </Button>
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Data</h3>
+            <Button variant="outline" className="w-full rounded-xl" onClick={handleExport}>
+              <Download className="mr-2 h-4 w-4" /> Export Subscriptions
+            </Button>
+          </div>
         </motion.div>
 
         {/* About */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="rounded-2xl bg-card p-5 card-shadow">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">About</h3>
-          <p className="text-sm text-foreground font-semibold">Gauge v1.0</p>
-          <p className="text-xs text-muted-foreground mt-1">Privacy-first subscription tracking. No bank linking, fully manual, fully yours.</p>
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">About</h3>
+            <p className="text-sm text-foreground font-semibold">Gauge v1.0</p>
+            <p className="text-xs text-muted-foreground mt-1">Privacy-first subscription tracking. No bank linking, fully manual, fully yours.</p>
+          </div>
         </motion.div>
       </div>
     </div>

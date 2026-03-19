@@ -5,6 +5,7 @@ import { formatCurrency, getMonthlyAmount } from '@/lib/constants';
 import { motion } from 'framer-motion';
 import { TrendingUp, ArrowUpRight } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 const CHART_COLORS = [
   'hsl(88 60% 50%)', 'hsl(88 65% 60%)', 'hsl(167 24% 52%)',
@@ -91,20 +92,26 @@ export default function InsightsPage() {
       {/* Stats Grid */}
       <div className="mb-5 grid grid-cols-2 gap-3">
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="p-4 glass-card">
-          <p className="text-xs text-muted-foreground mb-1">Yearly Projection</p>
-          <p className="text-2xl font-bold text-foreground">{formatCurrency(yearlyTotal, currency)}</p>
-          <div className="mt-2 flex items-center gap-1 text-xs text-primary font-medium">
-            <ArrowUpRight className="h-3 w-3" /> per year
+          className="relative rounded-[20px] border border-border/40">
+          <GlowingEffect spread={25} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative glass-card rounded-[20px] p-4">
+            <p className="text-xs text-muted-foreground mb-1">Yearly Projection</p>
+            <p className="text-2xl font-bold text-foreground">{formatCurrency(yearlyTotal, currency)}</p>
+            <div className="mt-2 flex items-center gap-1 text-xs text-primary font-medium">
+              <ArrowUpRight className="h-3 w-3" /> per year
+            </div>
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="p-4 glass-card">
-          <p className="text-xs text-muted-foreground mb-1">Avg per Sub</p>
-          <p className="text-2xl font-bold text-foreground">
-            {active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—'}
-          </p>
-          <div className="mt-2 text-xs text-muted-foreground">per month</div>
+          className="relative rounded-[20px] border border-border/40">
+          <GlowingEffect spread={25} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative glass-card rounded-[20px] p-4">
+            <p className="text-xs text-muted-foreground mb-1">Avg per Sub</p>
+            <p className="text-2xl font-bold text-foreground">
+              {active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—'}
+            </p>
+            <div className="mt-2 text-xs text-muted-foreground">per month</div>
+          </div>
         </motion.div>
       </div>
 

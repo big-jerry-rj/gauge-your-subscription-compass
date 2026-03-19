@@ -1,4 +1,4 @@
-import { LayoutList, BarChart3, Calendar, Settings } from 'lucide-react';
+import { LayoutList, BarChart3, Calendar, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BottomNavProps {
@@ -13,7 +13,7 @@ const leftTabs = [
 
 const rightTabs = [
   { id: 'calendar', label: 'Calendar', icon: Calendar },
-  { id: 'settings', label: 'Settings', icon: Settings },
+  { id: 'account', label: 'Account', icon: UserCircle },
 ];
 
 export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {

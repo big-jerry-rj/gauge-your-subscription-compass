@@ -1,11 +1,12 @@
 import { useProfile } from '@/hooks/useProfile';
 import { useTheme } from '@/hooks/useTheme';
+import { useAuth } from '@/hooks/useAuth';
 import { CURRENCIES } from '@/lib/constants';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { useSubscriptions } from '@/hooks/useSubscriptions';
-import { Download, Moon } from 'lucide-react';
+import { Download, Moon, LogOut, UserCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
@@ -13,6 +14,7 @@ import { GlowingEffect } from '@/components/ui/glowing-effect';
 export default function SettingsPage() {
   const { profile, updateProfile } = useProfile();
   const { theme, toggleTheme } = useTheme();
+  const { user, signOut } = useAuth();
   const { subscriptions } = useSubscriptions();
 
   const handleCurrencyChange = async (code: string) => {
@@ -32,17 +34,39 @@ export default function SettingsPage() {
     toast.success('Data exported');
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success('Signed out');
+  };
+
   return (
     <div className="px-5 pb-28">
       {/* Page header */}
       <div className="pt-8 pb-6">
         <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary/50 mb-1">Gauge</p>
-        <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Settings</h1>
+        <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Account</h1>
       </div>
 
       <div className="space-y-3">
-        {/* Currency */}
+        {/* Profile */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <UserCircle className="h-6 w-6 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-foreground truncate">{user?.email ?? '—'}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Gauge account</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Currency */}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
           <div className="relative rounded-2xl bg-card p-5">
@@ -59,7 +83,7 @@ export default function SettingsPage() {
         </motion.div>
 
         {/* Appearance */}
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
           <div className="relative rounded-2xl bg-card p-5">
@@ -75,7 +99,7 @@ export default function SettingsPage() {
         </motion.div>
 
         {/* Data */}
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.11 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
           <div className="relative rounded-2xl bg-card p-5">
@@ -87,7 +111,7 @@ export default function SettingsPage() {
         </motion.div>
 
         {/* About */}
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }}
           className="relative rounded-2xl border border-border/40">
           <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
           <div className="relative rounded-2xl bg-card p-5">
@@ -97,6 +121,17 @@ export default function SettingsPage() {
               Privacy-first subscription tracking. No bank linking, fully manual, fully yours.
             </p>
           </div>
+        </motion.div>
+
+        {/* Sign out */}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.17 }}>
+          <Button
+            variant="outline"
+            className="w-full rounded-2xl h-12 border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
+            onClick={handleSignOut}
+          >
+            <LogOut className="mr-2 h-4 w-4" /> Sign Out
+          </Button>
         </motion.div>
       </div>
     </div>

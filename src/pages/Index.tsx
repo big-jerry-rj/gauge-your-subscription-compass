@@ -21,7 +21,7 @@ export default function Index() {
         return <InsightsPage />;
       case "calendar":
         return <CalendarPage />;
-      case "settings":
+      case "account":
         return <SettingsPage />;
       default:
         return <SubscriptionsPage onAdd={() => setShowAdd(true)} />;

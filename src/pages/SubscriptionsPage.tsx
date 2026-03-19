@@ -137,30 +137,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
       transition={{ duration: 0.35 }}
       className="flex flex-col items-center pt-6 pb-4 text-center"
     >
-      {/* Gauge arc illustration — the brand motif */}
-      <div className="relative mb-7">
-        <svg width="116" height="116" viewBox="0 0 116 116" fill="none">
-          {/* Outer track */}
-          <circle cx="58" cy="58" r="50" stroke="rgba(163,230,53,0.08)" strokeWidth="7" />
-          {/* Partial arc — "nothing tracked yet" */}
-          <circle
-            cx="58" cy="58" r="50"
-            stroke="rgba(163,230,53,0.22)"
-            strokeWidth="7"
-            strokeDasharray={`${2 * Math.PI * 50}`}
-            strokeDashoffset={`${2 * Math.PI * 50 * 0.72}`}
-            strokeLinecap="round"
-            transform="rotate(-90 58 58)"
-          />
-          {/* Inner ring */}
-          <circle cx="58" cy="58" r="36" stroke="rgba(163,230,53,0.05)" strokeWidth="1" />
-          {/* Center G mark */}
-          <text x="58" y="52" textAnchor="middle" fontSize="26" fill="rgba(163,230,53,0.55)" fontFamily="system-ui" fontWeight="800">G</text>
-          <text x="58" y="69" textAnchor="middle" fontSize="9" fill="rgba(163,230,53,0.3)" fontFamily="system-ui" fontWeight="700" letterSpacing="2">GAUGE</text>
-        </svg>
-      </div>
-
-      <h2 className="text-[22px] font-black tracking-tight text-foreground mb-2.5">
+      <h2 className="text-[22px] font-black tracking-tight text-foreground mb-2.5 mt-10">
         No subscriptions yet
       </h2>
       <p className="text-sm text-muted-foreground leading-relaxed max-w-[250px] mb-8">

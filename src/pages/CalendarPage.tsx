@@ -40,24 +40,25 @@ export default function CalendarPage() {
         <h1 className="text-[32px] font-black tracking-tight text-foreground leading-none">Calendar</h1>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-5 rounded-[20px] bg-card border border-border/40 p-3 flex justify-center"
-      >
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={setSelectedDate}
-          modifiers={modifiers}
-          modifiersStyles={modifiersStyles}
-          className="w-full"
-          classNames={{
-            day_selected: 'bg-primary text-primary-foreground rounded-xl',
-            day_today: 'bg-muted text-foreground font-bold rounded-xl',
-          }}
-        />
-      </motion.div>
+      <div className="flex justify-center mb-5">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-block rounded-[20px] bg-card border border-border/40 p-3"
+        >
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={setSelectedDate}
+            modifiers={modifiers}
+            modifiersStyles={modifiersStyles}
+            classNames={{
+              day_selected: 'bg-primary text-primary-foreground rounded-xl',
+              day_today: 'bg-muted text-foreground font-bold rounded-xl',
+            }}
+          />
+        </motion.div>
+      </div>
 
       {selectedDate && (
         <div>

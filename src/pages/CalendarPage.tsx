@@ -3,6 +3,7 @@ import { useSubscriptions } from '@/hooks/useSubscriptions';
 import { formatCurrency } from '@/lib/constants';
 import { useProfile } from '@/hooks/useProfile';
 import { Calendar } from '@/components/ui/calendar';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { format, isSameDay } from 'date-fns';
 import { motion } from 'framer-motion';
 
@@ -44,9 +45,10 @@ export default function CalendarPage() {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glow-pulse inline-block rounded-[20px] border border-border/40"
+          className="relative inline-block rounded-[20px] border border-border/40"
         >
-          <div className="rounded-[20px] bg-card p-3">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-[20px] bg-card p-3">
             <Calendar
               mode="single"
               selected={selectedDate}
@@ -76,8 +78,9 @@ export default function CalendarPage() {
                   key={sub.id}
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex items-center gap-3 rounded-[20px] bg-card border border-border/40 p-4"
+                  className="relative flex items-center gap-3 rounded-[20px] bg-card border border-border/40 p-4"
                 >
+                  <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted overflow-hidden shrink-0">
                     {sub.logo_url ? (
                       <img src={sub.logo_url} alt={sub.name} className="h-6 w-6 object-contain" />

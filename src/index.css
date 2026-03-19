@@ -121,12 +121,6 @@
   100% { background-position:  200% center; }
 }
 
-/* Light mode: kill glow-pulse — lime halos on white cards look garish */
-html:not(.dark) .glow-pulse {
-  animation: none !important;
-  box-shadow: none !important;
-}
-
 /* Reduced-motion overrides */
 @media (prefers-reduced-motion: reduce) {
   [class*="animate-blob"] { animation: none !important; }

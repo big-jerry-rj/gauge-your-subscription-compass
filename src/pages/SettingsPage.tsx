@@ -9,6 +9,7 @@ import { useSubscriptions } from '@/hooks/useSubscriptions';
 import { Download, Moon, LogOut, UserCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 export default function SettingsPage() {
   const { profile, updateProfile } = useProfile();
@@ -49,8 +50,9 @@ export default function SettingsPage() {
       <div className="space-y-3">
         {/* Profile */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          className="glow-pulse rounded-2xl border border-border/40">
-          <div className="rounded-2xl bg-card p-5 card-shadow">
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <UserCircle className="h-6 w-6 text-primary" />
@@ -65,8 +67,9 @@ export default function SettingsPage() {
 
         {/* Currency */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-          className="glow-pulse rounded-2xl border border-border/40">
-          <div className="rounded-2xl bg-card p-5 card-shadow">
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Currency</h3>
             <Select value={profile?.preferred_currency ?? 'EUR'} onValueChange={handleCurrencyChange}>
               <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
@@ -81,8 +84,9 @@ export default function SettingsPage() {
 
         {/* Appearance */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
-          className="glow-pulse rounded-2xl border border-border/40">
-          <div className="rounded-2xl bg-card p-5 card-shadow">
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Appearance</h3>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -96,8 +100,9 @@ export default function SettingsPage() {
 
         {/* Data */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.11 }}
-          className="glow-pulse rounded-2xl border border-border/40">
-          <div className="rounded-2xl bg-card p-5 card-shadow">
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Data</h3>
             <Button variant="outline" className="w-full rounded-xl" onClick={handleExport}>
               <Download className="mr-2 h-4 w-4" /> Export Subscriptions
@@ -107,8 +112,9 @@ export default function SettingsPage() {
 
         {/* About */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }}
-          className="glow-pulse rounded-2xl border border-border/40">
-          <div className="rounded-2xl bg-card p-5 card-shadow">
+          className="relative rounded-2xl border border-border/40">
+          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="relative rounded-2xl bg-card p-5 card-shadow">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">About</h3>
             <p className="text-sm font-bold text-foreground">Gauge v1.0</p>
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">

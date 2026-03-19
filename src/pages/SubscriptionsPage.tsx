@@ -3,6 +3,7 @@ import { useSubscriptions, Subscription } from '@/hooks/useSubscriptions';
 import SubscriptionCard from '@/components/subscriptions/SubscriptionCard';
 import SubscriptionDetail from '@/components/subscriptions/SubscriptionDetail';
 import { Input } from '@/components/ui/input';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -145,10 +146,11 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
       </p>
 
       {/* Primary CTA */}
-      <div className="glow-pulse rounded-2xl border border-border/40 mb-9">
+      <div className="relative rounded-2xl border border-border/40 mb-9">
+        <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
         <button
           onClick={onAdd}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
+          className="relative inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
         >
           <Plus className="h-4 w-4 shrink-0" strokeWidth={2.5} />
           Add your first subscription

@@ -26,12 +26,12 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
         onClick={() => onTabChange(tab.id)}
         className={cn(
           "flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all duration-200 active:scale-95",
-          isActive ? "text-primary" : "text-muted-foreground"
+          isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
         )}
       >
         <div className={cn(
-          "flex items-center justify-center w-10 h-7 rounded-2xl transition-all duration-200",
-          isActive ? "bg-primary/[0.15]" : "bg-transparent"
+          "flex items-center justify-center w-10 h-7 rounded-xl transition-all duration-200",
+          isActive ? "bg-primary/[0.15]" : "hover:bg-muted/60"
         )}>
           <Icon className="h-[19px] w-[19px]" strokeWidth={isActive ? 2.5 : 1.8} />
         </div>

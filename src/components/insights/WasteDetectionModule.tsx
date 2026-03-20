@@ -127,7 +127,7 @@ export default function WasteDetectionModule({ subscriptions, currency, onSelect
         ) : (
           <>
             {/* Potential savings hero */}
-            <div className="mb-4 rounded-[16px] bg-primary p-4 relative overflow-hidden">
+            <div className="mb-4 rounded-2xl bg-primary p-4 relative overflow-hidden">
               <div className="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-white/[0.06]" />
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary-foreground/60 mb-1">
                 You could save up to
@@ -146,7 +146,7 @@ export default function WasteDetectionModule({ subscriptions, currency, onSelect
                 <button
                   key={`${sub.id}-${reason}`}
                   onClick={() => onSelect?.(sub)}
-                  className="w-full flex items-center gap-3 rounded-[14px] bg-muted/40 px-3 py-2.5 text-left transition-colors active:bg-muted/70"
+                  className="w-full flex items-center gap-3 rounded-xl bg-muted/40 px-3 py-2.5 text-left transition-colors hover:bg-muted/60 active:bg-muted/70"
                 >
                   <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
                     {sub.logo_url

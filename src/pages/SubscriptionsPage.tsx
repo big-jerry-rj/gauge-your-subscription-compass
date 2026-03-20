@@ -65,7 +65,7 @@ export default function SubscriptionsPage({ onAdd }: Props) {
               placeholder="Search subscriptions..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="h-11 rounded-2xl pl-10 bg-muted/50 border-0 text-[14px] font-medium placeholder:text-muted-foreground/40 focus-visible:ring-1 focus-visible:ring-primary/25"
+              className="h-11 rounded-xl pl-10 bg-muted/50 border-0 text-[14px] font-medium placeholder:text-muted-foreground/40 focus-visible:ring-1 focus-visible:ring-ring/60"
             />
           </div>
 

@@ -56,7 +56,7 @@ function RenewalArc({ nextBillingDate, children }: { nextBillingDate: string | n
       </svg>
       {/* Logo inner zone */}
       <div
-        className="absolute flex items-center justify-center rounded-[11px] bg-muted overflow-hidden"
+        className="absolute flex items-center justify-center rounded-xl bg-muted overflow-hidden"
         style={{ inset: '5px' }}
       >
         {children}

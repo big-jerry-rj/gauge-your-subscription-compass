@@ -193,7 +193,7 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             <Button
               onClick={handleSubmit}
               disabled={loading || !name || !amount}
-              className="h-12 w-full rounded-xl gradient-primary text-primary-foreground font-semibold text-base fab-shadow hover:opacity-90"
+              className="h-11 w-full gradient-primary text-primary-foreground font-semibold text-base fab-shadow hover:opacity-90"
             >
               {loading ? 'Adding...' : 'Add Subscription'}
             </Button>

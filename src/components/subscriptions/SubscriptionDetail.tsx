@@ -37,7 +37,7 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange }:
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="rounded-t-3xl px-6 pb-10">
+      <SheetContent side="bottom" className="rounded-t-[28px] px-6 pb-10">
         <SheetHeader className="mb-6">
           <SheetTitle className="text-xl font-bold">Subscription Details</SheetTitle>
         </SheetHeader>

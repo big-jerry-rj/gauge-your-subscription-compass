@@ -119,7 +119,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
 
         {/* Annual projection */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-[14px] bg-muted/40 p-3">
+          <div className="rounded-xl bg-muted/40 p-3">
             <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
               This year
             </p>
@@ -128,7 +128,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
             </p>
             <p className="text-[10px] text-muted-foreground mt-0.5">projected</p>
           </div>
-          <div className="rounded-[14px] bg-muted/40 p-3">
+          <div className="rounded-xl bg-muted/40 p-3">
             <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
               Run rate
             </p>

@@ -60,9 +60,9 @@ export default function SettingsPage() {
       <div className="space-y-3">
         {/* Profile */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          className="relative rounded-2xl border border-border/40">
+          className="relative rounded-[20px] border border-border/40">
           <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+          <div className="relative rounded-[20px] glass-card p-5">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <UserCircle className="h-6 w-6 text-primary" />
@@ -81,12 +81,12 @@ export default function SettingsPage() {
 
         {/* Currency */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-          className="relative rounded-2xl border border-border/40">
+          className="relative rounded-[20px] border border-border/40">
           <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+          <div className="relative rounded-[20px] glass-card p-5">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Currency</h3>
             <Select value={profile?.preferred_currency ?? 'EUR'} onValueChange={handleCurrencyChange}>
-              <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="rounded-xl h-11"><SelectValue /></SelectTrigger>
               <SelectContent>
                 {CURRENCIES.map(c => (
                   <SelectItem key={c.code} value={c.code}>{c.symbol} {c.name} ({c.code})</SelectItem>
@@ -98,9 +98,9 @@ export default function SettingsPage() {
 
         {/* Appearance */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
-          className="relative rounded-2xl border border-border/40">
+          className="relative rounded-[20px] border border-border/40">
           <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+          <div className="relative rounded-[20px] glass-card p-5">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Appearance</h3>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -114,11 +114,11 @@ export default function SettingsPage() {
 
         {/* Data */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.11 }}
-          className="relative rounded-2xl border border-border/40">
+          className="relative rounded-[20px] border border-border/40">
           <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+          <div className="relative rounded-[20px] glass-card p-5">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Data</h3>
-            <Button variant="outline" className="w-full rounded-xl" onClick={handleExport}>
+            <Button variant="outline" className="w-full" onClick={handleExport}>
               <Download className="mr-2 h-4 w-4" /> Export Subscriptions
             </Button>
           </div>
@@ -126,9 +126,9 @@ export default function SettingsPage() {
 
         {/* About */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }}
-          className="relative rounded-2xl border border-border/40">
+          className="relative rounded-[20px] border border-border/40">
           <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div className="relative rounded-2xl bg-card p-5 card-shadow">
+          <div className="relative rounded-[20px] glass-card p-5">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">About</h3>
             <p className="text-sm font-bold text-foreground">Gauge v1.0</p>
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
@@ -141,7 +141,7 @@ export default function SettingsPage() {
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.17 }}>
           <Button
             variant="outline"
-            className="w-full rounded-2xl h-12 border-border/60 text-muted-foreground hover:bg-muted"
+            className="w-full border-border/60 text-muted-foreground hover:bg-muted"
             onClick={handleSignOut}
           >
             <LogOut className="mr-2 h-4 w-4" />
@@ -154,7 +154,7 @@ export default function SettingsPage() {
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <Button
               variant="outline"
-              className={`w-full rounded-2xl h-12 transition-colors ${
+              className={`w-full transition-colors ${
                 confirmDelete
                   ? 'border-destructive bg-destructive/10 text-destructive hover:bg-destructive/20'
                   : 'border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive'

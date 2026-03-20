@@ -342,7 +342,7 @@ export default function InsightsPage() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 rounded-[22px] bg-primary overflow-hidden"
+            className="mb-4 rounded-[20px] bg-primary overflow-hidden"
           >
             {/* Text section */}
             <div className="pt-7 pb-1 px-5 text-center">

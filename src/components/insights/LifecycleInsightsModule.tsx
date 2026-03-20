@@ -66,7 +66,7 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
         {/* Top spender — elevated card with lime left accent */}
         <div className="mb-4 rounded-2xl bg-muted/50 overflow-hidden flex">
           <div className="w-[3px] bg-primary shrink-0" />
-          <div className="flex items-center gap-3 px-3 py-3.5 flex-1 min-w-0">
+          <div className="flex items-center gap-3 px-3 py-4 flex-1 min-w-0">
             <div className="h-[48px] w-[48px] rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
               {top.sub.logo_url
                 ? <img src={top.sub.logo_url} alt={top.sub.name} className="h-9 w-9 object-contain rounded-xl" />
@@ -95,7 +95,7 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
         {visibleRest.length > 0 && (
           <div className="space-y-3 mb-3">
             {visibleRest.map(({ sub, months, lifetimeSpend }, i) => (
-              <div key={sub.id} className="flex items-center gap-2.5">
+              <div key={sub.id} className="flex items-center gap-3">
                 <span className="text-[11px] font-bold text-muted-foreground/50 w-4 shrink-0 tabular-nums">
                   {i + 2}
                 </span>
@@ -131,8 +131,8 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
         )}
 
         {/* Average lifespan */}
-        <div className="rounded-xl bg-muted/40 px-3 py-2.5">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-0.5">
+        <div className="rounded-xl bg-muted/40 px-3 py-3">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
             Avg subscription lifespan
           </p>
           <p className="text-[15px] font-bold text-foreground">

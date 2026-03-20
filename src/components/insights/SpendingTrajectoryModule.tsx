@@ -58,7 +58,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
       <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <div className="relative glass-card rounded-[20px] p-5">
 
-        <div className="flex items-center gap-2.5 mb-4">
+        <div className="flex items-center gap-3 mb-4">
           <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary/10">
             <TrendingUp className="h-3.5 w-3.5 text-primary" />
           </div>
@@ -104,7 +104,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
         {/* Velocity pill */}
         {velocityData && (
           <div className={cn(
-            'mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold',
+            'mb-4 inline-flex items-center gap-2 rounded-full px-3 py-2 text-[11px] font-bold',
             velocityData.isIncreasing
               ? 'bg-destructive/10 text-destructive'
               : 'bg-primary/10 text-primary'
@@ -126,7 +126,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
             <p className="text-[16px] font-black text-foreground">
               {formatCurrency(projectedAnnual, currency)}
             </p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">projected</p>
+            <p className="text-[10px] text-muted-foreground mt-1">projected</p>
           </div>
           <div className="rounded-xl bg-muted/40 p-3">
             <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
@@ -135,7 +135,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
             <p className="text-[16px] font-black text-foreground">
               {formatCurrency(monthlyHistory[monthlyHistory.length - 1]?.total ?? 0, currency)}
             </p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">per month</p>
+            <p className="text-[10px] text-muted-foreground mt-1">per month</p>
           </div>
         </div>
       </div>

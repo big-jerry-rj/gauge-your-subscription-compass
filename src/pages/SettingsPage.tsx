@@ -71,7 +71,7 @@ export default function SettingsPage() {
                 <p className="text-sm font-bold text-foreground truncate">
                   {isGuest ? 'Guest' : (user?.email ?? '—')}
                 </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
+                <p className="text-xs text-muted-foreground mt-1">
                   {isGuest ? 'Local only · data won\'t sync' : 'Gauge account'}
                 </p>
               </div>

@@ -25,7 +25,7 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
         key={tab.id}
         onClick={() => onTabChange(tab.id)}
         className={cn(
-          "flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all duration-200 active:scale-95",
+          "flex flex-col items-center gap-1 px-3 py-2 transition-all duration-200 active:scale-95",
           isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
         )}
       >
@@ -47,7 +47,7 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/60 bg-card shadow-[0_-2px_16px_rgba(0,0,0,0.06)] safe-bottom">
-      <div className="mx-auto flex max-w-lg items-center justify-around px-2 py-1.5">
+      <div className="mx-auto flex max-w-lg items-center justify-around px-2 py-2">
         {leftTabs.map(renderTab)}
         <div className="w-14" />
         {rightTabs.map(renderTab)}

@@ -215,8 +215,8 @@ export default function InsightsPage() {
           <div className="relative rounded-[20px] border border-border/40">
             <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
             <div className="relative glass-card rounded-[20px] p-4">
-              <div className="flex items-center justify-between mb-3.5">
-                <div className="flex items-center gap-2.5">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
                   <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-warning/12">
                     <AlertCircle className="h-3.5 w-3.5 text-warning" />
                   </div>
@@ -234,7 +234,7 @@ export default function InsightsPage() {
                     const days = differenceInDays(new Date(sub.next_billing_date!), new Date());
                     return (
                       <div key={sub.id} className="flex items-center justify-between">
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-3">
                           <div className={cn(
                             'h-2 w-2 rounded-full shrink-0',
                             days === 0 ? 'bg-destructive' : days <= 2 ? 'bg-warning' : 'bg-primary'
@@ -318,7 +318,7 @@ export default function InsightsPage() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
             onClick={() => setEditMode(false)}
-            className="rounded-full bg-primary px-4 py-1.5 text-[13px] font-bold text-primary-foreground"
+            className="rounded-full bg-primary px-4 py-2 text-[13px] font-bold text-primary-foreground"
           >
             Done
           </motion.button>
@@ -332,7 +332,7 @@ export default function InsightsPage() {
             <TrendingUp className="h-7 w-7 text-muted-foreground/40" />
           </div>
           <p className="text-base font-bold text-foreground">No data yet</p>
-          <p className="mt-1.5 text-sm text-muted-foreground max-w-[200px] leading-relaxed">
+          <p className="mt-2 text-sm text-muted-foreground max-w-[200px] leading-relaxed">
             Add subscriptions to unlock spending insights.
           </p>
         </motion.div>
@@ -354,7 +354,7 @@ export default function InsightsPage() {
                   ? formatCurrency(activePoint.total, currency)
                   : formatCurrency(displayTotal, currency)}
               </p>
-              <p className="mt-2.5 text-[13px] text-primary-foreground/[0.42]">
+              <p className="mt-3 text-[13px] text-primary-foreground/[0.42]">
                 {active.length} active subscription{active.length !== 1 ? 's' : ''}
               </p>
             </div>

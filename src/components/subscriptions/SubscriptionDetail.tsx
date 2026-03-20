@@ -73,7 +73,7 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange }:
           </div>
         </div>
 
-        <div className="mb-6 space-y-1.5">
+        <div className="mb-6 space-y-2">
           <p className="text-xs font-medium text-muted-foreground">Status</p>
           <Select value={subscription.status} onValueChange={handleStatusChange} disabled={loading}>
             <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>

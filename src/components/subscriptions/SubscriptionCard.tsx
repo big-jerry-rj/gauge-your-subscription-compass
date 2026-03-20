@@ -78,14 +78,14 @@ function RenewalLabel({ date, status }: { date: string | null; status: string })
 
   if (days === 0) {
     return (
-      <span className="inline-flex items-center rounded-md bg-destructive/15 px-1.5 py-0.5 text-[11px] font-bold text-destructive">
+      <span className="inline-flex items-center rounded-md bg-destructive/15 px-2 py-1 text-[11px] font-bold text-destructive">
         Renews today
       </span>
     );
   }
   if (days === 1) {
     return (
-      <span className="inline-flex items-center rounded-md bg-warning/12 px-1.5 py-0.5 text-[11px] font-bold text-warning">
+      <span className="inline-flex items-center rounded-md bg-warning/12 px-2 py-1 text-[11px] font-bold text-warning">
         Renews tomorrow
       </span>
     );
@@ -110,7 +110,7 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
       className="relative cursor-pointer rounded-[20px] border border-border/40"
     >
       <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-      <div className="relative glass-card flex items-center gap-3.5 px-4 py-3.5 rounded-[20px]">
+      <div className="relative glass-card flex items-center gap-4 px-4 py-4 rounded-[20px]">
         {/* Logo tile */}
         <div className="h-[52px] w-[52px] shrink-0 rounded-xl bg-muted overflow-hidden flex items-center justify-center">
           {subscription.logo_url ? (
@@ -122,14 +122,14 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
 
         {/* Name + renewal date */}
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-[15px] text-foreground truncate leading-snug mb-0.5">
+          <p className="font-semibold text-[15px] text-foreground truncate leading-snug mb-1">
             {subscription.name}
           </p>
           <RenewalLabel date={subscription.next_billing_date} status={subscription.status} />
         </div>
 
         {/* Amount + cycle */}
-        <div className="flex flex-col items-end gap-0.5 shrink-0 mr-2">
+        <div className="flex flex-col items-end gap-1 shrink-0 mr-2">
           <span className="text-[15px] font-bold text-foreground tabular-nums">
             {formatCurrency(subscription.amount, subscription.currency)}
           </span>

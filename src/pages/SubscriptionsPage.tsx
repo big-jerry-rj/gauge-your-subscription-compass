@@ -70,13 +70,13 @@ export default function SubscriptionsPage({ onAdd }: Props) {
           </div>
 
           {/* Filter chips */}
-          <div className="mb-5 flex gap-2 overflow-x-auto no-scrollbar pb-0.5">
+          <div className="mb-5 flex gap-2 overflow-x-auto no-scrollbar pb-1">
             {FILTERS.map(f => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
                 className={cn(
-                  'shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200',
+                  'shrink-0 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200',
                   filter === f
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-muted text-muted-foreground border border-border/60 hover:bg-muted'
@@ -132,7 +132,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
       transition={{ duration: 0.35 }}
       className="flex flex-col items-center pt-6 pb-4 text-center"
     >
-      <h2 className="text-[22px] font-black tracking-tight text-foreground mb-2.5 mt-10">
+      <h2 className="text-[22px] font-black tracking-tight text-foreground mb-3 mt-10">
         No subscriptions yet
       </h2>
       <p className="text-sm text-muted-foreground leading-relaxed max-w-[250px] mb-8">
@@ -144,7 +144,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
         <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
         <button
           onClick={onAdd}
-          className="relative inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3.5 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
+          className="relative inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
         >
           <Plus className="h-4 w-4 shrink-0" strokeWidth={2.5} />
           Add your first subscription
@@ -160,7 +160,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
           <button
             key={name}
             onClick={onAdd}
-            className="rounded-full border border-border/80 bg-muted/70 px-4 py-1.5 text-[12px] font-semibold text-muted-foreground transition-all active:scale-95 hover:border-primary/30 hover:text-foreground"
+            className="rounded-full border border-border/80 bg-muted/70 px-4 py-2 text-[12px] font-semibold text-muted-foreground transition-all active:scale-95 hover:border-primary/30 hover:text-foreground"
           >
             {name}
           </button>

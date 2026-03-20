@@ -141,18 +141,18 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
             )}
 
             {!logoUrl && (
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <Label>Name</Label>
                 <Input value={name} onChange={e => setName(e.target.value)} placeholder="Subscription name" className="rounded-xl" />
               </div>
             )}
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label>Amount ({currency})</Label>
               <Input type="number" step="0.01" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="rounded-xl" />
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label>Billing Cycle</Label>
               <Select value={billingCycle} onValueChange={setBillingCycle}>
                 <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
@@ -165,7 +165,7 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
               </Select>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label>Category</Label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger className="rounded-xl"><SelectValue placeholder="Select category" /></SelectTrigger>
@@ -175,7 +175,7 @@ export default function AddSubscriptionSheet({ open, onOpenChange }: Props) {
               </Select>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label>Start Date</Label>
               <Popover>
                 <PopoverTrigger asChild>

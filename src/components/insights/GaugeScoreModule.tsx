@@ -105,7 +105,7 @@ export default function GaugeScoreModule({ subscriptions }: Props) {
               />
             </svg>
             {/* Center */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-0.5">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
               <span className="text-[42px] font-black text-foreground leading-none">{score.total}</span>
               <span className="text-[11px] font-semibold text-muted-foreground">{label}</span>
             </div>
@@ -115,7 +115,7 @@ export default function GaugeScoreModule({ subscriptions }: Props) {
         {/* Factor breakdown */}
         <div className="grid grid-cols-4 gap-3">
           {factors.map(f => (
-            <div key={f.label} className="flex flex-col items-center gap-1.5">
+            <div key={f.label} className="flex flex-col items-center gap-2">
               <div className="relative w-full h-1.5 rounded-full bg-muted overflow-hidden">
                 <motion.div
                   className="absolute inset-y-0 left-0 rounded-full"

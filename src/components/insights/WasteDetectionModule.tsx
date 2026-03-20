@@ -109,7 +109,7 @@ export default function WasteDetectionModule({ subscriptions, currency, onSelect
       <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <div className="relative glass-card rounded-[20px] p-5">
 
-        <div className="flex items-center gap-2.5 mb-4">
+        <div className="flex items-center gap-3 mb-4">
           <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-warning/12">
             <AlertTriangle className="h-3.5 w-3.5 text-warning" />
           </div>
@@ -134,9 +134,9 @@ export default function WasteDetectionModule({ subscriptions, currency, onSelect
               </p>
               <p className="text-[30px] font-black text-primary-foreground leading-none tracking-tight">
                 {formatCurrency(totalSavings, currency)}
-                <span className="text-[13px] font-semibold ml-0.5">/mo</span>
+                <span className="text-[13px] font-semibold ml-1">/mo</span>
               </p>
-              <p className="mt-1.5 text-[11px] text-primary-foreground/70">
+              <p className="mt-2 text-[11px] text-primary-foreground/70">
                 across {flagged.length} flagged subscription{flagged.length !== 1 ? 's' : ''}
               </p>
             </div>
@@ -146,7 +146,7 @@ export default function WasteDetectionModule({ subscriptions, currency, onSelect
                 <button
                   key={`${sub.id}-${reason}`}
                   onClick={() => onSelect?.(sub)}
-                  className="w-full flex items-center gap-3 rounded-xl bg-muted/40 px-3 py-2.5 text-left transition-colors hover:bg-muted/60 active:bg-muted/70"
+                  className="w-full flex items-center gap-3 rounded-xl bg-muted/40 px-3 py-3 text-left transition-colors hover:bg-muted/60 active:bg-muted/70"
                 >
                   <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
                     {sub.logo_url
@@ -157,14 +157,14 @@ export default function WasteDetectionModule({ subscriptions, currency, onSelect
                   <div className="flex-1 min-w-0">
                     <p className="text-[13px] font-semibold text-foreground truncate">{sub.name}</p>
                     <div className={cn(
-                      'mt-0.5 inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-bold',
+                      'mt-1 inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-bold',
                       reasonStyle(reason)
                     )}>
                       <ReasonIcon reason={reason} />
                       {detail}
                     </div>
                   </div>
-                  <div className="flex items-center gap-1.5 shrink-0">
+                  <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[12px] font-bold text-foreground tabular-nums">
                       {formatCurrency(monthlyCost, currency)}/mo
                     </span>

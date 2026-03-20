@@ -83,7 +83,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
                   borderRadius: 12,
                   fontSize: 12,
                 }}
-                cursor={{ fill: 'rgba(163,230,53,0.06)' }}
+                cursor={{ fill: 'hsl(var(--primary) / 0.06)' }}
               />
               <Bar dataKey="total" radius={[6, 6, 2, 2]} barSize={26}>
                 {monthlyHistory.map((_, i) => (
@@ -91,8 +91,8 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
                     key={i}
                     fill={
                       i === monthlyHistory.length - 1
-                        ? 'hsl(88 60% 50%)'
-                        : 'hsl(88 60% 50% / 0.3)'
+                        ? 'hsl(var(--primary))'
+                        : 'hsl(var(--primary) / 0.3)'
                     }
                   />
                 ))}

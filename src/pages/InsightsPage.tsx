@@ -346,21 +346,15 @@ export default function InsightsPage() {
           >
             {/* Text section */}
             <div className="pt-7 pb-1 px-5 text-center">
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.22em] mb-3"
-                style={{ color: 'rgba(0,0,0,0.42)' }}
-              >
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] mb-3 text-primary-foreground/[0.42]">
                 Monthly Spend
               </p>
-              <p
-                className="text-[52px] font-black leading-none tracking-tight"
-                style={{ color: 'rgba(0,0,0,0.85)' }}
-              >
+              <p className="text-[52px] font-black leading-none tracking-tight text-primary-foreground/[0.85]">
                 {isScrubbing && activePoint
                   ? formatCurrency(activePoint.total, currency)
                   : formatCurrency(displayTotal, currency)}
               </p>
-              <p className="mt-2.5 text-[13px]" style={{ color: 'rgba(0,0,0,0.42)' }}>
+              <p className="mt-2.5 text-[13px] text-primary-foreground/[0.42]">
                 {active.length} active subscription{active.length !== 1 ? 's' : ''}
               </p>
             </div>
@@ -379,7 +373,7 @@ export default function InsightsPage() {
                 >
                   <div
                     style={{
-                      background: 'rgba(8,8,8,0.86)',
+                      background: 'hsl(var(--foreground) / 0.86)',
                       borderRadius: 12,
                       padding: '6px 12px',
                       display: 'flex',
@@ -387,18 +381,18 @@ export default function InsightsPage() {
                       gap: 8,
                       backdropFilter: 'blur(8px)',
                       whiteSpace: 'nowrap',
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.28)',
+                      boxShadow: '0 4px 20px hsl(var(--foreground) / 0.28)',
                     }}
                   >
-                    <span style={{ color: 'white', fontSize: 13, fontWeight: 700 }}>
+                    <span style={{ color: 'hsl(var(--background))', fontSize: 13, fontWeight: 700 }}>
                       {formatCurrency(activePoint.total, currency)}
                     </span>
-                    <span style={{ color: 'rgba(255,255,255,0.38)', fontSize: 11 }}>
+                    <span style={{ color: 'hsl(var(--background) / 0.5)', fontSize: 11 }}>
                       {activePoint.month}
                     </span>
                     {Math.abs(scrubDelta) > 0.005 && (
                       <span style={{
-                        color: scrubDelta > 0 ? '#ef4444' : '#4ade80',
+                        color: scrubDelta > 0 ? 'hsl(var(--destructive))' : 'hsl(var(--primary))',
                         fontSize: 11,
                         fontWeight: 700,
                       }}>
@@ -430,20 +424,20 @@ export default function InsightsPage() {
               >
                 <defs>
                   <linearGradient id="heroAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(0,0,0,0.20)" />
-                    <stop offset="100%" stopColor="rgba(0,0,0,0.03)" />
+                    <stop offset="0%" stopColor="hsl(var(--primary-foreground) / 0.20)" />
+                    <stop offset="100%" stopColor="hsl(var(--primary-foreground) / 0.03)" />
                   </linearGradient>
                 </defs>
 
                 {/* Gradient fill */}
                 {areaPath && <path d={areaPath} fill="url(#heroAreaGrad)" />}
 
-                {/* White outline */}
+                {/* Outline */}
                 {linePath && (
                   <path
                     d={linePath}
                     fill="none"
-                    stroke="rgba(255,255,255,0.88)"
+                    stroke="hsl(var(--primary-foreground) / 0.88)"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -457,14 +451,14 @@ export default function InsightsPage() {
                       cx={activePoint.x}
                       cy={activePoint.y}
                       r={isScrubbing ? 10 : 7}
-                      fill="rgba(255,255,255,0.25)"
+                      fill="hsl(var(--primary-foreground) / 0.25)"
                       style={{ transition: 'r 0.12s ease' }}
                     />
                     <circle
                       cx={activePoint.x}
                       cy={activePoint.y}
                       r={isScrubbing ? 5.5 : 4}
-                      fill="white"
+                      fill="hsl(var(--primary-foreground))"
                       style={{ transition: 'r 0.12s ease' }}
                     />
                   </g>
@@ -474,9 +468,9 @@ export default function InsightsPage() {
 
             {/* Paused savings pill */}
             {pausedSavings > 0 && (
-              <div className="mx-5 mb-4 mt-1 flex items-center gap-2 rounded-xl bg-black/[0.08] px-3 py-2">
+              <div className="mx-5 mb-4 mt-1 flex items-center gap-2 rounded-xl bg-primary-foreground/[0.08] px-3 py-2">
                 <span className="text-sm">💰</span>
-                <p className="text-[11px] font-semibold" style={{ color: 'rgba(0,0,0,0.55)' }}>
+                <p className="text-[11px] font-semibold text-primary-foreground/[0.55]">
                   Saving {formatCurrency(pausedSavings, currency)}/mo — {paused.length} paused
                 </p>
               </div>

@@ -13,9 +13,9 @@ const R = 64;
 const CIRC = 2 * Math.PI * R;
 
 function ringColor(score: number) {
-  if (score >= 70) return '#A3E635';
-  if (score >= 40) return '#F59E0B';
-  return '#EF4444';
+  if (score >= 70) return 'hsl(var(--primary))';
+  if (score >= 40) return 'hsl(var(--warning))';
+  return 'hsl(var(--destructive))';
 }
 
 function scoreLabel(score: number) {

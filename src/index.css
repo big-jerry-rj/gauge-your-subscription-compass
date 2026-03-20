@@ -39,6 +39,7 @@
     --border: 0 0% 82%;
     --input: 0 0% 82%;
     --ring: 74 100% 45%;
+    --brand-secondary: 74 100% 38%;
 
     --radius: 1rem;
   }
@@ -77,6 +78,7 @@
     --border: 0 0% 18%;             /* #2E2E2E */
     --input: 0 0% 18%;
     --ring: 74 100% 50%;
+    --brand-secondary: 74 100% 44%;
   }
 }
 
@@ -111,8 +113,8 @@
 
 /* Glow pulse — visible on touch/mobile (no pointermove needed) */
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 10px 2px rgba(163,230,53,0.22), 0 0 22px 4px rgba(163,230,53,0.08); }
-  50%       { box-shadow: 0 0 18px 6px rgba(163,230,53,0.42), 0 0 36px 10px rgba(163,230,53,0.15); }
+  0%, 100% { box-shadow: 0 0 10px 2px hsl(var(--primary) / 0.22), 0 0 22px 4px hsl(var(--primary) / 0.08); }
+  50%       { box-shadow: 0 0 18px 6px hsl(var(--primary) / 0.42), 0 0 36px 10px hsl(var(--primary) / 0.15); }
 }
 
 /* Shimmer — premium skeleton loading sweep */
@@ -136,7 +138,7 @@
 
 @layer utilities {
   .gradient-primary {
-    background: hsl(74 100% 50%);
+    background: hsl(var(--primary));
   }
 
   /* Solid card — no glassmorphism, matches the reference */
@@ -164,11 +166,11 @@
   }
 
   .fab-shadow {
-    box-shadow: 0 4px 20px rgba(194, 255, 0, 0.35);
+    box-shadow: 0 4px 20px hsl(var(--primary) / 0.35);
   }
 
   .dark .fab-shadow {
-    box-shadow: 0 4px 24px rgba(194, 255, 0, 0.3);
+    box-shadow: 0 4px 24px hsl(var(--primary) / 0.3);
   }
 
   .safe-bottom {
@@ -189,7 +191,7 @@
 
   /* Lime glow for primary buttons */
   .lime-glow {
-    box-shadow: 0 4px 20px rgba(194, 255, 0, 0.35);
+    box-shadow: 0 4px 20px hsl(var(--primary) / 0.35);
   }
 
   /* Animated lime glow border — works on touch/mobile */

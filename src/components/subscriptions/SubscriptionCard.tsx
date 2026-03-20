@@ -27,16 +27,16 @@ function RenewalArc({ nextBillingDate, children }: { nextBillingDate: string | n
   const targetOffset = CIRC * (1 - progress);
 
   const strokeColor =
-    daysLeft === null       ? 'rgba(163,230,53,0.15)' :
-    daysLeft <= 3           ? '#ef4444' :
-    daysLeft <= 7           ? '#f59e0b' :
-                              '#A3E635';
+    daysLeft === null       ? 'hsl(var(--primary) / 0.15)' :
+    daysLeft <= 3           ? 'hsl(var(--destructive))' :
+    daysLeft <= 7           ? 'hsl(var(--warning))' :
+                              'hsl(var(--primary))';
 
   return (
     <div className="relative shrink-0" style={{ width: SIZE, height: SIZE }}>
       <svg className="absolute inset-0" width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
         {/* Track */}
-        <circle cx={C} cy={C} r={R} fill="none" stroke="rgba(163,230,53,0.07)" strokeWidth="2" />
+        <circle cx={C} cy={C} r={R} fill="none" stroke="hsl(var(--primary) / 0.07)" strokeWidth="2" />
         {/* Progress arc — animates on mount */}
         {daysLeft !== null && (
           <motion.circle

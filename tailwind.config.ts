@@ -96,6 +96,8 @@ export default {
         "blob3": "blob3 22s ease-in-out infinite",
         "blob4": "blob4 12s ease-in-out infinite",
         "blob5": "blob5 16s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 2.5s ease-in-out infinite",
+        "shimmer": "shimmer 1.8s linear infinite",
       },
     },
   },

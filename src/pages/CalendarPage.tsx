@@ -29,9 +29,7 @@ export default function CalendarPage() {
   }, [activeSubs, selectedDate]);
 
   const modifiers = { billing: billingDates };
-  const modifiersStyles = {
-    billing: { fontWeight: 700, position: 'relative' as const },
-  };
+  const modifiersClassNames = { billing: 'calendar-billing-day' };
 
   return (
     <div className="px-5 pb-28">
@@ -53,10 +51,10 @@ export default function CalendarPage() {
               selected={selectedDate}
               onSelect={setSelectedDate}
               modifiers={modifiers}
-              modifiersStyles={modifiersStyles}
+              modifiersClassNames={modifiersClassNames}
               classNames={{
-                day_selected: 'bg-primary text-primary-foreground rounded-xl',
-                day_today: 'bg-muted text-foreground font-bold rounded-xl',
+                day_selected: 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground rounded-[12px]',
+                day_today: 'bg-muted text-foreground font-bold rounded-[12px]',
               }}
             />
           </div>
@@ -80,11 +78,11 @@ export default function CalendarPage() {
                   className="relative flex items-center gap-3 rounded-[20px] bg-card border border-border/40 p-4"
                 >
                   <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted overflow-hidden shrink-0">
+                  <div className="h-[52px] w-[52px] rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
                     {sub.logo_url ? (
-                      <img src={sub.logo_url} alt={sub.name} className="h-6 w-6 object-contain" />
+                      <img src={sub.logo_url} alt={sub.name} className="h-10 w-10 object-contain rounded-xl" />
                     ) : (
-                      <span className="font-bold text-primary">{sub.name[0]}</span>
+                      <span className="text-base font-bold text-primary">{sub.name[0]}</span>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">

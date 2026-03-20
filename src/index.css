@@ -197,6 +197,23 @@
     animation: glow-pulse 2.5s ease-in-out infinite;
   }
 
+  /* Calendar billing day dot */
+  .calendar-billing-day {
+    position: relative;
+    font-weight: 700;
+  }
+  .calendar-billing-day::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: hsl(var(--primary));
+  }
+
   /* Shimmer skeleton sweep */
   .shimmer {
     background: linear-gradient(

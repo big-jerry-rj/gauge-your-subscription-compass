@@ -4,7 +4,7 @@ import SubscriptionCard from '@/components/subscriptions/SubscriptionCard';
 import SubscriptionDetail from '@/components/subscriptions/SubscriptionDetail';
 import { Input } from '@/components/ui/input';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { Search, SlidersHorizontal, Plus } from 'lucide-react';
+import { Search, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
@@ -46,11 +46,6 @@ export default function SubscriptionsPage({ onAdd }: Props) {
             </p>
           )}
         </div>
-        {hasAny && (
-          <button className="flex h-9 w-9 items-center justify-center rounded-2xl bg-muted/60 transition-colors active:bg-muted">
-            <SlidersHorizontal className="h-[17px] w-[17px] text-muted-foreground" />
-          </button>
-        )}
       </div>
 
       {isLoading ? (

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getServiceBg } from '@/lib/constants';
+import { getItunesIcon, subscribeToIconCache } from '@/lib/itunesIcons';
 
 interface Props {
   logoUrl?: string | null;
@@ -11,29 +12,48 @@ interface Props {
 
 /**
  * iOS-style squircle app icon.
- * - Colored brand background (from props or auto-detected from service name)
- * - Image covers the container (object-cover)
- * - border-radius: 22% — matches iOS squircle formula
- * - Falls back to bold initial on brand color
+ * - Prioritises Apple App Store artwork (512px) fetched via iTunes Search API
+ * - Falls back to the Google-favicon URL passed in via logoUrl
+ * - Final fallback: bold initial on brand colour
+ * - border-radius: 22% — iOS squircle formula
  */
 export function AppIcon({ logoUrl, name, size, bg, className = '' }: Props) {
   const [failed, setFailed] = useState(false);
+  // Seed from synchronous cache first (populated from localStorage on module load)
+  const [itunesUrl, setItunesUrl] = useState<string | null>(() => getItunesIcon(name));
+
+  useEffect(() => {
+    // Re-read from cache when the global prefetch resolves
+    const unsub = subscribeToIconCache(() => {
+      const url = getItunesIcon(name);
+      if (url) setItunesUrl(url);
+    });
+    // Also check immediately in case cache was populated between render and effect
+    const url = getItunesIcon(name);
+    if (url) setItunesUrl(url);
+    return unsub;
+  }, [name]);
+
+  // Reset failed state when the URL source changes
+  useEffect(() => { setFailed(false); }, [itunesUrl]);
+
   const background = bg ?? getServiceBg(name);
   const radius = Math.round(size * 0.22); // iOS squircle
+  const displayUrl = itunesUrl ?? logoUrl;
 
   return (
     <div
       className={`shrink-0 overflow-hidden flex items-center justify-center ${className}`}
       style={{ width: size, height: size, borderRadius: radius, background }}
     >
-      {logoUrl && !failed ? (
+      {displayUrl && !failed ? (
         <img
-          src={logoUrl}
+          src={displayUrl}
           alt={name}
           className="w-full h-full object-cover"
           onError={() => setFailed(true)}
           loading="eager"
-          decoding="sync"
+          decoding="async"
         />
       ) : (
         <span

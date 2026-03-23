@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { prefetchAndNotify } from "@/lib/itunesIcons";
 import BottomNav from "@/components/layout/BottomNav";
 import FAB from "@/components/layout/FAB";
 import AnimatedBackground from "@/components/layout/AnimatedBackground";
@@ -17,6 +18,10 @@ export default function Index() {
   const [activeTab, setActiveTab] = useState("subscriptions");
   const [showAdd, setShowAdd] = useState(false);
   const [editingSub, setEditingSub] = useState<Subscription | null>(null);
+
+  // Kick off App Store icon prefetch in the background — results are cached in
+  // localStorage and immediately available on subsequent visits
+  useEffect(() => { prefetchAndNotify(); }, []);
 
   // Show nothing while Supabase checks existing session
   if (loading) {

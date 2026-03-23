@@ -1,5 +1,6 @@
 import { Subscription } from '@/hooks/useSubscriptions';
 import { formatCurrency } from '@/lib/constants';
+import { AppIcon } from '@/components/subscriptions/AppIcon';
 import { format, differenceInDays } from 'date-fns';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
@@ -111,14 +112,12 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
     >
       <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <div className="relative glass-card flex items-center gap-4 px-4 py-4 rounded-[20px]">
-        {/* Logo tile */}
-        <div className="h-[52px] w-[52px] shrink-0 rounded-xl bg-muted overflow-hidden flex items-center justify-center">
-          {subscription.logo_url ? (
-            <img src={subscription.logo_url} alt={subscription.name} className="h-10 w-10 object-contain rounded-xl" />
-          ) : (
-            <span className="text-sm font-bold text-primary">{subscription.name[0]}</span>
-          )}
-        </div>
+        {/* Logo tile — iOS squircle */}
+        <AppIcon
+          logoUrl={subscription.logo_url}
+          name={subscription.name}
+          size={52}
+        />
 
         {/* Name + renewal date */}
         <div className="flex-1 min-w-0">

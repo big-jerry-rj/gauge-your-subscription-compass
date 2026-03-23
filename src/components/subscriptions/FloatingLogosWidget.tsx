@@ -1,8 +1,9 @@
-import { useState } from 'react';
 import { Subscription } from '@/hooks/useSubscriptions';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Maximize2, X } from 'lucide-react';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { AppIcon } from './AppIcon';
+import { useState } from 'react';
 
 interface Props {
   subscriptions: Subscription[];
@@ -21,47 +22,6 @@ const POSITIONS = [
   { left: '74%', top: '50%', size: 44, floatY: 9,  dur: 3.9 },
 ];
 
-function SubLogo({
-  sub,
-  size,
-  className = '',
-}: {
-  sub: Subscription;
-  size: number;
-  className?: string;
-}) {
-  const [failed, setFailed] = useState(false);
-  return (
-    <div
-      className={`overflow-hidden rounded-full bg-muted shrink-0 ${className}`}
-      style={{
-        width: size,
-        height: size,
-        boxShadow: '0 6px 20px rgba(0,0,0,0.28)',
-      }}
-    >
-      {sub.logo_url && !failed ? (
-        <img
-          src={sub.logo_url}
-          alt={sub.name}
-          className="w-full h-full object-cover"
-          onError={() => setFailed(true)}
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center bg-primary/10">
-          <span
-            className="font-black text-primary"
-            style={{ fontSize: Math.round(size * 0.38) }}
-          >
-            {sub.name[0]}
-          </span>
-        </div>
-      )}
-    </div>
-  );
-}
-
-export { SubLogo };
 
 export default function FloatingLogosWidget({ subscriptions, onSelectSub }: Props) {
   const [expanded, setExpanded] = useState(false);
@@ -96,7 +56,7 @@ export default function FloatingLogosWidget({ subscriptions, onSelectSub }: Prop
                 }}
                 whileTap={{ scale: 0.88 }}
               >
-                <SubLogo sub={sub} size={pos.size} />
+                <AppIcon logoUrl={sub.logo_url} name={sub.name} size={pos.size} />
               </motion.button>
             );
           })}
@@ -164,7 +124,7 @@ export default function FloatingLogosWidget({ subscriptions, onSelectSub }: Prop
                       setTimeout(() => onSelectSub?.(sub), 200);
                     }}
                   >
-                    <SubLogo sub={sub} size={68} />
+                    <AppIcon logoUrl={sub.logo_url} name={sub.name} size={68} />
                     <span className="text-[11px] font-semibold text-foreground text-center leading-tight line-clamp-2 max-w-[72px]">
                       {sub.name}
                     </span>

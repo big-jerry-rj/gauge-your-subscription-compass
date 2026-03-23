@@ -1,4 +1,5 @@
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { AppIcon } from './AppIcon';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Subscription, useSubscriptions } from '@/hooks/useSubscriptions';
@@ -91,19 +92,12 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange, o
         {/* ── Hero header ── */}
         <div className="flex items-start gap-4 px-6 pt-6 pb-5 shrink-0">
           {/* Logo */}
-          <div className="h-[76px] w-[76px] rounded-[18px] bg-muted overflow-hidden shrink-0 shadow-md">
-            {subscription.logo_url ? (
-              <img
-                src={subscription.logo_url}
-                alt={subscription.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="h-full w-full flex items-center justify-center bg-primary/10">
-                <span className="text-[28px] font-black text-primary">{subscription.name[0]}</span>
-              </div>
-            )}
-          </div>
+          <AppIcon
+            logoUrl={subscription.logo_url}
+            name={subscription.name}
+            size={76}
+            className="shadow-md"
+          />
 
           {/* Name + plan + price */}
           <div className="flex-1 min-w-0 pt-0.5">

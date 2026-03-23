@@ -72,7 +72,7 @@ export default function SettingsPage() {
                   {isGuest ? 'Guest' : (user?.email ?? '—')}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {isGuest ? 'Local only · data won\'t sync' : 'Gauge account'}
+                  {isGuest ? 'Stored on this device only' : 'Syncs across your devices'}
                 </p>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function SettingsPage() {
           <div className="relative rounded-[20px] glass-card p-5">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Data</h3>
             <Button variant="outline" className="w-full" onClick={handleExport}>
-              <Download className="mr-2 h-4 w-4" /> Export Subscriptions
+              <Download className="mr-2 h-4 w-4" /> Export as JSON
             </Button>
           </div>
         </motion.div>
@@ -145,7 +145,7 @@ export default function SettingsPage() {
             onClick={handleSignOut}
           >
             <LogOut className="mr-2 h-4 w-4" />
-            {isGuest ? 'Leave guest mode' : 'Sign out'}
+            {isGuest ? 'Sign in to sync your data' : 'Sign out'}
           </Button>
         </motion.div>
 

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSubscriptions, Subscription } from '@/hooks/useSubscriptions';
 import SubscriptionCard from '@/components/subscriptions/SubscriptionCard';
 import SubscriptionDetail from '@/components/subscriptions/SubscriptionDetail';
+import FloatingLogosWidget from '@/components/subscriptions/FloatingLogosWidget';
 import { Input } from '@/components/ui/input';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { Search, Plus } from 'lucide-react';
@@ -12,9 +13,10 @@ const FILTERS = ['All', 'Active', 'Paused', 'Cancelled'] as const;
 
 interface Props {
   onAdd: () => void;
+  onEdit: (sub: Subscription) => void;
 }
 
-export default function SubscriptionsPage({ onAdd }: Props) {
+export default function SubscriptionsPage({ onAdd, onEdit }: Props) {
   const { subscriptions, isLoading } = useSubscriptions();
   const [filter, setFilter] = useState<string>('All');
   const [search, setSearch] = useState('');
@@ -58,6 +60,12 @@ export default function SubscriptionsPage({ onAdd }: Props) {
         <EmptyState onAdd={onAdd} />
       ) : (
         <>
+          {/* Floating logos widget */}
+          <FloatingLogosWidget
+            subscriptions={subscriptions}
+            onSelectSub={sub => setSelected(sub)}
+          />
+
           {/* Search */}
           <div className="relative mb-4">
             <Search className="absolute left-3.5 top-1/2 h-[15px] w-[15px] -translate-y-1/2 text-muted-foreground/50" />
@@ -119,6 +127,10 @@ export default function SubscriptionsPage({ onAdd }: Props) {
         subscription={selected}
         open={!!selected}
         onOpenChange={open => !open && setSelected(null)}
+        onEdit={sub => {
+          setSelected(null);
+          setTimeout(() => onEdit(sub), 280);
+        }}
       />
     </div>
   );
@@ -136,7 +148,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
         No subscriptions yet
       </h2>
       <p className="text-sm text-muted-foreground leading-relaxed max-w-[250px] mb-8">
-        Add your first recurring payment to start tracking renewals and monthly spend.
+        You're probably paying for things you've forgotten. Add them here and stay on top of every renewal.
       </p>
 
       {/* Primary CTA */}
@@ -147,7 +159,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
           className="relative inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-[14px] font-bold text-primary-foreground transition-transform active:scale-95"
         >
           <Plus className="h-4 w-4 shrink-0" strokeWidth={2.5} />
-          Add your first subscription
+          Track your first sub
         </button>
       </div>
 

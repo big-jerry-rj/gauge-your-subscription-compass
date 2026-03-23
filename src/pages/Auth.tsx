@@ -51,7 +51,7 @@ export default function Auth() {
               draggable={false}
             />
             <p className="text-sm text-muted-foreground text-center leading-relaxed max-w-[220px]">
-              Track your subscriptions,<br />privately.
+              All your subscriptions.<br />No surprises.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export default function Auth() {
                 </div>
                 <h2 className="text-xl font-bold text-foreground">Check your email</h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  We sent a link to{' '}
+                  Sign-in link sent to{' '}
                   <span className="font-medium text-foreground">{email}</span>
                 </p>
                 <Button
@@ -78,7 +78,7 @@ export default function Auth() {
                   className="mt-6 text-muted-foreground"
                   onClick={() => { setSent(false); setEmail(''); setShowEmail(false); }}
                 >
-                  Use a different email
+                  Wrong email? Start over
                 </Button>
               </motion.div>
 
@@ -111,7 +111,7 @@ export default function Auth() {
                   disabled={loading || !email}
                   className="h-12 w-full rounded-xl bg-primary text-primary-foreground font-semibold text-base fab-shadow hover:opacity-90 transition-opacity"
                 >
-                  {loading ? 'Sending…' : 'Send magic link'}
+                  {loading ? 'Sending…' : 'Send sign-in link'}
                   {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
                 </Button>
                 <button
@@ -139,7 +139,7 @@ export default function Auth() {
                   className="h-12 w-full rounded-xl bg-primary text-primary-foreground font-semibold text-[15px] fab-shadow hover:opacity-90 transition-opacity"
                 >
                   <Mail className="mr-2 h-4 w-4" />
-                  Continue with email
+                  Sign in with email
                 </Button>
 
                 {/* Divider */}
@@ -156,11 +156,11 @@ export default function Auth() {
                   className="h-12 w-full rounded-xl border-border/80 bg-card font-semibold text-[15px] text-foreground hover:bg-muted transition-colors"
                 >
                   <UserRound className="mr-2 h-4 w-4 text-muted-foreground" />
-                  Continue as guest
+                  Try without signing in
                 </Button>
 
                 <p className="text-center text-[11px] text-muted-foreground leading-relaxed pt-1">
-                  Guest mode is local-only. Your data won't sync across devices.
+                  Your data stays on this device only.
                 </p>
               </motion.div>
             )}

@@ -12,15 +12,17 @@ function useLocalSubscriptions() {
 
   const addSubscription = {
     mutateAsync: async (sub: Partial<Omit<Subscription, 'id' | 'user_id' | 'created_at' | 'updated_at'>> & { name: string; amount: number }) => {
+      const id = crypto.randomUUID();
       const now = new Date().toISOString();
       setSubscriptions(prev => [{
-        id: crypto.randomUUID(), user_id: 'guest', created_at: now, updated_at: now,
+        id, user_id: 'guest', created_at: now, updated_at: now,
         name: sub.name, amount: sub.amount, currency: sub.currency ?? 'EUR',
         billing_cycle: sub.billing_cycle ?? 'monthly', category: sub.category ?? null,
         start_date: sub.start_date ?? now.split('T')[0], status: sub.status ?? 'active',
         logo_url: sub.logo_url ?? null, next_billing_date: sub.next_billing_date ?? null,
         notes: sub.notes ?? null,
       }, ...prev]);
+      return { id };
     },
   };
 
@@ -60,8 +62,10 @@ function useRemoteSubscriptions(userId: string) {
 
   const addSubscription = useMutation({
     mutationFn: async (sub: Partial<Omit<Subscription, 'id' | 'user_id' | 'created_at' | 'updated_at'>> & { name: string; amount: number }) => {
-      const { error } = await supabase.from('subscriptions').insert({ ...sub, user_id: userId });
+      const id = crypto.randomUUID();
+      const { error } = await supabase.from('subscriptions').insert({ ...sub, id, user_id: userId });
       if (error) throw error;
+      return { id };
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });

@@ -61,7 +61,7 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
       <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <div className="relative glass-card rounded-[20px] p-5">
 
-        <p className="text-[13px] font-bold text-foreground mb-4">Lifecycle Insights</p>
+        <p className="text-[13px] font-bold text-foreground mb-4">Lifetime Spend</p>
 
         {/* Top spender — elevated card with lime left accent */}
         <div className="mb-4 rounded-2xl bg-muted/50 overflow-hidden flex">
@@ -86,7 +86,7 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
               <p className="text-[16px] font-black text-foreground tabular-nums">
                 {formatCurrency(top.lifetimeSpend, currency)}
               </p>
-              <p className="text-[10px] text-muted-foreground">lifetime</p>
+              <p className="text-[10px] text-muted-foreground">total spent</p>
             </div>
           </div>
         </div>
@@ -124,8 +124,8 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
             className="flex items-center gap-1 text-[11px] font-semibold text-primary mb-4 hover:text-primary/70 transition-colors"
           >
             {expanded
-              ? <><ChevronUp className="h-3 w-3" />Show less</>
-              : <><ChevronDown className="h-3 w-3" />See all {rest.length} more</>
+              ? <><ChevronUp className="h-3 w-3" />Show fewer</>
+              : <><ChevronDown className="h-3 w-3" />Show {rest.length} more</>
             }
           </button>
         )}
@@ -133,10 +133,10 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
         {/* Average lifespan */}
         <div className="rounded-xl bg-muted/40 px-3 py-3">
           <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
-            Avg subscription lifespan
+            Avg sub lifespan
           </p>
           <p className="text-[15px] font-bold text-foreground">
-            {avgLifespan !== null ? `${avgLifespan} months` : 'No cancelled subs yet'}
+            {avgLifespan !== null ? `${avgLifespan} months` : 'Cancel one to start tracking'}
           </p>
         </div>
       </div>

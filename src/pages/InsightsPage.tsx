@@ -193,8 +193,8 @@ export default function InsightsPage() {
         return (
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: 'Yearly', value: formatCurrency(yearlyTotal, currency), sub: 'projected' },
-              { label: 'Avg / Sub', value: active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—', sub: 'per month' },
+              { label: 'Yearly', value: formatCurrency(yearlyTotal, currency), sub: 'annualised' },
+              { label: 'Per Sub', value: active.length ? formatCurrency(monthlyTotal / active.length, currency) : '—', sub: 'avg per month' },
             ].map(stat => (
               <div key={stat.label} className="relative rounded-[20px] border border-border/40">
                 <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
@@ -220,14 +220,14 @@ export default function InsightsPage() {
                   <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-warning/12">
                     <AlertCircle className="h-3.5 w-3.5 text-warning" />
                   </div>
-                  <span className="text-[13px] font-bold text-foreground">Due this week</span>
+                  <span className="text-[13px] font-bold text-foreground">Charging this week</span>
                 </div>
                 {upcomingRenewals.length > 0 && (
                   <span className="text-[12px] font-bold text-warning">{formatCurrency(upcomingTotal, currency)}</span>
                 )}
               </div>
               {upcomingRenewals.length === 0 ? (
-                <p className="text-[12px] text-muted-foreground py-1">No renewals due this week</p>
+                <p className="text-[12px] text-muted-foreground py-1">All clear this week</p>
               ) : (
                 <div className="space-y-3">
                   {upcomingRenewals.map(sub => {
@@ -263,9 +263,9 @@ export default function InsightsPage() {
           <div className="relative rounded-[20px] border border-border/40">
             <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
             <div className="relative glass-card rounded-[20px] p-5">
-              <h3 className="text-[13px] font-bold text-foreground mb-4">Spend by Category</h3>
+              <h3 className="text-[13px] font-bold text-foreground mb-4">Where it goes</h3>
               {categoryData.length === 0 ? (
-                <p className="text-[12px] text-muted-foreground py-1">No category data yet</p>
+                <p className="text-[12px] text-muted-foreground py-1">Add subscriptions to see a breakdown</p>
               ) : (
                 <div className="flex items-center gap-4">
                   <div className="h-32 w-32 shrink-0">
@@ -331,9 +331,9 @@ export default function InsightsPage() {
           <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-muted/60">
             <TrendingUp className="h-7 w-7 text-muted-foreground/40" />
           </div>
-          <p className="text-base font-bold text-foreground">No data yet</p>
+          <p className="text-base font-bold text-foreground">Nothing tracked yet</p>
           <p className="mt-2 text-sm text-muted-foreground max-w-[200px] leading-relaxed">
-            Add subscriptions to unlock spending insights.
+            Add a subscription to see where your money goes.
           </p>
         </motion.div>
       ) : (
@@ -392,7 +392,7 @@ export default function InsightsPage() {
                     </span>
                     {Math.abs(scrubDelta) > 0.005 && (
                       <span style={{
-                        color: scrubDelta > 0 ? 'hsl(var(--destructive))' : 'hsl(var(--primary))',
+                        color: scrubDelta > 0 ? 'hsl(var(--destructive))' : 'hsl(142 69% 28%)',
                         fontSize: 11,
                         fontWeight: 700,
                       }}>
@@ -484,7 +484,7 @@ export default function InsightsPage() {
               animate={{ opacity: 1, y: 0 }}
               className="text-[11px] text-muted-foreground text-center mb-3"
             >
-              Hold and drag to reorder
+              Drag to rearrange
             </motion.p>
           )}
 

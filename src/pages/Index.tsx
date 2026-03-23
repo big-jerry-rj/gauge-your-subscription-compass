@@ -10,11 +10,13 @@ import CalendarPage from "./CalendarPage";
 import SettingsPage from "./SettingsPage";
 import Auth from "./Auth";
 import { motion, AnimatePresence } from "framer-motion";
+import { Subscription } from "@/hooks/useSubscriptions";
 
 export default function Index() {
   const { isAuthenticated, loading } = useAuth();
   const [activeTab, setActiveTab] = useState("subscriptions");
   const [showAdd, setShowAdd] = useState(false);
+  const [editingSub, setEditingSub] = useState<Subscription | null>(null);
 
   // Show nothing while Supabase checks existing session
   if (loading) {
@@ -33,7 +35,7 @@ export default function Index() {
   const renderPage = () => {
     switch (activeTab) {
       case "subscriptions":
-        return <SubscriptionsPage onAdd={() => setShowAdd(true)} />;
+        return <SubscriptionsPage onAdd={() => setShowAdd(true)} onEdit={sub => setEditingSub(sub)} />;
       case "insights":
         return <InsightsPage />;
       case "calendar":
@@ -41,7 +43,7 @@ export default function Index() {
       case "account":
         return <SettingsPage />;
       default:
-        return <SubscriptionsPage onAdd={() => setShowAdd(true)} />;
+        return <SubscriptionsPage onAdd={() => setShowAdd(true)} onEdit={sub => setEditingSub(sub)} />;
     }
   };
 
@@ -68,6 +70,11 @@ export default function Index() {
       <FAB onClick={() => setShowAdd(true)} />
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
       <AddSubscriptionSheet open={showAdd} onOpenChange={setShowAdd} />
+      <AddSubscriptionSheet
+        open={!!editingSub}
+        onOpenChange={open => !open && setEditingSub(null)}
+        subscriptionToEdit={editingSub}
+      />
     </div>
   );
 }

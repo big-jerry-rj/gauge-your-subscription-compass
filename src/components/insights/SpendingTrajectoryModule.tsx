@@ -62,7 +62,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
           <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary/10">
             <TrendingUp className="h-3.5 w-3.5 text-primary" />
           </div>
-          <span className="text-[13px] font-bold text-foreground">Spending Trajectory</span>
+          <span className="text-[13px] font-bold text-foreground">Spend Trend</span>
         </div>
 
         {/* 6-month bar chart */}
@@ -76,7 +76,7 @@ export default function SpendingTrajectoryModule({ subscriptions, currency }: Pr
                 tickLine={false}
               />
               <Tooltip
-                formatter={(val: number) => [formatCurrency(val, currency), 'Spend']}
+                formatter={(val: number) => [formatCurrency(val, currency), 'Monthly']}
                 contentStyle={{
                   background: 'hsl(var(--card))',
                   border: '1px solid hsl(var(--border))',

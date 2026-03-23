@@ -67,7 +67,7 @@ export default function CalendarPage() {
             {format(selectedDate, 'MMMM d, yyyy')}
           </h3>
           {subsForDate.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No renewals on this date</p>
+            <p className="text-sm text-muted-foreground">Nothing charging on this day</p>
           ) : (
             <div className="space-y-3">
               {subsForDate.map(sub => (

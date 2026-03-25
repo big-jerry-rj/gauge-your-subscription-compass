@@ -2,10 +2,9 @@ import { useState, useMemo } from 'react';
 import { useSubscriptions, Subscription } from '@/hooks/useSubscriptions';
 import SubscriptionCard from '@/components/subscriptions/SubscriptionCard';
 import SubscriptionDetail from '@/components/subscriptions/SubscriptionDetail';
-import FloatingLogosWidget from '@/components/subscriptions/FloatingLogosWidget';
-import { Input } from '@/components/ui/input';
+import { DashboardWidget } from '@/components/subscriptions/DashboardWidget';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { Search, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
@@ -19,24 +18,29 @@ interface Props {
 export default function SubscriptionsPage({ onAdd, onEdit }: Props) {
   const { subscriptions, isLoading } = useSubscriptions();
   const [filter, setFilter] = useState<string>('All');
-  const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<Subscription | null>(null);
 
   const hasAny = subscriptions.length > 0;
   const activeCount = subscriptions.filter(s => s.status === 'active').length;
 
+  // Read all meta from localStorage once (re-evaluated when subscriptions change)
+  const allMeta = useMemo(() => {
+    try {
+      const raw = localStorage.getItem('gauge-sub-meta');
+      return raw ? JSON.parse(raw) : {};
+    } catch { return {}; }
+  }, [subscriptions]);
+
   const filtered = useMemo(() => {
-    return subscriptions.filter(s => {
-      const matchesFilter = filter === 'All' || s.status === filter.toLowerCase();
-      const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase());
-      return matchesFilter && matchesSearch;
-    });
-  }, [subscriptions, filter, search]);
+    return subscriptions
+      .filter(s => filter === 'All' || s.status === filter.toLowerCase())
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [subscriptions, filter]);
 
   return (
     <div className="px-5 pb-28">
       {/* Page header */}
-      <div className="flex items-end justify-between pt-8 pb-6">
+      <div className="flex items-end justify-between pt-8 pb-4">
         <div>
           <h1 className="text-[32px] font-black tracking-tight leading-none">
             <span className="text-foreground">Your </span>
@@ -52,6 +56,7 @@ export default function SubscriptionsPage({ onAdd, onEdit }: Props) {
 
       {isLoading ? (
         <div className="space-y-3">
+          <div className="shimmer h-[240px] rounded-[24px]" />
           {[1, 2, 3].map(i => (
             <div key={i} className="shimmer h-20 rounded-[20px]" />
           ))}
@@ -60,42 +65,30 @@ export default function SubscriptionsPage({ onAdd, onEdit }: Props) {
         <EmptyState onAdd={onAdd} />
       ) : (
         <>
-          {/* Floating logos widget */}
-          <FloatingLogosWidget
-            subscriptions={subscriptions}
-            onSelectSub={sub => setSelected(sub)}
-          />
+          {/* ── Dashboard widget ── */}
+          <DashboardWidget subscriptions={subscriptions} allMeta={allMeta} />
 
-          {/* Search */}
-          <div className="relative mb-4">
-            <Search className="absolute left-3.5 top-1/2 h-[15px] w-[15px] -translate-y-1/2 text-muted-foreground/50" />
-            <Input
-              placeholder="Search subscriptions..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="h-11 rounded-xl pl-10 bg-muted/50 border-0 text-[14px] font-medium placeholder:text-muted-foreground/40 focus-visible:ring-1 focus-visible:ring-ring/60"
-            />
+          {/* ── Filter chips ── */}
+          <div className="my-5">
+            <div className="flex gap-2 overflow-x-auto no-scrollbar pb-0.5">
+              {FILTERS.map(f => (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className={cn(
+                    'shrink-0 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200',
+                    filter === f
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground border border-border/60 hover:bg-muted'
+                  )}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Filter chips */}
-          <div className="mb-5 flex gap-2 overflow-x-auto no-scrollbar pb-1">
-            {FILTERS.map(f => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={cn(
-                  'shrink-0 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200',
-                  filter === f
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground border border-border/60 hover:bg-muted'
-                )}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
-
-          {/* List */}
+          {/* ── Subscription list ── */}
           {filtered.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
@@ -103,7 +96,7 @@ export default function SubscriptionsPage({ onAdd, onEdit }: Props) {
               className="py-12 text-center"
             >
               <p className="text-sm text-muted-foreground">
-                No results for "{search || filter}"
+                No results for "{filter}"
               </p>
             </motion.div>
           ) : (
@@ -113,7 +106,7 @@ export default function SubscriptionsPage({ onAdd, onEdit }: Props) {
                   key={sub.id}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.04 }}
+                  transition={{ delay: i * 0.03 }}
                 >
                   <SubscriptionCard subscription={sub} onClick={() => setSelected(sub)} />
                 </motion.div>
@@ -151,7 +144,6 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
         You're probably paying for things you've forgotten. Add them here and stay on top of every renewal.
       </p>
 
-      {/* Primary CTA */}
       <div className="relative rounded-2xl border border-border/40 mb-9">
         <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
         <button
@@ -163,7 +155,6 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
         </button>
       </div>
 
-      {/* Suggestions */}
       <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground/40 mb-3">
         Popular services
       </p>

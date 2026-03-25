@@ -46,7 +46,7 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border/60 bg-card shadow-[0_-2px_16px_rgba(0,0,0,0.06)] safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 nav-glass safe-bottom">
       <div className="mx-auto flex max-w-lg items-center justify-around px-2 py-2">
         {leftTabs.map(renderTab)}
         <div className="w-14" />

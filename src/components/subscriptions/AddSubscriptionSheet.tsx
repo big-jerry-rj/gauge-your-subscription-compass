@@ -15,7 +15,14 @@ import { CalendarIcon, ChevronRight, Search, X, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { AppIcon } from './AppIcon';
+import { searchItunesApps, mapGenreToCategory, ItunesApp } from '@/lib/itunesIcons';
 import { motion, AnimatePresence } from 'framer-motion';
+
+const TOP_15 = [
+  'Netflix', 'Spotify', 'YouTube Premium', 'Amazon Prime', 'Disney+',
+  'Apple Music', 'HBO Max', 'iCloud+', 'Microsoft 365', 'Google One',
+  'ChatGPT Plus', 'Adobe Creative Cloud', 'Hulu', 'Dropbox', 'GitHub',
+];
 
 interface Props {
   open: boolean;
@@ -43,6 +50,8 @@ export default function AddSubscriptionSheet({ open, onOpenChange, subscriptionT
   const [logoBg, setLogoBg] = useState('');
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState(false);
+  const [itunesResults, setItunesResults] = useState<ItunesApp[]>([]);
+  const [itunesLoading, setItunesLoading] = useState(false);
 
   // Meta fields
   const [addon, setAddon] = useState('');
@@ -81,6 +90,49 @@ export default function AddSubscriptionSheet({ open, onOpenChange, subscriptionT
     const q = search.toLowerCase();
     return POPULAR_SERVICES.filter(s => s.name.toLowerCase().includes(q));
   }, [search]);
+
+  const popularServices = useMemo(
+    () => TOP_15.map(n => POPULAR_SERVICES.find(s => s.name === n)).filter(Boolean) as typeof POPULAR_SERVICES[number][],
+    []
+  );
+
+  const alphabetSections = useMemo(() => {
+    const nonPopular = POPULAR_SERVICES.filter(s => !TOP_15.includes(s.name));
+    const groups: Record<string, typeof POPULAR_SERVICES[number][]> = {};
+    nonPopular.forEach(s => {
+      const letter = s.name[0].toUpperCase();
+      if (!groups[letter]) groups[letter] = [];
+      groups[letter].push(s);
+    });
+    return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
+  }, []);
+
+  useEffect(() => {
+    if (!search.trim() || search.length < 2) {
+      setItunesResults([]);
+      setItunesLoading(false);
+      return;
+    }
+    setItunesLoading(true);
+    const timer = setTimeout(async () => {
+      const results = await searchItunesApps(search, 6);
+      const localNames = new Set(filteredServices.map(s => s.name.toLowerCase()));
+      setItunesResults(results.filter(r => !localNames.has(r.trackName.toLowerCase())));
+      setItunesLoading(false);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const selectItunesApp = (app: ItunesApp) => {
+    setName(app.trackName);
+    setLogoUrl(app.artworkUrl512);
+    setLogoBg('#1C1C1E');
+    setCategory(mapGenreToCategory(app.primaryGenreName));
+    setAmount('');
+    setSearch('');
+    setItunesResults([]);
+    setStep('form');
+  };
 
   const selectService = (service: typeof POPULAR_SERVICES[number]) => {
     setName(service.name);
@@ -193,50 +245,132 @@ export default function AddSubscriptionSheet({ open, onOpenChange, subscriptionT
 
               {/* List */}
               <div className="flex-1 min-h-0 overflow-y-auto px-5 pb-6">
-                {!search && (
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
-                    Popular
-                  </p>
-                )}
+                {search ? (
+                  /* ── Search results (flat) ── */
+                  <div className="space-y-0.5">
+                    {filteredServices.map((service, i) => (
+                      <motion.button
+                        key={service.name}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.012 }}
+                        onClick={() => selectService(service)}
+                        className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60 active:bg-muted/80"
+                      >
+                        <AppIcon logoUrl={service.logo} name={service.name} size={52} bg={service.bg} />
+                        <span className="flex-1 text-[15px] font-semibold text-foreground">{service.name}</span>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+                      </motion.button>
+                    ))}
 
-                <div className="space-y-0.5">
-                  {filteredServices.map((service, i) => (
-                    <motion.button
-                      key={service.name}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.012 }}
-                      onClick={() => selectService(service)}
-                      className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60 active:bg-muted/80"
+                    {/* App Store results */}
+                    {search.length >= 2 && (
+                      itunesLoading ? (
+                        <div className="flex items-center gap-3 px-2 py-3 text-muted-foreground">
+                          <div className="h-5 w-5 shrink-0 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
+                          <span className="text-[14px]">Searching App Store…</span>
+                        </div>
+                      ) : itunesResults.length > 0 ? (
+                        <>
+                          <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mt-4 mb-2">
+                            From App Store
+                          </p>
+                          {itunesResults.map(app => (
+                            <motion.button
+                              key={app.trackName + app.artistName}
+                              initial={{ opacity: 0, y: 6 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              onClick={() => selectItunesApp(app)}
+                              className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60 active:bg-muted/80"
+                            >
+                              <AppIcon logoUrl={app.artworkUrl512} name={app.trackName} size={52} bg="#1C1C1E" />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-[15px] font-semibold text-foreground truncate">{app.trackName}</p>
+                                <p className="text-[12px] text-muted-foreground truncate">{app.artistName}</p>
+                              </div>
+                              <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+                            </motion.button>
+                          ))}
+                        </>
+                      ) : null
+                    )}
+
+                    {/* Manual entry */}
+                    <button
+                      onClick={() => setStep('form')}
+                      className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60 mt-2"
                     >
-                      <AppIcon
-                        logoUrl={service.logo}
-                        name={service.name}
-                        size={52}
-                        bg={service.bg}
-                      />
-                      <span className="flex-1 text-[15px] font-semibold text-foreground">
-                        {service.name}
-                      </span>
+                      <div className="shrink-0 flex items-center justify-center" style={{ width: 52, height: 52, borderRadius: 12, background: 'hsl(var(--muted))' }}>
+                        <span className="text-[22px] font-black text-muted-foreground">+</span>
+                      </div>
+                      <span className="flex-1 text-[15px] font-semibold text-foreground">Add manually</span>
                       <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
-                    </motion.button>
-                  ))}
-
-                  {/* Manual entry */}
-                  <button
-                    onClick={() => { setStep('form'); }}
-                    className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60 mt-2"
-                  >
-                    <div
-                      className="shrink-0 flex items-center justify-center"
-                      style={{ width: 52, height: 52, borderRadius: 12, background: 'hsl(var(--muted))' }}
-                    >
-                      <span className="text-[22px] font-black text-muted-foreground">+</span>
+                    </button>
+                  </div>
+                ) : (
+                  /* ── Browse mode: Popular + A–Z sections ── */
+                  <>
+                    {/* Popular */}
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                      Popular
+                    </p>
+                    <div className="space-y-0.5 mb-2">
+                      {popularServices.map((service, i) => (
+                        <motion.button
+                          key={service.name}
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.012 }}
+                          onClick={() => selectService(service)}
+                          className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60 active:bg-muted/80"
+                        >
+                          <AppIcon logoUrl={service.logo} name={service.name} size={52} bg={service.bg} />
+                          <span className="flex-1 text-[15px] font-semibold text-foreground">{service.name}</span>
+                          <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+                        </motion.button>
+                      ))}
                     </div>
-                    <span className="flex-1 text-[15px] font-semibold text-foreground">Add manually</span>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
-                  </button>
-                </div>
+
+                    {/* A–Z sections */}
+                    {alphabetSections.map(([letter, services]) => (
+                      <div key={letter}>
+                        <p className="text-[11px] font-bold tracking-widest text-muted-foreground mt-5 mb-1 px-1">
+                          {letter}
+                        </p>
+                        <div className="space-y-0.5">
+                          {services.map((service, i) => (
+                            <motion.button
+                              key={service.name}
+                              initial={{ opacity: 0, y: 6 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: i * 0.008 }}
+                              onClick={() => selectService(service)}
+                              className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60 active:bg-muted/80"
+                            >
+                              <AppIcon logoUrl={service.logo} name={service.name} size={52} bg={service.bg} />
+                              <span className="flex-1 text-[15px] font-semibold text-foreground">{service.name}</span>
+                              <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+                            </motion.button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Manual entry */}
+                    <div className="mt-5">
+                      <button
+                        onClick={() => setStep('form')}
+                        className="flex w-full items-center gap-4 rounded-2xl px-2 py-2.5 text-left transition-colors hover:bg-muted/60"
+                      >
+                        <div className="shrink-0 flex items-center justify-center" style={{ width: 52, height: 52, borderRadius: 12, background: 'hsl(var(--muted))' }}>
+                          <span className="text-[22px] font-black text-muted-foreground">+</span>
+                        </div>
+                        <span className="flex-1 text-[15px] font-semibold text-foreground">Add manually</span>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             </motion.div>
 

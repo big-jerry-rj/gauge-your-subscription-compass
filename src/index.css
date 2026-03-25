@@ -41,6 +41,10 @@
     --ring: 74 100% 45%;
     --brand-secondary: 74 100% 38%;
 
+    /* Price token — deep forest green: ~8:1 contrast on white, AA-compliant */
+    --price: 155 52% 27%;
+    --price-foreground: 0 0% 100%;
+
     --radius: 1rem;
   }
 
@@ -79,6 +83,10 @@
     --input: 0 0% 18%;
     --ring: 74 100% 50%;
     --brand-secondary: 74 100% 44%;
+
+    /* Price token — electric lime in dark: full brand accent */
+    --price: 74 100% 50%;
+    --price-foreground: 0 0% 4%;
   }
 }
 
@@ -150,6 +158,41 @@
 
   .dark .glass-card {
     background: hsl(var(--card));
+    box-shadow: none;
+  }
+
+  /* Widget surface — frosted glass in light, elevated dark */
+  .widget-glass {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset,
+                0 0 0 1px rgba(0,0,0,0.07),
+                0 4px 24px rgba(0,0,0,0.06),
+                0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .dark .widget-glass {
+    background: linear-gradient(145deg, #2A2A2E 0%, #1C1C1E 60%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 0 1px rgba(255,255,255,0.05);
+  }
+
+  /* Nav bar — frosted glass for both modes */
+  .nav-glass {
+    background: rgba(252,252,252,0.88);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-top: 0.5px solid rgba(0,0,0,0.08);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+  }
+
+  .dark .nav-glass {
+    background: rgba(12,12,12,0.90);
+    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+    border-top: 0.5px solid rgba(255,255,255,0.06);
     box-shadow: none;
   }
 

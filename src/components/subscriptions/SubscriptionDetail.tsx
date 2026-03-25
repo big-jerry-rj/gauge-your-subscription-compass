@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Subscription, useSubscriptions } from '@/hooks/useSubscriptions';
 import { useSubscriptionMeta, NOTIFICATION_OPTIONS } from '@/hooks/useSubscriptionMeta';
-import { formatCurrency, CURRENCIES } from '@/lib/constants';
+import { useProfile } from '@/hooks/useProfile';
+import { useExchangeRates } from '@/hooks/useExchangeRates';
+import { formatCurrency, CURRENCIES, getServiceBg } from '@/lib/constants';
 import { format, differenceInDays } from 'date-fns';
 import { Pencil, Trash2, Play, Pause, XCircle } from 'lucide-react';
 import { useState } from 'react';
@@ -15,6 +17,15 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onEdit?: (sub: Subscription) => void;
+}
+
+function hexToRgba(hex: string, alpha: number): string {
+  const clean = hex.replace('#', '');
+  const r = parseInt(clean.substring(0, 2), 16);
+  const g = parseInt(clean.substring(2, 4), 16);
+  const b = parseInt(clean.substring(4, 6), 16);
+  if (isNaN(r) || isNaN(g) || isNaN(b)) return `rgba(120,120,140,${alpha})`;
+  return `rgba(${r},${g},${b},${alpha})`;
 }
 
 function InfoRow({ label, value }: { label: string; value: string }) {
@@ -33,15 +44,25 @@ function RowDivider() {
 export default function SubscriptionDetail({ subscription, open, onOpenChange, onEdit }: Props) {
   const { updateSubscription, deleteSubscription } = useSubscriptions();
   const { getMeta } = useSubscriptionMeta();
+  const { profile } = useProfile();
+  const { convert } = useExchangeRates();
   const [loading, setLoading] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   if (!subscription) return null;
 
-  const meta = getMeta(subscription.id);
+  // Brand color gradient — derived from the service's logo background colour
+  const rawBrandColor = getServiceBg(subscription.name);
+  const isBlack = rawBrandColor.replace('#', '').toLowerCase() === '000000';
+  const brandHex = isBlack ? '#4A4A6A' : rawBrandColor;
+  // Use same colour at 0 alpha for end stop — avoids transparent-to-black banding
+  const brandGradient = `radial-gradient(ellipse 90% 55% at 15% 0%, ${hexToRgba(brandHex, 0.38)} 0%, ${hexToRgba(brandHex, 0)} 100%)`;
 
-  const currencyInfo = CURRENCIES.find(c => c.code === subscription.currency);
-  const currencyDisplay = `${subscription.currency} · ${currencyInfo?.symbol ?? ''}`;
+  const meta = getMeta(subscription.id);
+  const currency = profile?.preferred_currency ?? subscription.currency ?? 'EUR';
+  const displayAmount = convert(subscription.amount, subscription.currency ?? 'EUR', currency);
+  const currencyInfo = CURRENCIES.find(c => c.code === currency);
+  const currencyDisplay = `${currency} · ${currencyInfo?.symbol ?? ''}`;
 
   const daysUntilRenewal = subscription.next_billing_date
     ? differenceInDays(new Date(subscription.next_billing_date), new Date())
@@ -88,6 +109,7 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange, o
       <SheetContent
         side="bottom"
         className="rounded-t-[28px] px-0 pb-0 overflow-hidden flex flex-col max-h-[88dvh]"
+        style={{ backgroundImage: brandGradient }}
       >
         {/* ── Hero header ── */}
         <div className="flex items-start gap-4 px-6 pt-6 pb-5 shrink-0">
@@ -106,8 +128,8 @@ export default function SubscriptionDetail({ subscription, open, onOpenChange, o
               {meta.addon ? ` ${meta.addon}` : ''}
             </h2>
             <div className="mt-1 flex items-baseline gap-1">
-              <span className="text-[22px] font-black text-primary leading-none">
-                {formatCurrency(subscription.amount, subscription.currency)}
+              <span className="text-[22px] font-black text-price leading-none">
+                {formatCurrency(displayAmount, currency)}
               </span>
               <span className="text-[12px] font-semibold text-primary/60">/{subscription.billing_cycle.charAt(0)}</span>
             </div>

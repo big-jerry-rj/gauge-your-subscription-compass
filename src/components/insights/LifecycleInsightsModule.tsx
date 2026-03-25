@@ -3,6 +3,7 @@ import { Subscription } from '@/hooks/useSubscriptions';
 import { formatCurrency, getMonthlyAmount } from '@/lib/constants';
 import { differenceInMonths, format } from 'date-fns';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { AppIcon } from '@/components/subscriptions/AppIcon';
 import { motion } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -67,12 +68,7 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
         <div className="mb-4 rounded-2xl bg-muted/50 overflow-hidden flex">
           <div className="w-[3px] bg-primary shrink-0" />
           <div className="flex items-center gap-3 px-3 py-4 flex-1 min-w-0">
-            <div className="h-[48px] w-[48px] rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
-              {top.sub.logo_url
-                ? <img src={top.sub.logo_url} alt={top.sub.name} className="h-9 w-9 object-contain rounded-xl" />
-                : <span className="text-sm font-bold text-primary">{top.sub.name[0]}</span>
-              }
-            </div>
+            <AppIcon logoUrl={top.sub.logo_url} name={top.sub.name} size={48} />
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-bold text-foreground truncate">{top.sub.name}</p>
               <p className="text-[11px] text-muted-foreground">
@@ -99,12 +95,7 @@ export default function LifecycleInsightsModule({ subscriptions, currency }: Pro
                 <span className="text-[11px] font-bold text-muted-foreground/50 w-4 shrink-0 tabular-nums">
                   {i + 2}
                 </span>
-                <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center overflow-hidden shrink-0">
-                  {sub.logo_url
-                    ? <img src={sub.logo_url} alt={sub.name} className="h-6 w-6 object-contain rounded-lg" />
-                    : <span className="text-[10px] font-bold text-primary">{sub.name[0]}</span>
-                  }
-                </div>
+                <AppIcon logoUrl={sub.logo_url} name={sub.name} size={32} />
                 <div className="flex-1 min-w-0">
                   <p className="text-[13px] font-semibold text-foreground truncate">{sub.name}</p>
                   <p className="text-[10px] text-muted-foreground">{tenureLabel(months)}</p>

@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react';
 import { useSubscriptions } from '@/hooks/useSubscriptions';
 import { formatCurrency } from '@/lib/constants';
 import { useProfile } from '@/hooks/useProfile';
+import { useExchangeRates } from '@/hooks/useExchangeRates';
 import { Calendar } from '@/components/ui/calendar';
+import { AppIcon } from '@/components/subscriptions/AppIcon';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { format, isSameDay } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -10,6 +12,7 @@ import { motion } from 'framer-motion';
 export default function CalendarPage() {
   const { subscriptions } = useSubscriptions();
   const { profile } = useProfile();
+  const { convert } = useExchangeRates();
   const currency = profile?.preferred_currency ?? 'EUR';
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
 
@@ -78,19 +81,13 @@ export default function CalendarPage() {
                   className="relative flex items-center gap-3 rounded-[20px] bg-card border border-border/40 p-4"
                 >
                   <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-                  <div className="h-[52px] w-[52px] rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
-                    {sub.logo_url ? (
-                      <img src={sub.logo_url} alt={sub.name} className="h-10 w-10 object-contain rounded-xl" />
-                    ) : (
-                      <span className="text-base font-bold text-primary">{sub.name[0]}</span>
-                    )}
-                  </div>
+                  <AppIcon logoUrl={sub.logo_url} name={sub.name} size={52} />
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-foreground">{sub.name}</p>
                     <p className="text-xs text-muted-foreground capitalize">{sub.billing_cycle}</p>
                   </div>
                   <span className="font-bold text-foreground tabular-nums">
-                    {formatCurrency(sub.amount, currency)}
+                    {formatCurrency(convert(sub.amount, sub.currency ?? 'EUR', currency), currency)}
                   </span>
                 </motion.div>
               ))}

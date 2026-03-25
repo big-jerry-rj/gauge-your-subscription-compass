@@ -3,21 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+    <!-- PWA / app shell -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Gauge — Subscription Tracker</title>
-    <meta name="description" content="Track and manage all your subscriptions in one place with Gauge." />
-    <meta name="author" content="Gauge" />
+    <meta name="apple-mobile-web-app-title" content="Gauge" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Icons -->
     <link rel="icon" href="/gauge-logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/gauge-logo.png" />
 
-    <meta property="og:title" content="Gauge — Subscription Tracker" />
-    <meta property="og:description" content="Track and manage all your subscriptions in one place." />
+    <!-- Canonical -->
+    <link rel="canonical" href="https://gauge-your-subscription-compass.vercel.app/" />
+
+    <!-- Primary SEO -->
+    <title>Gauge — Subscription Tracker</title>
+    <meta name="description" content="Track all your subscriptions in one place. See monthly spend, upcoming renewals, and trial alerts across Netflix, Spotify, iCloud and 97 more services. Free — no bank linking." />
+    <meta name="author" content="Gauge" />
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="subscription tracker, manage subscriptions, recurring payments, subscription manager, Netflix tracker, monthly spend tracker" />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/gauge-logo.png" />
+    <meta property="og:site_name" content="Gauge" />
+    <meta property="og:url" content="https://gauge-your-subscription-compass.vercel.app/" />
+    <meta property="og:title" content="Gauge — Subscription Tracker" />
+    <meta property="og:description" content="Track all your subscriptions in one place. See monthly spend, upcoming renewals, and free trial alerts. Supports 100+ services. Free — no bank linking required." />
+    <meta property="og:image" content="https://gauge-your-subscription-compass.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Gauge subscription tracker dashboard showing monthly spend and upcoming renewals" />
 
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="/gauge-logo.png" />
+    <meta name="twitter:title" content="Gauge — Subscription Tracker" />
+    <meta name="twitter:description" content="Track all your subscriptions in one place. See monthly spend, upcoming renewals, and trial alerts. Free — no bank linking." />
+    <meta name="twitter:image" content="https://gauge-your-subscription-compass.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="Gauge subscription tracker dashboard" />
+
+    <!-- Structured data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Gauge",
+      "url": "https://gauge-your-subscription-compass.vercel.app/",
+      "description": "Gauge is a subscription tracker that gives you a single, clean source of truth for all your recurring subscriptions. Track Netflix, Spotify, iCloud and more — see your total monthly spend, upcoming renewals, and trial expiry alerts.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Track unlimited subscriptions",
+        "Renewal reminders and alerts",
+        "Free trial expiry tracking",
+        "Monthly and annual spend analytics",
+        "Multi-currency support",
+        "Gauge Score subscription health rating",
+        "100+ pre-filled popular services",
+        "Apple App Store icon integration"
+      ],
+      "screenshot": "https://gauge-your-subscription-compass.vercel.app/og-image.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Gauge"
+      }
+    }
+    </script>
+
+    <!-- Performance: preconnect to external origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://itunes.apple.com" />
+    <link rel="dns-prefetch" href="https://open.er-api.com" />
   </head>
 
   <body>

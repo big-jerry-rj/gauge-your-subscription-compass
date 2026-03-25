@@ -25,57 +25,106 @@ function persistCache() {
 
 // iTunes search terms optimised to return the correct app as first result
 const ITUNES_TERMS: Record<string, string> = {
-  'Netflix': 'Netflix',
-  'YouTube Premium': 'YouTube',
-  'Disney+': 'Disney+',
-  'HBO Max': 'Max',
-  'Apple TV+': 'Apple TV',
-  'Hulu': 'Hulu',
-  'Amazon Prime': 'Amazon Prime Video',
-  'Peacock': 'Peacock TV',
-  'Paramount+': 'Paramount+',
-  'Crunchyroll': 'Crunchyroll',
-  'Spotify': 'Spotify Music',
-  'Apple Music': 'Apple Music',
-  'Tidal': 'Tidal Music',
-  'Deezer': 'Deezer Music Streaming',
-  'SoundCloud Go': 'SoundCloud',
-  'iCloud+': 'iCloud',
-  'Google One': 'Google One',
-  'Dropbox': 'Dropbox',
-  'OneDrive': 'Microsoft OneDrive',
-  'Microsoft 365': 'Microsoft 365',
-  'Notion': 'Notion',
-  'Slack': 'Slack',
-  'Zoom': 'Zoom',
-  'Figma': 'Figma',
-  'Grammarly': 'Grammarly Keyboard',
-  'Canva Pro': 'Canva',
-  'Evernote': 'Evernote',
-  'Trello': 'Trello',
-  'Adobe Creative Cloud': 'Adobe Creative Cloud',
-  'GitHub': 'GitHub',
-  'ChatGPT Plus': 'ChatGPT',
   '1Password': '1Password – Password Manager',
-  'NordVPN': 'NordVPN',
-  'ExpressVPN': 'ExpressVPN',
-  'Dashlane': 'Dashlane Password Manager',
-  'Duolingo Plus': 'Duolingo',
-  'Coursera': 'Coursera',
-  'MasterClass': 'MasterClass',
-  'Skillshare': 'Skillshare',
+  'Adobe Creative Cloud': 'Adobe Creative Cloud',
+  'Airtable': 'Airtable',
+  'Amazon Music': 'Amazon Music',
+  'Amazon Prime': 'Amazon Prime Video',
+  'Apple Arcade': 'Apple Arcade',
+  'Apple Music': 'Apple Music',
+  'Apple News+': 'Apple News',
+  'Apple TV+': 'Apple TV',
+  'Asana': 'Asana',
   'Audible': 'Audible',
-  'Headspace': 'Headspace',
+  'Babbel': 'Babbel',
+  'Bitwarden': 'Bitwarden Password Manager',
+  'BritBox': 'BritBox',
+  'Brilliant': 'Brilliant',
   'Calm': 'Calm',
-  'Strava': 'Strava Run Ride Hike',
-  'MyFitnessPal': 'MyFitnessPal',
-  'Peloton': 'Peloton',
-  'Xbox Game Pass': 'Xbox Game Pass',
-  'PlayStation Plus': 'PlayStation App',
-  'Nintendo Online': 'Nintendo Switch Online',
-  'LinkedIn Premium': 'LinkedIn',
+  'Canva Pro': 'Canva',
+  'ChatGPT Plus': 'ChatGPT',
+  'Cloudflare': 'Cloudflare WARP',
+  'Codecademy': 'Codecademy Go',
+  'Copilot': 'Copilot Budget & Finance Tracker',
+  'Coursera': 'Coursera',
+  'Crunchyroll': 'Crunchyroll',
+  'DashPass': 'DoorDash',
+  'Dashlane': 'Dashlane Password Manager',
+  'Deezer': 'Deezer Music Streaming',
   'Discord Nitro': 'Discord',
+  'Discovery+': 'discovery+',
+  'Disney+': 'Disney+',
+  'Dropbox': 'Dropbox',
+  'Duolingo Plus': 'Duolingo',
+  'EA Play': 'EA Play',
+  'ESPN+': 'ESPN',
+  'Evernote': 'Evernote',
+  'ExpressVPN': 'ExpressVPN',
+  'Figma': 'Figma',
+  'Freeletics': 'Freeletics',
+  'FuboTV': 'Fubo Sports & Live TV',
+  'GitHub': 'GitHub',
+  'Google One': 'Google One',
+  'Grammarly': 'Grammarly Keyboard',
+  'HBO Max': 'Max',
+  'Headspace': 'Headspace',
+  'Hulu': 'Hulu',
+  'iCloud+': 'iCloud',
+  'Instacart+': 'Instacart Shopper',
+  'Keeper': 'Keeper Password Manager',
+  'Linear': 'Linear',
+  'LinkedIn Learning': 'LinkedIn Learning',
+  'LinkedIn Premium': 'LinkedIn',
+  'Loom': 'Loom',
+  'MasterClass': 'MasterClass',
+  'Microsoft 365': 'Microsoft 365',
+  'Miro': 'Miro',
+  'Monarch Money': 'Monarch Money',
+  'Monday.com': 'monday.com',
+  'MUBI': 'MUBI',
+  'MyFitnessPal': 'MyFitnessPal',
+  'NBA League Pass': 'NBA',
+  'Netflix': 'Netflix',
+  'New York Times': 'The New York Times',
+  'Nike Training Club': 'Nike Training Club',
+  'Nintendo Online': 'Nintendo Switch Online',
+  'NordVPN': 'NordVPN',
+  'Noom': 'Noom',
+  'Notion': 'Notion',
+  'OneDrive': 'Microsoft OneDrive',
+  'Pandora': 'Pandora Music & Radio',
+  'Paramount+': 'Paramount+',
+  'Patreon': 'Patreon',
+  'Peacock': 'Peacock TV',
+  'Peloton': 'Peloton',
+  'Philo': 'Philo Live & On-Demand TV',
+  'PlayStation Plus': 'PlayStation App',
+  'Setapp': 'Setapp',
+  'Shudder': 'Shudder',
+  'Skillshare': 'Skillshare',
+  'Slack': 'Slack',
+  'SoundCloud Go': 'SoundCloud',
+  'Spotify': 'Spotify Music',
+  'Strava': 'Strava Run Ride Hike',
+  'Substack': 'Substack',
+  'Tailscale': 'Tailscale',
+  'The Athletic': 'The Athletic',
+  'Tidal': 'Tidal Music',
+  'Todoist': 'Todoist',
+  'Trello': 'Trello',
   'Twitch': 'Twitch',
+  'Uber One': 'Uber',
+  'Ubisoft+': 'Ubisoft Connect',
+  'Wall Street Journal': 'The Wall Street Journal',
+  'Washington Post': 'The Washington Post',
+  'WHOOP': 'WHOOP',
+  'WW': 'WeightWatchers',
+  'X Premium': 'X',
+  'Xbox Game Pass': 'Xbox Game Pass',
+  'YNAB': 'YNAB',
+  'YouTube Music': 'YouTube Music',
+  'YouTube Premium': 'YouTube',
+  'Zoom': 'Zoom',
 };
 
 async function fetchOne(term: string): Promise<string | null> {
@@ -143,4 +192,40 @@ export function notifyIconListeners() {
 
 export function prefetchAndNotify(): void {
   prefetchItunesIcons().then(() => notifyIconListeners());
+}
+
+export interface ItunesApp {
+  trackName: string;
+  artworkUrl512: string;
+  artistName: string;
+  primaryGenreName: string;
+}
+
+export async function searchItunesApps(term: string, limit = 6): Promise<ItunesApp[]> {
+  try {
+    const res = await fetch(
+      `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=software&country=us&limit=${limit}`
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.results ?? []).map((r: any) => ({
+      trackName: r.trackName,
+      artworkUrl512: r.artworkUrl512,
+      artistName: r.artistName,
+      primaryGenreName: r.primaryGenreName ?? '',
+    }));
+  } catch { return []; }
+}
+
+export function mapGenreToCategory(genre: string): string {
+  const g = genre.toLowerCase();
+  if (g.includes('music')) return 'Music';
+  if (g.includes('entertainment') || g.includes('video')) return 'Entertainment';
+  if (g.includes('game')) return 'Gaming';
+  if (g.includes('health') || g.includes('fitness')) return 'Health & Fitness';
+  if (g.includes('education')) return 'Education';
+  if (g.includes('productivity')) return 'Productivity';
+  if (g.includes('news')) return 'News & Media';
+  if (g.includes('finance') || g.includes('business')) return 'Finance';
+  return '';
 }

@@ -59,3 +59,23 @@ TypeScript is configured loosely: `noImplicitAny: false` and `strictNullChecks: 
 ### Testing
 - Unit tests: Vitest with jsdom, configured in `vitest.config.ts`. Test files go in `src/test/`.
 - E2E tests: Playwright, configured in `playwright.config.ts`.
+
+## Design Context
+
+### Brand Personality
+**Confident & Alive.** Three words: *sharp*, *reactive*, *trusted*. Data is the hero — zero decoration. The interface has pulse: bold numbers, a single punchy accent (electric lime `hsl(74 100% 50%)`), and enough motion to feel reactive without being noisy. Think: Bloomberg terminal that grew up on iOS.
+
+### Aesthetic Direction
+- Dark-first. Light mode is a clean fallback, never the primary experience.
+- Primary accent: Electric lime — used sparingly on CTAs, active states, positive trends, healthy Gauge Score ring only. Never as background fill.
+- Typography: Plus Jakarta Sans, weights 600–900 for data, 400–500 for labels. Numbers are always the largest element.
+- Radius: iOS squircle language — `rounded-2xl` (24px) cards, `rounded-xl` (20px) inputs, `rounded-full` chips.
+- Motion: Framer Motion spring (`stiffness: 300, damping: 30`) for positional; `0.18–0.25s ease-out` for fades. Never decorative.
+- Anti-patterns: No glassmorphism, no gradient card fills, no emoji in UI chrome, no heavy drop shadows.
+
+### Design Principles
+1. **Numbers first.** Every screen leads with the most important number.
+2. **Density with breathing room.** 4px-base spacing; generous vertical rhythm.
+3. **One accent, used deliberately.** Lime on CTAs, active states, positive indicators — nothing else.
+4. **Motion communicates, never decorates.** Spring physics for drag; ease-out for entrances.
+5. **Progressive disclosure.** Critical summary above the fold; pull down for detail.

@@ -1,0 +1,25 @@
+{
+  "name": "Gauge — Subscription Tracker",
+  "short_name": "Gauge",
+  "description": "Track all your subscriptions in one place. See monthly spend, upcoming renewals, and trial alerts.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/gauge-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["finance", "productivity"],
+  "lang": "en"
+}

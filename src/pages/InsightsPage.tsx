@@ -1,6 +1,7 @@
 import { useMemo, useEffect, useState, useRef, useCallback } from 'react';
 import { useSubscriptions, Subscription } from '@/hooks/useSubscriptions';
 import { useProfile } from '@/hooks/useProfile';
+import { useExchangeRates } from '@/hooks/useExchangeRates';
 import { formatCurrency, getMonthlyAmount } from '@/lib/constants';
 import { motion, animate, Reorder } from 'framer-motion';
 import { TrendingUp, ArrowUpRight, AlertCircle, GripVertical } from 'lucide-react';
@@ -25,7 +26,13 @@ const DEFAULT_ORDER: TileId[] = ['quick-stats', 'renewals', 'category', 'gauge-s
 export default function InsightsPage() {
   const { subscriptions } = useSubscriptions();
   const { profile } = useProfile();
+  const { convert } = useExchangeRates();
   const currency = profile?.preferred_currency ?? 'EUR';
+  // Converts a subscription's stored amount to the preferred display currency
+  const toPreferred = useCallback(
+    (s: Subscription) => convert(s.amount, s.currency ?? 'EUR', currency),
+    [convert, currency],
+  );
   const [selected, setSelected] = useState<Subscription | null>(null);
   const [editMode, setEditMode] = useState(false);
 
@@ -82,11 +89,11 @@ export default function InsightsPage() {
   const paused = subscriptions.filter(s => s.status === 'paused');
 
   const monthlyTotal = useMemo(
-    () => active.reduce((sum, s) => sum + getMonthlyAmount(s.amount, s.billing_cycle), 0),
-    [active]
+    () => active.reduce((sum, s) => sum + getMonthlyAmount(toPreferred(s), s.billing_cycle), 0),
+    [active, toPreferred]
   );
   const yearlyTotal = monthlyTotal * 12;
-  const pausedSavings = paused.reduce((sum, s) => sum + getMonthlyAmount(s.amount, s.billing_cycle), 0);
+  const pausedSavings = paused.reduce((sum, s) => sum + getMonthlyAmount(toPreferred(s), s.billing_cycle), 0);
 
   // Animated counter
   const [displayTotal, setDisplayTotal] = useState(0);
@@ -109,13 +116,13 @@ export default function InsightsPage() {
       .sort((a, b) => new Date(a.next_billing_date!).getTime() - new Date(b.next_billing_date!).getTime()),
     [active]
   );
-  const upcomingTotal = upcomingRenewals.reduce((sum, s) => sum + s.amount, 0);
+  const upcomingTotal = upcomingRenewals.reduce((sum, s) => sum + toPreferred(s), 0);
 
   const categoryData = useMemo(() => {
     const map: Record<string, number> = {};
     active.forEach(s => {
       const cat = s.category || 'Other';
-      map[cat] = (map[cat] || 0) + getMonthlyAmount(s.amount, s.billing_cycle);
+      map[cat] = (map[cat] || 0) + getMonthlyAmount(toPreferred(s), s.billing_cycle);
     });
     return Object.entries(map)
       .map(([name, value]) => ({ name, value: Math.round(value * 100) / 100 }))
@@ -131,7 +138,7 @@ export default function InsightsPage() {
       const total = subscriptions
         .filter(s => s.status === 'active')
         .filter(s => s.start_date && new Date(s.start_date) <= monthEnd)
-        .reduce((sum, s) => sum + getMonthlyAmount(s.amount, s.billing_cycle), 0);
+        .reduce((sum, s) => sum + getMonthlyAmount(toPreferred(s), s.billing_cycle), 0);
       months.push({ month: format(date, 'MMM'), total: Math.round(total * 100) / 100 });
     }
     return months;
@@ -246,7 +253,7 @@ export default function InsightsPage() {
                             {days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : `in ${days}d`}
                           </span>
                           <span className="text-[13px] font-bold text-foreground tabular-nums">
-                            {formatCurrency(sub.amount, currency)}
+                            {formatCurrency(toPreferred(sub), currency)}
                           </span>
                         </div>
                       </div>

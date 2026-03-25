@@ -45,8 +45,7 @@ export default function Auth() {
             <img
               src={theme === 'dark' ? '/gauge-green.png' : '/gauge-black.png'}
               alt="Gauge"
-              height={48}
-              style={{ height: 48, width: 'auto' }}
+              style={{ height: 'auto', width: '100%', maxWidth: 480 }}
               className="mb-4"
               draggable={false}
             />

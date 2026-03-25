@@ -4,6 +4,7 @@ import { formatCurrency, getMonthlyAmount } from '@/lib/constants';
 import { differenceInDays } from 'date-fns';
 import { AlertTriangle, CheckCircle, ChevronRight, Layers, FlaskConical, Clock } from 'lucide-react';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { AppIcon } from '@/components/subscriptions/AppIcon';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -148,12 +149,7 @@ export default function WasteDetectionModule({ subscriptions, currency, onSelect
                   onClick={() => onSelect?.(sub)}
                   className="w-full flex items-center gap-3 rounded-xl bg-muted/40 px-3 py-3 text-left transition-colors hover:bg-muted/60 active:bg-muted/70"
                 >
-                  <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center overflow-hidden shrink-0">
-                    {sub.logo_url
-                      ? <img src={sub.logo_url} alt={sub.name} className="h-7 w-7 object-contain rounded-xl" />
-                      : <span className="text-xs font-bold text-primary">{sub.name[0]}</span>
-                    }
-                  </div>
+                  <AppIcon logoUrl={sub.logo_url} name={sub.name} size={40} />
                   <div className="flex-1 min-w-0">
                     <p className="text-[13px] font-semibold text-foreground truncate">{sub.name}</p>
                     <div className={cn(

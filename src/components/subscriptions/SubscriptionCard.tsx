@@ -1,5 +1,7 @@
 import { Subscription } from '@/hooks/useSubscriptions';
 import { formatCurrency } from '@/lib/constants';
+import { useProfile } from '@/hooks/useProfile';
+import { useExchangeRates } from '@/hooks/useExchangeRates';
 import { AppIcon } from '@/components/subscriptions/AppIcon';
 import { format, differenceInDays } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -102,6 +104,10 @@ function cycleShort(cycle: string): string {
 }
 
 export default function SubscriptionCard({ subscription, onClick }: Props) {
+  const { profile } = useProfile();
+  const { convert } = useExchangeRates();
+  const currency = profile?.preferred_currency ?? subscription.currency ?? 'EUR';
+  const displayAmount = convert(subscription.amount, subscription.currency ?? 'EUR', currency);
 
   return (
     <motion.div
@@ -129,8 +135,8 @@ export default function SubscriptionCard({ subscription, onClick }: Props) {
 
         {/* Amount + cycle */}
         <div className="flex flex-col items-end gap-1 shrink-0 mr-2">
-          <span className="text-[15px] font-bold text-foreground tabular-nums">
-            {formatCurrency(subscription.amount, subscription.currency)}
+          <span className="text-[15px] font-bold text-price tabular-nums">
+            {formatCurrency(displayAmount, currency)}
           </span>
           <span className="text-[11px] text-muted-foreground">
             {cycleShort(subscription.billing_cycle)}
